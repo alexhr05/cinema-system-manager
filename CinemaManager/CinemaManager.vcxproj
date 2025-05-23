@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CinemaManager.cpp" />
+    <ClCompile Include="MyString.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mystring.h" />
