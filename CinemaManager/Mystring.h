@@ -1,7 +1,4 @@
 #pragma once
-#ifndef MYSTRING_H
-#define MYSTRING_H
-#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 
 
@@ -30,5 +27,3 @@ public:
 	void readFromStream(std::istream& in);
 
 };
-
-#endif
