@@ -16,13 +16,12 @@ public:
 
     void add(const T& element);
     T& operator[](size_t index);
-    T& front();
-    T& back();
     bool empty() const;
     size_t getSize() const;
     size_t getCapacity() const;
     void clear();
     int find(const T& element) const;
 
+    void resize();
     void print() const;
 };
