@@ -4,7 +4,7 @@ class Hall {
 private:
 	int rows;
 	int cols;
-	char** isSeatTaken;
+	char** seats;
 public:
 	Hall(int r, int c);
 	~Hall();
