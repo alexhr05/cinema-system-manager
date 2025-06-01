@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="ActionMovie.cpp" />
     <ClCompile Include="CinemaManager.cpp" />
+    <ClCompile Include="DocumantaryMovie.cpp" />
     <ClCompile Include="Hall.cpp" />
     <ClCompile Include="Movie.cpp" />
     <ClCompile Include="MyString.cpp" />
@@ -136,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActionMovie.h" />
+    <ClInclude Include="DocumantaryMovie.h" />
     <ClInclude Include="Hall.h" />
     <ClInclude Include="Movie.h" />
     <ClInclude Include="Mystring.h" />
