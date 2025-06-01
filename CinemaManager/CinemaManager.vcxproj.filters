@@ -38,5 +38,11 @@
     <ClInclude Include="MyVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Movie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
