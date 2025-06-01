@@ -19,7 +19,6 @@ public:
 	Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, Hall& hall, tm& timeInfo, int startHour, int endHour);
 	Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre);
 
-
 	MyString getTitle();
 	int getRate();
 	double getDuration();

@@ -11,11 +11,4 @@ using namespace std;
 int main()
 {
 
-    MyVector<int> my;
-    
-    my.add(0);
-    my.add(1);
-    my.add(2);
-
-    my.print();
 }
