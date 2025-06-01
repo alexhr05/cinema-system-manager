@@ -24,9 +24,6 @@
     <ClCompile Include="User.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MyVector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Hall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -38,7 +35,7 @@
     <ClInclude Include="User.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MyVector.h">
+    <ClInclude Include="MyVector.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Movie.h">

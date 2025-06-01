@@ -2,10 +2,20 @@
 //
 
 #include <iostream>
+//#include "User.h"
+//#include "MyString.h"
+#include "MyVector.hpp"
 
 using namespace std;
 
 int main()
 {
-    cout << "Hello World!\n";
+
+    MyVector<int> my;
+    
+    my.add(0);
+    my.add(1);
+    my.add(2);
+
+    my.print();
 }

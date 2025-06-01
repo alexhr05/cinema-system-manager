@@ -55,7 +55,7 @@ MyString MyString::operator+(const MyString& other) const {
     result.data = new char[result.length + 1];
 
     strcpy_s(result.data, this->length + 1, this->data);
-    strcat(result.data, other.data);
+    strcat_s(result.data, result.length, other.data);
 
     return result;
 }
@@ -79,25 +79,23 @@ bool MyString::equals(const MyString& other) const {
     return true;
 }
 
-MyString MyString::fromDouble(double number) {
-    int intPart = static_cast<int>(number);
-    int fractionalPart = static_cast<int>((number - intPart) * 100);
-
-    // Конвертиране на цяло число в MyString (можеш да замениш с твоята функция от size_tToString)
-    char buffer[32];
-
-    // Handle negative numbers
-    if (number < 0) {
-        intPart = -intPart;
-        fractionalPart = -fractionalPart;
-        std::snprintf(buffer, sizeof(buffer), "-%d.%02d", intPart, fractionalPart);
-    }
-    else {
-        std::snprintf(buffer, sizeof(buffer), "%d.%02d", intPart, fractionalPart);
-    }
-
-    return MyString(buffer);
-}
+//MyString MyString::fromDouble(double number) {
+//    int intPart = static_cast<int>(number);
+//    int fractionalPart = static_cast<int>((number - intPart) * 100);
+//
+//    char buffer[32];
+//
+//    if (number < 0) {
+//        intPart = -intPart;
+//        fractionalPart = -fractionalPart;
+//        std::snprintf(buffer, sizeof(buffer), "-%d.%02d", intPart, fractionalPart);
+//    }
+//    else {
+//        std::snprintf(buffer, sizeof(buffer), "%d.%02d", intPart, fractionalPart);
+//    }
+//
+//    return MyString(buffer);
+//}
 
 
 std::istream& operator>>(std::istream& in, MyString& str) {
@@ -105,10 +103,8 @@ std::istream& operator>>(std::istream& in, MyString& str) {
     const int MAX_LEN = 1024;
     char buffer[MAX_LEN];
 
-    // Пропуска всички водещи whitespace символи (ако има)
     in >> ws;
 
-    // Чете до края на реда (включва space)
     in.getline(buffer, MAX_LEN);
 
     str = MyString(buffer);
@@ -131,8 +127,8 @@ MyString MyString::fromSizeT(size_t number) {
     return MyString(buffer + index);
 }
 
-void MyString::readFromStream(std::istream& in) {
-    char buffer[1024];
-    in.getline(buffer, 1024);
-    *this = buffer;
-}
+//void MyString::readFromStream(std::istream& in) {
+//    char buffer[1024];
+//    in.getline(buffer, 1024);
+//    *this = buffer;
+//}

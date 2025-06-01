@@ -1,5 +1,6 @@
-﻿#include <iostream>
-#include "Hall.h"
+﻿#include "Hall.h"
+#include <iostream>
+
 
 using namespace std;
 

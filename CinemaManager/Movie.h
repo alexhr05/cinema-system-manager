@@ -1,17 +1,18 @@
 #pragma once
 
 #include "MyString.h"
+#include "Hall.h"
 
 class Movie {
 private:
-	/*MyString title;
+	MyString title;
 	int rate;
 	double duration;
 	int productionYear;
 	MyString Genre;
 	Hall hall;
-	time_stamp dateProjection;
+	/*time_stamp dateProjection;*/
 	int  startHour;
-	int endHour;*/
+	int endHour;
 
 };
