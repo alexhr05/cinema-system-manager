@@ -3,6 +3,7 @@
 
 class User {
 private:
+	static int id;
 	MyString name;
 	MyString password;
 	double balance;
@@ -18,4 +19,5 @@ public:
 	MyString getName() const;
 	MyString getPassword() const;
 	double getBalance() const;
+	int getId() const;
 };

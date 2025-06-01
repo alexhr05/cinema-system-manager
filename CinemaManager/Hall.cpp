@@ -57,3 +57,9 @@ bool Hall::cancelReservation(int row, int col) {
 
     return false;
 }
+
+int Hall::id = 1;
+
+int Hall::getId() const {
+    return id;
+}

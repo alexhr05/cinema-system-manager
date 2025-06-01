@@ -31,3 +31,9 @@ MyString User::getPassword() const {
 double User::getBalance() const {
 	return balance;
 }
+
+int User::id = 0;
+
+int User::getId() const {
+	return id;
+}
