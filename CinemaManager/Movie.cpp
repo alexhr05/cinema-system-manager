@@ -10,47 +10,47 @@ Movie::Movie(MyString& title, int rate, double duration, int productYear, MyStri
 {
 }
 
-MyString Movie::getTitle()
+MyString Movie::getTitle() const
 {
 	return title;
 }
 
-int Movie::getRate()
+int Movie::getRate() const
 {
 	return rate;
 }
 
-double Movie::getDuration()
+double Movie::getDuration() const
 {
 	return duration;
 }
 
-int Movie::getProductionYear()
+int Movie::getProductionYear() const
 {
 	return productionYear;
 }
 
-MyString Movie::getGenre()
+MyString Movie::getGenre() const
 {
 	return Genre;
 }
 
-Hall Movie::getHall()
+Hall Movie::getHall() const
 {
 	return hall;
 }
 
-tm Movie::getTimeInfo()
+tm Movie::getTimeInfo() const
 {
 	return timeInfo;
 }
 
-int Movie::getStartHour()
+int Movie::getStartHour() const
 {
 	return startHour;
 }
 
-int Movie::getEndHour()
+int Movie::getEndHour() const
 {
 	return endHour;
 }

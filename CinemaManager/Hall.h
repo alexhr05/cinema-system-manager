@@ -16,4 +16,8 @@ public:
 	bool cancelReservation(int row, int col);
 
 	int getId() const;
+	int getRow() const;
+	int getCol() const;
+	char** getSeats() const;
+
 };

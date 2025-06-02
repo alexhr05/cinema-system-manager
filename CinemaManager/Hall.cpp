@@ -63,3 +63,18 @@ int Hall::id = 1;
 int Hall::getId() const {
     return id;
 }
+
+int Hall::getRow() const
+{
+    return rows;
+}
+
+int Hall::getCol() const
+{
+    return cols;
+}
+
+char** Hall::getSeats() const
+{
+    return seats;
+}
