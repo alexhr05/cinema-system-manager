@@ -37,3 +37,30 @@ int User::id = 0;
 int User::getId() const {
 	return id;
 }
+
+MyVector<Ticket> User::getTickets() const
+{
+	return tickets;
+}
+
+MyVector<Movie> User::getWatchedMovies() const
+{
+	return watchedMovies;
+}
+
+void User::checkExpiredTickets()
+{
+	MyVector<Ticket> updatedTickets;
+
+	for (int i = 0; i < tickets.getSize();i++) {
+		Ticket ticket = tickets[i];
+		if (ticket.isExpired()) {
+			watchedMovies.add(ticket.getMovie());
+		}
+		else {
+			updatedTickets.add(ticket);
+		}
+	}
+
+	tickets = updatedTickets;
+}
