@@ -11,9 +11,10 @@ private:
     int col;
     time_t issueDate;
 public:
+    Ticket() = default;
     Ticket(Movie& movie, int row, int col);
 
-    Movie getMovie() const;
+    Movie getMovie();
     int getRow() const;
     int getCol() const;
     time_t getIssueDate() const;

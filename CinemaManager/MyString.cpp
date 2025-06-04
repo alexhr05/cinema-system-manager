@@ -4,6 +4,7 @@
 #include <cmath>  
 
 using namespace std;
+const int BUFFER_SIZE = 1024;
 
 MyString::MyString() : length(0) {
     this->data = new char[1];
@@ -78,39 +79,12 @@ bool MyString::equals(const MyString& other) const {
     }
     return true;
 }
-
-//MyString MyString::fromDouble(double number) {
-//    int intPart = static_cast<int>(number);
-//    int fractionalPart = static_cast<int>((number - intPart) * 100);
-//
-//    char buffer[32];
-//
-//    if (number < 0) {
-//        intPart = -intPart;
-//        fractionalPart = -fractionalPart;
-//        std::snprintf(buffer, sizeof(buffer), "-%d.%02d", intPart, fractionalPart);
-//    }
-//    else {
-//        std::snprintf(buffer, sizeof(buffer), "%d.%02d", intPart, fractionalPart);
-//    }
-//
-//    return MyString(buffer);
-//}
-
-
-std::istream& operator>>(std::istream& in, MyString& str) {
-
-    const int MAX_LEN = 1024;
-    char buffer[MAX_LEN];
-
-    in >> ws;
-
-    in.getline(buffer, MAX_LEN);
-
-    str = MyString(buffer);
-    return in;
+std::istream& operator>>(std::istream& is, MyString& str) {
+    char buffer[BUFFER_SIZE];
+    is >> buffer;
+    str = buffer;
+    return is;
 }
-
 
 MyString MyString::fromSizeT(size_t number) {
     if (number == 0) return MyString("0");
@@ -125,6 +99,22 @@ MyString MyString::fromSizeT(size_t number) {
     }
 
     return MyString(buffer + index);
+}
+
+void MyString::set(const char* str) {
+    delete[] data;
+    length = strlen(str);
+    data = new char[length + 1];
+    strcpy_s(data,length, str);
+}
+
+
+
+std::istream& getline(std::istream& is, MyString& str) {
+    char buffer[BUFFER_SIZE];
+    is.getline(buffer, BUFFER_SIZE);
+    str.set(buffer); 
+    return is;
 }
 
 //void MyString::readFromStream(std::istream& in) {

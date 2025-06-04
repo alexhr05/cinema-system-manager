@@ -1,5 +1,9 @@
 #include "Movie.h"
 
+Movie::Movie(): title(""), rate(0), duration(0), productionYear(0), Genre(""), hall(), timeInfo(), startHour(0), endHour(0)
+{
+}
+
 Movie::Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, Hall& hall, tm& timeInfo, int startHour, int endHour)
 	: title(title), rate(rate), duration(duration), productionYear(productYear), Genre(Genre), hall(hall), timeInfo(timeInfo), startHour(startHour), endHour(endHour)
 {

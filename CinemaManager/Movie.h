@@ -16,6 +16,7 @@ private:
 	int  startHour;
 	int endHour;
 public:
+	Movie();
 	Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, Hall& hall, tm& timeInfo, int startHour, int endHour);
 	Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre);
 

@@ -134,6 +134,7 @@
     <ClCompile Include="Hall.cpp" />
     <ClCompile Include="Movie.cpp" />
     <ClCompile Include="MyString.cpp" />
+    <ClCompile Include="SystemManager.cpp" />
     <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="User.cpp" />
   </ItemGroup>
@@ -145,6 +146,8 @@
     <ClInclude Include="Movie.h" />
     <ClInclude Include="Mystring.h" />
     <ClInclude Include="MyVector.hpp" />
+    <ClInclude Include="SeatTypes.h" />
+    <ClInclude Include="SystemManager.h" />
     <ClInclude Include="Ticket.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>

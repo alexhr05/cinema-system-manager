@@ -7,8 +7,10 @@ private:
 	char* data;
 	size_t length;
 
-	friend std::istream& operator>>(std::istream& in, MyString str);
 public:
+	friend std::istream& operator>>(std::istream& in, MyString& str);
+	friend std::istream& getline(std::istream& is, MyString& str);
+
 	MyString();
 	MyString(const char* str);
 	MyString(const MyString& other);
@@ -24,6 +26,6 @@ public:
 	bool equals(const MyString& other) const;
 	MyString fromDouble(double number);
 	static MyString fromSizeT(size_t number);
-	void readFromStream(std::istream& in);
+	void set(const char* str);
 
 };

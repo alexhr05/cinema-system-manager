@@ -14,7 +14,7 @@ Ticket::Ticket(Movie& movie, int row, int col)
 	hall.reserveSeat(row, col);
 }
 
-Movie Ticket::getMovie() const
+Movie Ticket::getMovie()
 {
 	return movie;
 }
@@ -37,15 +37,22 @@ bool Ticket::isExpired() const
 	time_t now;
 	time(&now);
 
-	tm* now_tm = localtime(&now);
-	tm* ticket_tm = localtime(&issueDate);
+	tm now_tm;
+	tm ticket_tm;
 
-	if (ticket_tm->tm_year < now_tm->tm_year)
+	localtime_s(&now_tm, &now);
+	localtime_s(&ticket_tm, &issueDate);
+
+
+	if (ticket_tm.tm_year < now_tm.tm_year)
 		return true;
-	if (ticket_tm->tm_year == now_tm->tm_year && ticket_tm->tm_mon < now_tm->tm_mon)
+	if (ticket_tm.tm_year == now_tm.tm_year && ticket_tm.tm_mon < now_tm.tm_mon)
 		return true;
-	if (ticket_tm->tm_year == now_tm->tm_year && ticket_tm->tm_mon == now_tm->tm_mon && ticket_tm->tm_mday < now_tm->tm_mday)
+	if (ticket_tm.tm_year == now_tm.tm_year &&
+		ticket_tm.tm_mon == now_tm.tm_mon &&
+		ticket_tm.tm_mday < now_tm.tm_mday)
 		return true;
+
 
 	return false;
 }

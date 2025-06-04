@@ -31,7 +31,7 @@ public:
 };
 
 template <typename T>
-MyVector<T>::MyVector() : data(nullptr), capacity(0), size(0) {}
+MyVector<T>::MyVector() : data(new T[4]), capacity(4), size(0) {}
 
 template <typename T>
 MyVector<T>::MyVector(size_t initialCapacity) : capacity(initialCapacity), size(0) {
@@ -49,6 +49,8 @@ MyVector<T>::MyVector(const MyVector& other) : capacity(other.capacity), size(ot
 template <typename T>
 MyVector<T>& MyVector<T>::operator=(const MyVector& other) {
     if (this != &other) {
+        delete[] data;
+
         capacity = other.capacity;
         size = other.size;
         data = new T[capacity];
