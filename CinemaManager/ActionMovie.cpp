@@ -15,3 +15,8 @@ int ActionMovie::getActionIntensity() const
 {
 	return actionIntensity;
 }
+
+double ActionMovie::getTicketPrice() const
+{
+	return basePrice + (actionIntensity * 1.5);
+}

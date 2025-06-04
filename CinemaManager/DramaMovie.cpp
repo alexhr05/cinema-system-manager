@@ -15,3 +15,8 @@ bool DramaMovie::getHasComedyElements() const
 {
 	return hasComedyElements;
 }
+
+double DramaMovie::getTicketPrice() const 
+{
+	return basePrice + (hasComedyElements ? 2.0 : 0.0);
+}

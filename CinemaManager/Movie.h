@@ -30,6 +30,6 @@ public:
 	int getStartHour() const;
 	int getEndHour() const;
 	
-
+	virtual double getTicketPrice() const = 0;
 
 };

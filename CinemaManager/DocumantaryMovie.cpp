@@ -15,3 +15,7 @@ bool DocumentaryMovie::getIsBasedOnTrueEvents() const
 {
 	return isBasedOnTrueEvents;
 }
+
+double DocumentaryMovie::getTicketPrice() const {
+	return basePrice + (isBasedOnTrueEvents ? 3.0 : 0.0);
+}
