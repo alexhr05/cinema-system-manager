@@ -105,7 +105,7 @@ void MyString::set(const char* str) {
     delete[] data;
     length = strlen(str);
     data = new char[length + 1];
-    strcpy_s(data,length, str);
+    strcpy_s(data,length+1, str);
 }
 
 

@@ -6,15 +6,15 @@
 
 using namespace std;
 
-Ticket::Ticket(Movie& movie, int row, int col)
+Ticket::Ticket(Movie* movie, int row, int col)
 	: movie(movie)
 {
 	time(&issueDate);
-	Hall hall = movie.getHall();
+	Hall hall = movie->getHall();
 	hall.reserveSeat(row, col);
 }
 
-Movie Ticket::getMovie()
+Movie* Ticket::getMovie()
 {
 	return movie;
 }
@@ -61,8 +61,8 @@ void Ticket::print() const
 {
 	cout << "Ticket information:" << endl;
 
-	cout << "Movie: " << movie.getTitle().c_str()
-		<< " | Зала ID: " << movie.getHall().getId()
+	cout << "Movie: " << movie->getTitle().c_str()
+		<< " | Зала ID: " << movie->getHall().getId()
 		<< " | Място: Ред " << row << ", Колона " << col << std::endl;
 
 }

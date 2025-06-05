@@ -6,15 +6,15 @@
 
 class Ticket {
 private:
-	Movie movie;
+	Movie* movie;
     int row;
     int col;
     time_t issueDate;
 public:
     Ticket() = default;
-    Ticket(Movie& movie, int row, int col);
+    Ticket(Movie* movie, int row, int col);
 
-    Movie getMovie();
+    Movie* getMovie();
     int getRow() const;
     int getCol() const;
     time_t getIssueDate() const;

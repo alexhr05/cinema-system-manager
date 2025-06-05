@@ -2,10 +2,14 @@
 #include "Mystring.h"
 
 
-User::User() : name(""), password(""), balance(0) {}
+User::User() : id(0),name(""), password(""), balance(0) {}
 
-User::User(MyString& name, MyString& password, double balance) : name(name), password(password), balance(balance) {
+User::User(MyString& name, MyString& password, double balance) : id(++counterId), name(name), password(password), balance(balance) {
 
+}
+
+void User::setId(int newId) {
+	this->id = newId;
 }
 
 void User::setName(MyString& name) {
@@ -32,7 +36,7 @@ double User::getBalance() const {
 	return balance;
 }
 
-int User::id = 0;
+int User::counterId = 0;
 
 int User::getId() const {
 	return id;
@@ -43,7 +47,7 @@ MyVector<Ticket> User::getTickets() const
 	return tickets;
 }
 
-MyVector<Movie> User::getWatchedMovies() const
+MyVector<Movie*> User::getWatchedMovies() const
 {
 	return watchedMovies;
 }

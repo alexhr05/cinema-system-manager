@@ -15,21 +15,32 @@ int main()
 {
 	SystemManager system;
 	system.loadHallsFromFiles();
+	system.loadUsersFromFiles();
 	
-	/*Hall hall(5, 5);
-	hall.reserveSeat(1,1);
-	system.addHall(hall);
+	/*Hall* h = new Hall(5, 5);
+	h->reserveSeat(1,1);
+	system.addHall(h);
 
-	Hall hall2(3,5);
-	hall.reserveSeat(0, 0);
-	system.addHall(hall2);*/
+	Hall* hall2 = new Hall(3,5);
+	hall2->reserveSeat(0, 0);
+	system.addHall(hall2);
 
-	system.printHalls();
+	system.printHalls();*/
+	User* loggedUser = nullptr;
+	MyString name;
+	MyString password;
 
+	cin >> name >> password;
+
+	loggedUser = system.login(name, password);
+	if (loggedUser == nullptr) {
+		cout << "Ne sushtesvuva" << endl;
+	}
+	else {
+		cout << "name" << loggedUser->getName().c_str();
+	}
 	
-
-
-	system.saveHallsToFiles();
+	//system.saveHallsToFiles();
 	
 
 
