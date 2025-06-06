@@ -1,18 +1,24 @@
 #include "Movie.h"
 
-Movie::Movie(): title(""), rate(0), duration(0), productionYear(0), Genre(""), hall(), timeInfo(), startHour(0), endHour(0)
+Movie::Movie(): id(++counterId), title(""), rate(0), duration(0), productionYear(0), Genre(""), hall(), timeInfo(), startHour(0), endHour(0)
 {
 }
 
 Movie::Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, Hall& hall, tm& timeInfo, int startHour, int endHour)
-	: title(title), rate(rate), duration(duration), productionYear(productYear), Genre(Genre), hall(hall), timeInfo(timeInfo), startHour(startHour), endHour(endHour)
+	: id(++counterId), title(title), rate(rate), duration(duration), productionYear(productYear), Genre(Genre), hall(hall), timeInfo(timeInfo), startHour(startHour), endHour(endHour)
 {
 }
 
 Movie::Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre)
-	: title(title), rate(rate), duration(duration), productionYear(productYear), Genre(Genre), hall(0,0)
+	: id(++counterId),title(title), rate(rate), duration(duration), productionYear(productYear), Genre(Genre), hall(0,0)
 {
 }
+
+int Movie::getId() const
+{
+	return id;
+}
+int Movie::counterId = 1;
 
 MyString Movie::getTitle() const
 {

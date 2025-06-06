@@ -41,7 +41,19 @@ int main()
 	}
 	
 	//system.saveHallsToFiles();
+	system.saveUsersToFiles();
 	
+	//time_t now;
+	//time(&now);
+
+	//tm now_tm;
+	//tm ticket_tm;
+
+	//localtime_s(&now_tm, &now);
+	////localtime_s(&ticket_tm, &issueDate);
+
+
+	//cout << now_tm.tm_year;
 
 
 }

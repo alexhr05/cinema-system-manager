@@ -6,6 +6,8 @@
 
 class Movie {
 private:
+	static int counterId;
+	int id;
 	MyString title;
 	int rate;
 	double duration;
@@ -20,6 +22,7 @@ public:
 	Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, Hall& hall, tm& timeInfo, int startHour, int endHour);
 	Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre);
 
+	int getId() const;
 	MyString getTitle() const;
 	int getRate() const;
 	double getDuration() const;

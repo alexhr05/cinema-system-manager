@@ -26,6 +26,9 @@ public:
 	bool equals(const MyString& other) const;
 	MyString fromDouble(double number);
 	static MyString fromSizeT(size_t number);
-	void set(const char* str);
 
+	static MyString fromInt(int number);
+
+	void set(const char* str);
+	static void intToCharArray(int number, char* buffer);
 };

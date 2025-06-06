@@ -2,7 +2,7 @@
 #include "Mystring.h"
 
 
-User::User() : id(0),name(""), password(""), balance(0) {}
+User::User() : id(++counterId),name(""), password(""), balance(0) {}
 
 User::User(MyString& name, MyString& password, double balance) : id(++counterId), name(name), password(password), balance(balance) {
 

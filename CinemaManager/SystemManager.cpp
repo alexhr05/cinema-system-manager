@@ -111,17 +111,42 @@ void SystemManager::saveUsersToFiles()
             << user->getPassword().c_str() << '\n'
             << user->getBalance() << '\n';
 
-        /*saveTicketsForUser(user);*/
+        saveTicketsForUser(user);
     }
     outFile.close();
 }
 
 void SystemManager::saveTicketsForUser(User* user) {
-    ofstream outFile("tickets.txt", ios::app);
+    char idBuffer[12]; 
+    
+    MyString::intToCharArray(user->getId(), idBuffer); 
+
+    MyString idStr(idBuffer); 
+
+    MyString name = "ticketUser";
+
+    MyString nameBeforeDot = name + idStr;
+    MyString nameAfterDot = ".txt";
+    
+    
 
 
+    MyString fileName = nameBeforeDot + nameAfterDot;
+    ofstream outFile(fileName.c_str(), ios::app);
+
+    MyVector<Ticket> userTickets = user->getTickets();
+    
+    
+    for (size_t i = 0; i < userTickets.getSize(); i++)
+    {
+        outFile << userTickets[i].getMovie()->getId() << "\n"
+            << userTickets[i].getRow() << "\n"
+            << userTickets[i].getCol() << "\n"
+            << userTickets[i].getIssueDate() << "\n";
+    }
 
     outFile.close();
+    /*delete[] idBuffer;*/
 }
 
 void SystemManager::loadMoviesFromFiles()

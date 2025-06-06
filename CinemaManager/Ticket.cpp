@@ -9,6 +9,7 @@ using namespace std;
 Ticket::Ticket(Movie* movie, int row, int col)
 	: movie(movie)
 {
+	
 	time(&issueDate);
 	Hall hall = movie->getHall();
 	hall.reserveSeat(row, col);

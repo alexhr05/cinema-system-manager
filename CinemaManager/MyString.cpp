@@ -33,6 +33,7 @@ MyString& MyString::operator=(const MyString& other) {
     return *this;
 }
 
+
 MyString::~MyString() {
     delete[] this->data;
 }
@@ -56,7 +57,7 @@ MyString MyString::operator+(const MyString& other) const {
     result.data = new char[result.length + 1];
 
     strcpy_s(result.data, this->length + 1, this->data);
-    strcat_s(result.data, result.length, other.data);
+    strcat_s(result.data, result.length + 1, other.data);
 
     return result;
 }
@@ -101,6 +102,21 @@ MyString MyString::fromSizeT(size_t number) {
     return MyString(buffer + index);
 }
 
+MyString MyString::fromInt(int number) {
+    if (number == 0) return MyString("0");
+
+    char buffer[101];
+    int index = 100;
+    buffer[index] = '\0';
+
+    while (number > 0) {
+        buffer[--index] = '0' + (number % 10);
+        number /= 10;
+    }
+
+    return MyString(buffer + index);
+}
+
 void MyString::set(const char* str) {
     delete[] data;
     length = strlen(str);
@@ -108,14 +124,48 @@ void MyString::set(const char* str) {
     strcpy_s(data,length+1, str);
 }
 
-
-
 std::istream& getline(std::istream& is, MyString& str) {
     char buffer[BUFFER_SIZE];
     is.getline(buffer, BUFFER_SIZE);
     str.set(buffer); 
     return is;
 }
+
+void MyString::intToCharArray(int number, char* buffer) {
+    bool isNegative = false;
+    int i = 0;
+
+    if (number == 0) {
+        buffer[i++] = '0';
+        buffer[i] = '\0';
+        return;
+    }
+
+    if (number < 0) {
+        isNegative = true;
+        number = -number;
+    }
+
+    while (number > 0) {
+        buffer[i++] = (number % 10) + '0';
+        number /= 10;
+    }
+
+    if (isNegative) {
+        buffer[i++] = '-';
+    }
+
+    buffer[i] = '\0';
+
+    // Обръщане на символите
+    for (int j = 0; j < i / 2; ++j) {
+        char temp = buffer[j];
+        buffer[j] = buffer[i - j - 1];
+        buffer[i - j - 1] = temp;
+    }
+}
+
+
 
 //void MyString::readFromStream(std::istream& in) {
 //    char buffer[1024];
