@@ -127,9 +127,7 @@ void SystemManager::saveTicketsForUser(User* user) {
 
     MyString nameBeforeDot = name + idStr;
     MyString nameAfterDot = ".txt";
-    
-    
-
+   
 
     MyString fileName = nameBeforeDot + nameAfterDot;
     ofstream outFile(fileName.c_str(), ios::app);
@@ -146,7 +144,6 @@ void SystemManager::saveTicketsForUser(User* user) {
     }
 
     outFile.close();
-    /*delete[] idBuffer;*/
 }
 
 void SystemManager::loadMoviesFromFiles()
@@ -196,4 +193,17 @@ MyVector<Hall*> SystemManager::getHalls() const
     return halls;
 }
 
+bool SystemManager::registerUser(MyString name, MyString password) {
+    for (size_t i = 0; i < users.getSize(); i++)
+    {
+        if(users[i]->getName().equals(name) && users[i]->getPassword().equals(password)) {
+            return false;
+        }
+    }
+
+    User* user = new User(name, password);
+    users.add(user);
+
+    return true;
+}
 

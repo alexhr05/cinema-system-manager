@@ -13,6 +13,9 @@ private:
 public:
     Ticket() = default;
     Ticket(Movie* movie, int row, int col);
+    Ticket(const Ticket& other);
+    Ticket& operator=(const Ticket& other);
+
 
     Movie* getMovie();
     int getRow() const;

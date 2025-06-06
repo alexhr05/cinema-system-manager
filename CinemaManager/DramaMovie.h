@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Movie.h"
 
@@ -13,4 +13,7 @@ public:
 	bool getHasComedyElements() const;
 	double getTicketPrice() const override;
 
+	Movie* clone() const override {
+		return new DramaMovie(*this);
+	}
 };

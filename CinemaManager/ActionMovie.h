@@ -12,4 +12,8 @@ public:
 
 	int getActionIntensity() const;
 	double getTicketPrice() const override;
+
+	Movie* clone() const override {
+		return new ActionMovie(*this);
+	}
 };

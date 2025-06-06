@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "MyString.h"
 #include "Hall.h"
@@ -34,5 +34,6 @@ public:
 	int getEndHour() const;
 	
 	virtual double getTicketPrice() const = 0;
+	virtual Movie* clone() const = 0;
 
 };

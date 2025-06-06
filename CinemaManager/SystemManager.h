@@ -34,15 +34,19 @@ public:
 	void loadMoviesFromFiles();    
 	void saveMoviesToFiles();      
 
+	bool registerUser(MyString name, MyString password);
 	User* login(MyString name, MyString password);
 	void logout();
 
 	void addMovie(Movie* movie);
 	void addHall(Hall* hall);
+	
 
 	MyVector<User*> getUsers() const;
 	MyVector<Movie*> getMovies() const;
 	MyVector<Hall*> getHalls() const;
+
+
 
 	void printHalls();
 

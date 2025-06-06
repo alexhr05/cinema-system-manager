@@ -15,6 +15,31 @@ Ticket::Ticket(Movie* movie, int row, int col)
 	hall.reserveSeat(row, col);
 }
 
+Ticket::Ticket(const Ticket& other) {
+	this->row = other.row;
+	this->col = other.col;
+	this->issueDate = other.issueDate;
+	this->movie = other.movie; 
+}
+
+Ticket& Ticket::operator=(const Ticket& other) {
+	if (this != &other) {
+
+		this->row = other.row;
+		this->col = other.col;
+		this->issueDate = other.issueDate;
+
+
+		if (other.movie) {
+			movie = other.movie->clone();  
+		}
+		else {
+			movie = nullptr;
+		}
+	}
+	return *this;
+}
+
 Movie* Ticket::getMovie()
 {
 	return movie;

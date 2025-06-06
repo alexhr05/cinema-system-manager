@@ -22,7 +22,8 @@ private:
 
 public:
 	User();
-	User(MyString& name,MyString& password,double balance);
+	User(MyString name,MyString password,double balance);
+	User(MyString name, MyString password);
 
 	void setName(MyString& name);
 	void setPassword(MyString& password);

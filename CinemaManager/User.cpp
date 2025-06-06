@@ -2,9 +2,14 @@
 #include "Mystring.h"
 
 
-User::User() : id(++counterId),name(""), password(""), balance(0) {}
+User::User() : id(++counterId),name(""), password(""), balance(0), tickets(MyVector<Ticket>()), watchedMovies(MyVector<Movie*>()) {}
 
-User::User(MyString& name, MyString& password, double balance) : id(++counterId), name(name), password(password), balance(balance) {
+User::User(MyString name, MyString password) : id(++counterId), name(name), password(password), balance(0), tickets(MyVector<Ticket>()), watchedMovies(MyVector<Movie*>())
+{
+
+}
+
+User::User(MyString name, MyString password, double balance) : id(++counterId), name(name), password(password), balance(balance), tickets(MyVector<Ticket>()), watchedMovies(MyVector<Movie*>()) {
 
 }
 

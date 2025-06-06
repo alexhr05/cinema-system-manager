@@ -10,7 +10,7 @@ Movie::Movie(MyString& title, int rate, double duration, int productYear, MyStri
 }
 
 Movie::Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre)
-	: id(++counterId),title(title), rate(rate), duration(duration), productionYear(productYear), Genre(Genre), hall(0,0)
+	: id(++counterId),title(title), rate(rate), duration(duration), productionYear(productYear), Genre(Genre), hall(Hall(3,3))
 {
 }
 

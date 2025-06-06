@@ -5,6 +5,7 @@
 #include "User.h"
 #include "Hall.h"
 #include "Movie.h"
+#include "ActionMovie.h"
 #include "MyString.h"
 #include "MyVector.hpp"
 #include "SystemManager.h"
@@ -30,15 +31,68 @@ int main()
 	MyString name;
 	MyString password;
 
-	cin >> name >> password;
+	cout << "> ";
+	MyString cmd;
+	while (cin>>cmd) {
+		if (cmd.equals("exit")) {
+			break;
+		}
+		else if (cmd.equals("login")) {
+			MyString name, password;
+			cin >> name >> password;
 
-	loggedUser = system.login(name, password);
-	if (loggedUser == nullptr) {
-		cout << "Ne sushtesvuva" << endl;
+			loggedUser = system.login(name, password);
+			
+			if (loggedUser == nullptr) {
+				cout << "Not found such User" << endl;
+			}
+			else {
+				cout << "name" << loggedUser->getName().c_str();
+			}
+
+		}
+		else if (cmd.equals("register")) {
+			MyString name, password;
+			cin >> name >> password;
+
+			if (system.registerUser(name, password)) {
+				cout << "Registration successful!\n";
+			}
+			else {
+				cout << "User already exists.\n";
+			}
+		}
+		cout << "> ";
 	}
-	else {
-		cout << "name" << loggedUser->getName().c_str();
+	time_t now = time(0);
+	tm ltm ;
+
+	localtime_s(&ltm, &now);
+	
+	MyVector<Ticket> tick;
+	name = "Star wars";
+	MyString Genre = "fas";
+	Movie* am = new ActionMovie(name, 4, 2.5, 2000, Genre, 10);
+
+	Ticket ticks(am, 2, 3);
+	tick.add(ticks);
+
+	for (size_t i = 0; i < tick.getSize(); i++)
+	{
+		cout << "Movie: " << tick[i].getMovie()->getTitle().c_str() << "\n";
+		cout << "Row: " << tick[i].getRow() << ", Col: " << tick[i].getCol() << "\n";
+		cout << "Sold at: "
+			<< 1900 + ltm.tm_year << "-"
+			<< 1 + ltm.tm_mon << "-"
+			<< ltm.tm_mday << " "
+			<< ltm.tm_hour << ":"
+			<< ltm.tm_min << ":"
+			<< ltm.tm_sec << "\n\n";
+
 	}
+	
+	
+
 	
 	//system.saveHallsToFiles();
 	system.saveUsersToFiles();
