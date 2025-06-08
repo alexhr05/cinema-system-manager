@@ -1,17 +1,18 @@
 #include "Movie.h"
 
-Movie::Movie(): id(++counterId), title(""), rate(0), duration(0), productionYear(0), Genre(""), hall(), timeInfo(), startHour(0), endHour(0)
+Movie::Movie(): id(++counterId), title(""), rate(0), duration(0), productionYear(0), Genre(""), hallId(0), timeInfo(), startHour(0), endHour(0)
 {
 }
 
-Movie::Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, Hall& hall, tm& timeInfo, int startHour, int endHour)
-	: id(++counterId), title(title), rate(rate), duration(duration), productionYear(productYear), Genre(Genre), hall(hall), timeInfo(timeInfo), startHour(startHour), endHour(endHour)
+Movie::Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, int hallId, tm& timeInfo, int startHour, int endHour, MoviesType type)
+	: id(++counterId), title(title), rate(rate), duration(duration), productionYear(productYear), Genre(Genre), hallId(hallId), timeInfo(timeInfo), startHour(startHour), endHour(endHour), type(type)
 {
 }
 
-Movie::Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre)
-	: id(++counterId),title(title), rate(rate), duration(duration), productionYear(productYear), Genre(Genre), hall(Hall(3,3))
+Movie::Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, MoviesType type)
+	 : id(++counterId),title(title), rate(rate), duration(duration), productionYear(productYear), Genre(Genre), type(type)
 {
+	
 }
 
 int Movie::getId() const
@@ -45,9 +46,9 @@ MyString Movie::getGenre() const
 	return Genre;
 }
 
-Hall Movie::getHall() const
+int Movie::getHallId() const
 {
-	return hall;
+	return hallId;
 }
 
 tm Movie::getTimeInfo() const
@@ -63,4 +64,14 @@ int Movie::getStartHour() const
 int Movie::getEndHour() const
 {
 	return endHour;
+}
+
+void Movie::setHallId(int id)
+{
+	hallId = id;
+}
+
+MoviesType Movie::getMovieType() const
+{
+	return type;
 }

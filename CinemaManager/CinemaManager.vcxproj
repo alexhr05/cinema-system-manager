@@ -146,6 +146,7 @@
     <ClInclude Include="DramaMovie.h" />
     <ClInclude Include="Hall.h" />
     <ClInclude Include="Movie.h" />
+    <ClInclude Include="MoviesType.h" />
     <ClInclude Include="Mystring.h" />
     <ClInclude Include="MyVector.hpp" />
     <ClInclude Include="SeatTypes.h" />

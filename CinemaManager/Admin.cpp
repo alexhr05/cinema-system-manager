@@ -2,6 +2,7 @@
 
 Admin::Admin(MyString name, MyString password)
     : User(name, password, 0.0) {
+    
 }
 
 void Admin::handleUserSpecificCommand(MyString command, SystemManager& system)

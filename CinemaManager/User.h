@@ -35,6 +35,7 @@ public:
 	int getId() const;
 	MyVector<Ticket> getTickets() const;
 	MyVector<Movie*> getWatchedMovies() const;
+	void addTicket(Ticket& ticket);
 
 	void checkExpiredTickets();
 	void setId(int newId);

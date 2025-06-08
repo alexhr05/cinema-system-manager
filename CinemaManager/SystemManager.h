@@ -31,8 +31,8 @@ public:
 	void loadTicketsForUser();
 	void saveTicketsForUser(User* user);
 
-	void loadMoviesFromFiles();    
-	void saveMoviesToFiles();      
+	void loadMoviesFromFile();    
+	void saveMoviesToFile();      
 
 	bool registerUser(MyString name, MyString password);
 	User* login(MyString name, MyString password);
@@ -46,8 +46,9 @@ public:
 	MyVector<Movie*> getMovies() const;
 	MyVector<Hall*> getHalls() const;
 
+	void addDefaultAdmin();
 
-
+	Hall* findHallById(int id);
 	void printHalls();
 
 };

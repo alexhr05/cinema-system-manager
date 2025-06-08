@@ -27,7 +27,7 @@ void Hall::free()
     delete[] seats;
 }
 
-Hall::Hall(): id(0), rows(0), cols(0), seats(nullptr)
+Hall::Hall(): id(0), rows(0), cols(0), seats(new char*[1])
 {
 }
 

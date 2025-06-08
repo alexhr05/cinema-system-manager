@@ -1,5 +1,7 @@
 #include "User.h"
+#include "Ticket.h"
 #include "Mystring.h"
+#include "MyVector.hpp"
 
 
 User::User() : id(++counterId),name(""), password(""), balance(0), tickets(MyVector<Ticket>()), watchedMovies(MyVector<Movie*>()) {}
@@ -9,12 +11,17 @@ User::User(MyString name, MyString password) : id(++counterId), name(name), pass
 
 }
 
+
 User::User(MyString name, MyString password, double balance) : id(++counterId), name(name), password(password), balance(balance), tickets(MyVector<Ticket>()), watchedMovies(MyVector<Movie*>()) {
 
 }
 
 void User::setId(int newId) {
 	this->id = newId;
+
+	if (newId >=counterId) {
+		counterId = newId + 1;
+	}
 }
 
 void User::setName(MyString& name) {
@@ -55,6 +62,12 @@ MyVector<Ticket> User::getTickets() const
 MyVector<Movie*> User::getWatchedMovies() const
 {
 	return watchedMovies;
+}
+
+void User::addTicket(Ticket& ticket)
+{
+	/*tickets = MyVector<Ticket>(4);*/
+	tickets.add(ticket);
 }
 
 void User::checkExpiredTickets()

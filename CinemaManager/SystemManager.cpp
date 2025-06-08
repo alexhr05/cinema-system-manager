@@ -3,7 +3,13 @@
 #include <fstream>
 #include "MyVector.hpp"
 #include "SeatTypes.h"
+#include "User.h"
 #include "Admin.h"
+#include "MoviesType.h"
+#include "ActionMovie.h"
+#include "DocumantaryMovie.h"
+#include "DramaMovie.h"
+
 
 using namespace std;
 
@@ -95,15 +101,56 @@ void SystemManager::printHalls() {
 
 void SystemManager::loadUsersFromFiles()
 {
-    users.add(new Admin("admin", "admin123"));
+    std::ifstream in("users.txt");
+    if (!in.is_open()) {
+        std::cerr << "Could not open user file. Creating default admin.\n";
+        addDefaultAdmin();
+        return;
+    }
 
+    
+    bool adminExists = false;
+    while (!in.eof()) {
+        int id;
+        MyString name, password;
+        double balance;
+        in >> id >> name >> password >> balance;
+        if (id == 1) {
+            adminExists = true;
+            User* admin = new User(name, password);
+            admin->setId(1);
+            users.add(admin);
+            cout << "Size="<<users.getSize() << endl;
+            cout << "Name="<<name.c_str() << endl;
+        }
+        
+    }
+    
+    
+    
+    if (!adminExists) {
+        addDefaultAdmin();
+    }
 }
+
+void SystemManager::addDefaultAdmin() {
+    MyString defaultName = "admin";
+    MyString defaultPassword = "admin123";
+    User* admin = new User(defaultName, defaultPassword);
+    admin->setId(1);
+    users.add(admin);
+
+    cout << "Default admin created: admin / admin123\n";
+}
+
+
 
 void SystemManager::saveUsersToFiles()
 {
     ofstream outFile("users.txt", ios::app);
     if (!outFile.is_open()) return;
 
+    cout << "users.getSIze()" << users.getSize();
     for (size_t i = 0; i < users.getSize(); i++) {
         User* user = users[i];
         outFile << user->getId() << "\n"
@@ -146,12 +193,116 @@ void SystemManager::saveTicketsForUser(User* user) {
     outFile.close();
 }
 
-void SystemManager::loadMoviesFromFiles()
+void SystemManager::loadMoviesFromFile()
 {
+    std::ifstream in("movies.txt");
+    if (!in.is_open()) {
+        std::cerr << "Could not open user file. Creating default admin.\n";
+        addDefaultAdmin();
+        return;
+    }
+
+    int id, productionYear, starHour, endHour, rate, hallId;
+    double duration;
+    MyString title, genre;
+    int type;
+    int actionIntensity;
+    bool isBasedOnTrueEvents, hasComedyElements;
+    tm timeStruct = {};
+
+    while (in >> id >> type) {
+        in.ignore();
+        getline(in, title, '"');
+
+        in >> rate >> duration >> productionYear;
+
+        in.ignore();
+        getline(in, genre, '"');
+
+        in >> hallId >> timeStruct.tm_year >> timeStruct.tm_mon >> timeStruct.tm_mday >> starHour >> endHour;
+        Movie* movie = nullptr;
+
+        MoviesType movieType = static_cast<MoviesType>(type);
+
+        Hall* h = findHallById(hallId);
+        if (!h) {
+            cout << "Hall not found with this id:" << hallId << endl;
+            continue;
+        }
+
+        switch (movieType) {
+        case MoviesType::ActionMovie:
+            in >> actionIntensity;
+            movie = new ActionMovie(title, rate, duration, productionYear, genre, movieType, actionIntensity);
+            break;
+        case MoviesType::DocumentaryMovie:
+            in >> isBasedOnTrueEvents;
+            movie = new DocumentaryMovie(title, rate, duration, productionYear, genre, movieType, isBasedOnTrueEvents);
+            break;
+        case MoviesType::DramaMovie:
+            in >> hasComedyElements;
+            movie = new DramaMovie(title, rate, duration, productionYear, genre, movieType, hasComedyElements);
+            break;
+        default:
+            cout << "Unknown movie type: " << type << endl;
+        }
+        movies.add(movie);
+        cout << "Minava";
+        cout << movies[0]->getTitle().c_str() <<" " << movies[0]->getProductionYear();
+        
+        in.close();
+    }
 }
 
-void SystemManager::saveMoviesToFiles()
+void SystemManager::saveMoviesToFile()
 {
+
+    ofstream outFile("movies.txt", ios::app);
+    MyString name = "Star wars";
+    MyString gen = "fic";
+    Movie* movie = new ActionMovie(name, 3, 2.5, 2000, gen, MoviesType::ActionMovie,15);
+    movie->setHallId(2);
+    movies.add(movie);
+    tm timeStruct = {};
+    for (size_t i = 0; i < movies.getSize(); i++)
+    {
+        outFile << movies[i]->getId() << "\n"
+            << static_cast<int>(movies[i]->getMovieType())<<"\n"
+            << movies[i]->getTitle().c_str() << "\n"
+            << movies[i]->getRate() << "\n"
+            << movies[i]->getDuration() << "\n"
+            << movies[i]->getProductionYear() << "\n"
+            << movies[i]->getGenre().c_str() << "\n"
+            << movies[i]->getHallId() << "\n"
+            << (1900 + timeStruct.tm_year) << "\n"
+            << (1 + timeStruct.tm_mon) << "\n"
+            << timeStruct.tm_mday << "\n"
+            << movies[i]->getStartHour() << "\n"
+            << movies[i]->getEndHour()<<"\n";
+        switch (movies[i]->getMovieType()) {
+        case MoviesType::ActionMovie: {
+            ActionMovie* action = dynamic_cast<ActionMovie*>(movie);
+            outFile << action->getActionIntensity() << "\n";
+            break;
+        }   
+        case MoviesType::DocumentaryMovie: {
+            DocumentaryMovie* documentary = dynamic_cast<DocumentaryMovie*>(movie);
+            outFile << documentary->getIsBasedOnTrueEvents() << "\n";
+            break;
+        }   
+        case MoviesType::DramaMovie: {
+            DramaMovie* drama = dynamic_cast<DramaMovie*>(movie);
+            outFile << drama->getHasComedyElements() << "\n";
+            break;
+        }
+        default:
+            cout << "Unknown movie type: " << static_cast<int>(movies[i]->getMovieType())<< endl;
+        }
+            
+    }
+
+
+    outFile.close();
 }
 
 User* SystemManager::login(MyString name, MyString password) {
@@ -207,3 +358,11 @@ bool SystemManager::registerUser(MyString name, MyString password) {
     return true;
 }
 
+Hall* SystemManager::findHallById(int id) {
+    for (size_t i = 0; i < halls.getSize(); i++) {
+        if (halls[i]->getId() == id) {
+            return halls[i];
+        }
+    }
+    return nullptr;
+}

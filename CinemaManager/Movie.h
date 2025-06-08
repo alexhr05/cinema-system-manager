@@ -2,6 +2,7 @@
 
 #include "MyString.h"
 #include "Hall.h"
+#include "MoviesType.h"
 #include <ctime>
 
 class Movie {
@@ -13,14 +14,15 @@ private:
 	double duration;
 	int productionYear;
 	MyString Genre;
-	Hall hall;
+	int hallId;
 	tm timeInfo = {};
 	int  startHour;
 	int endHour;
+	MoviesType type;
 public:
 	Movie();
-	Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, Hall& hall, tm& timeInfo, int startHour, int endHour);
-	Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre);
+	Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, int hallId, tm& timeInfo, int startHour, int endHour, MoviesType type);
+	Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, MoviesType type);
 
 	int getId() const;
 	MyString getTitle() const;
@@ -28,12 +30,16 @@ public:
 	double getDuration() const;
 	int getProductionYear() const;
 	MyString getGenre() const;
-	Hall getHall() const;
+	int getHallId() const;
 	tm getTimeInfo() const;
 	int getStartHour() const;
 	int getEndHour() const;
+	void setHallId(int id);
+	MoviesType getMovieType() const;
+	void setMovieType();
 	
 	virtual double getTicketPrice() const = 0;
 	virtual Movie* clone() const = 0;
+	
 
 };

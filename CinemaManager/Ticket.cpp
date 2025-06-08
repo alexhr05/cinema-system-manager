@@ -7,19 +7,26 @@
 using namespace std;
 
 Ticket::Ticket(Movie* movie, int row, int col)
-	: movie(movie)
+	: movie(movie), row(row), col(col)
 {
 	
 	time(&issueDate);
-	Hall hall = movie->getHall();
-	hall.reserveSeat(row, col);
+	
 }
+
+//Ticket::~Ticket() {
+//	if (movie != nullptr) {
+//		delete movie;
+//	}
+//	
+//}
+
 
 Ticket::Ticket(const Ticket& other) {
 	this->row = other.row;
 	this->col = other.col;
 	this->issueDate = other.issueDate;
-	this->movie = other.movie; 
+	this->movie = other.movie ? other.movie->clone() : nullptr;
 }
 
 Ticket& Ticket::operator=(const Ticket& other) {
@@ -28,14 +35,7 @@ Ticket& Ticket::operator=(const Ticket& other) {
 		this->row = other.row;
 		this->col = other.col;
 		this->issueDate = other.issueDate;
-
-
-		if (other.movie) {
-			movie = other.movie->clone();  
-		}
-		else {
-			movie = nullptr;
-		}
+		this->movie = other.movie ? other.movie->clone() : nullptr;
 	}
 	return *this;
 }
@@ -88,7 +88,7 @@ void Ticket::print() const
 	cout << "Ticket information:" << endl;
 
 	cout << "Movie: " << movie->getTitle().c_str()
-		<< " | Зала ID: " << movie->getHall().getId()
+		<< " | Зала ID: " << movie->getHallId()
 		<< " | Място: Ред " << row << ", Колона " << col << std::endl;
 
 }

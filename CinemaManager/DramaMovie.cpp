@@ -1,13 +1,13 @@
 #include "Movie.h"
 #include "DramaMovie.h"
 
-DramaMovie::DramaMovie(MyString& title, int rate, double duration, int productYear, MyString& Genre, Hall& hall, tm& timeInfo, int startHour, int endHour, bool hasComedyElements)
-	:Movie(title, rate, duration, productYear, Genre, hall, timeInfo, startHour, endHour), hasComedyElements(hasComedyElements)
+DramaMovie::DramaMovie(MyString& title, int rate, double duration, int productYear, MyString& Genre, int hallId, tm& timeInfo, int startHour, int endHour, MoviesType type, bool hasComedyElements)
+	:Movie(title, rate, duration, productYear, Genre, hallId, timeInfo, startHour, endHour, type), hasComedyElements(hasComedyElements)
 {
 }
 
-DramaMovie::DramaMovie(MyString& title, int rate, double duration, int productYear, MyString& Genre, bool hasComedyElements)
-	:Movie(title, rate, duration, productYear, Genre), hasComedyElements(hasComedyElements)
+DramaMovie::DramaMovie(MyString& title, int rate, double duration, int productYear, MyString& Genre, MoviesType type, bool hasComedyElements)
+	:Movie(title, rate, duration, productYear, Genre, type), hasComedyElements(hasComedyElements)
 {
 }
 
@@ -19,4 +19,11 @@ bool DramaMovie::getHasComedyElements() const
 double DramaMovie::getTicketPrice() const 
 {
 	return basePrice + (hasComedyElements ? 2.0 : 0.0);
+}
+
+Movie* DramaMovie::clone() const
+{
+	
+	return new DramaMovie(*this);
+	
 }

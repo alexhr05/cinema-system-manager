@@ -12,6 +12,7 @@ private:
     time_t issueDate;
 public:
     Ticket() = default;
+    /*~Ticket();*/
     Ticket(Movie* movie, int row, int col);
     Ticket(const Ticket& other);
     Ticket& operator=(const Ticket& other);

@@ -1,6 +1,7 @@
 ﻿#include "MyString.h"
 #include <iostream>
 #include <cstring>
+#include <fstream>
 #include <cmath>  
 
 using namespace std;
@@ -124,12 +125,7 @@ void MyString::set(const char* str) {
     strcpy_s(data,length+1, str);
 }
 
-std::istream& getline(std::istream& is, MyString& str) {
-    char buffer[BUFFER_SIZE];
-    is.getline(buffer, BUFFER_SIZE);
-    str.set(buffer); 
-    return is;
-}
+
 
 void MyString::intToCharArray(int number, char* buffer) {
     bool isNegative = false;
@@ -165,6 +161,57 @@ void MyString::intToCharArray(int number, char* buffer) {
     }
 }
 
+MyString MyString::operator+(char c) const {
+    char* newData = new char[length + 2];
+
+    for (int i = 0; i < length; i++) {
+        newData[i] = data[i];
+    }
+
+    newData[length] = c;
+
+    newData[length + 1] = '\0';
+
+    MyString result(newData);
+
+    delete[] newData;
+
+    return result;
+}
+
+//std::istream& getline(std::istream& is, MyString& str) {
+//    char buffer[BUFFER_SIZE];
+//    is.getline(buffer, BUFFER_SIZE);
+//    str.set(buffer); 
+//    return is;
+//}
+
+bool getline(istream& is, MyString & str, char delimiter) {
+    str = MyString("");
+
+    char ch;
+    bool foundDelimiter = false;
+    bool readAnyChar = false;
+
+    while (is.get(ch)) {
+        readAnyChar = true;
+
+        if (ch == delimiter) {
+            foundDelimiter = true;
+            break;
+        }
+
+        str = str + ch; 
+    }
+
+    return readAnyChar || foundDelimiter;
+}
+
+MyString& MyString::operator+=(char c) {
+    MyString result = this->data + c;
+
+    return result;
+}
 
 
 //void MyString::readFromStream(std::istream& in) {

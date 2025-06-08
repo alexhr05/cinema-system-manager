@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <fstream>
 
 
 class MyString {
@@ -9,7 +10,7 @@ private:
 
 public:
 	friend std::istream& operator>>(std::istream& in, MyString& str);
-	friend std::istream& getline(std::istream& is, MyString& str);
+	/*friend std::istream& getline(std::istream& is, MyString& str);*/
 
 	MyString();
 	MyString(const char* str);
@@ -31,4 +32,7 @@ public:
 
 	void set(const char* str);
 	static void intToCharArray(int number, char* buffer);
+	MyString operator+(char c) const;
+	MyString& operator+=(char c);
+	friend bool getline(std::istream& is, MyString& str, char delimiter);
 };
