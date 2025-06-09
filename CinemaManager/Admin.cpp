@@ -1,4 +1,6 @@
-﻿#include "Admin.h"
+﻿#include "User.h"
+#include "Admin.h"
+#include "SystemManager.h"
 
 Admin::Admin(MyString name, MyString password)
     : User(name, password, 0.0) {
@@ -23,6 +25,11 @@ void Admin::handleUserSpecificCommand(MyString command, SystemManager& system)
     //    std::cout << "[Admin] Closing hall...\n";
     //    // closeHaul();
     //}
+}
+
+void Admin::removeMovie(SystemManager& system)
+{
+    
 }
 
 //void Admin::addActionMovie(Movie& movie, int actionIntensity)

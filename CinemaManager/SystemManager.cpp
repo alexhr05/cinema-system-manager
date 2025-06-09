@@ -122,18 +122,21 @@ void SystemManager::loadTcketsFromFiles() {
 
     while (in>>id>>movieId>> row>>col>>year>>month>>day>>hour) {
         issuedDate = createTimeStruct(year, month, day, hour);
+        
         try {
             /*MyString name = "asdawd";
             MyString gen = "gen";
             Movie* movie = new ActionMovie(name, 3, 2.5, 2000, gen, MoviesType::ActionMovie, 15);
             movies.add(movie);*/
             /*cout << "Moive id:" << movies[0]->getId() << "movieId" << movieId << "row:" << row << "; col=" << col << "; year:" << issuedDate.tm_year << "; month:" << issuedDate.tm_mon << endl;*/
+            cout << "Movies:" << movies.getSize()<<endl;
             Movie* movieRes = findMovieById(movieId);
             Ticket tick(movieRes, row, col);
             tick.setIssuedDate(issuedDate);
 
             
             allTickets.add(tick);
+            
         }
         catch (const std::exception& ex) {
             std::cerr << "Error: " << ex.what() << std::endl;
@@ -143,6 +146,7 @@ void SystemManager::loadTcketsFromFiles() {
 
         
     }
+    
 
     in.close();
 }
@@ -189,7 +193,9 @@ void SystemManager::loadUsersFromFiles()
         addDefaultAdmin();
         return;
     }
-
+    
+    addDefaultAdmin();
+    
     int id;
     MyString name, password;
     double balance;
@@ -203,9 +209,7 @@ void SystemManager::loadUsersFromFiles()
         in.ignore();
         getline(in, password, '\n');
 
-        in >> balance;
-
-        in >> ticketsSize;
+        in >> balance>> ticketsSize;
         
         User* user = new User(name, password, balance);
         for (size_t i = 0; i < ticketsSize; i++) {
@@ -233,23 +237,13 @@ void SystemManager::loadUsersFromFiles()
             }
         }
         users.add(user);
-
-        if (id == 1) {
-            adminExists = true;
-            User* admin = new Admin(name, password);// ПРОМЯНА
-            admin->setId(1);
-            users.add(admin);
-            cout << "Size="<<users.getSize() << endl;
-            cout << "Name="<<name.c_str() << endl;
-        }
+        cout << "USER INFO:" << users.getSize()<< endl;
+        cout << users[1]->getName().c_str() << " " << users[1]->getPassword().c_str() << " " << users[1]->getBalance() << " "
+            << users[1]->getTickets()[0].getId();
         
     }
-    
-    
-    
-    if (!adminExists) {
-        addDefaultAdmin();
-    }
+   
+    in.close();
 }
 
 Ticket& SystemManager::findTicketById(int id) {
@@ -291,24 +285,23 @@ void SystemManager::addDefaultAdmin() {
 
 void SystemManager::saveUsersToFiles()
 {
-    ofstream outFile("users.txt", ios::app);
+    ofstream outFile("users.txt", ios::out);
     if (!outFile.is_open()) return;
 
-    
-
     for (size_t i = 0; i < users.getSize(); i++) {
-        User* user = users[i];
         
-        outFile << user->getId() << "\n"
-            << user->getName().c_str() << '\n'
-            << user->getPassword().c_str() << '\n'
-            << user->getBalance() << '\n';
+        User* user = users[i];
+        if (user->getId() != 1 ) {
+            outFile << user->getId() << "\n"
+                << user->getName().c_str() << '\n'
+                << user->getPassword().c_str() << '\n'
+                << user->getBalance() << '\n';
             if (user->getTickets().getSize() > 0) {
                 MyVector<Ticket> tickets;
                 tickets = user->getTickets();
                 outFile << tickets.getSize() << "\n";
                 for (size_t j = 0; j < tickets.getSize(); j++) {
-                    outFile << tickets[j].getId()<<"\n";
+                    outFile << tickets[j].getId() << "\n";
                 }
             }
             if (user->getWatchedMovies().getSize() > 0) {
@@ -318,7 +311,7 @@ void SystemManager::saveUsersToFiles()
                     outFile << watchedMovies[j]->getId() << "\n";
                 }
             }
-
+        }
     }
     outFile.close();
 }
@@ -346,6 +339,7 @@ void SystemManager::loadMoviesFromFile()
 
     while (in >> id >> type) {
         in.ignore();
+        cout << "MovieId:" << id<<endl;
         
         getline(in, title, '\n');
         
@@ -387,10 +381,11 @@ void SystemManager::loadMoviesFromFile()
             cout << "Unknown movie type: " << type << endl;
         }
         movies.add(movie);
+        cout <<"size:"<< movies.getSize();
         
         
-        in.close();
     }
+    in.close();
 }
 
 void SystemManager::saveMoviesToFile()

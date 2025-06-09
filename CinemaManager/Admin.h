@@ -14,5 +14,6 @@ public:
 	void addDramaMovie(Movie& movie, bool hasComedyElements);
 	void addDocumentaryMovie(Movie& movie, bool isBasedOnTrueEvents);
 
+	void removeMovie(SystemManager& system);
 
 };

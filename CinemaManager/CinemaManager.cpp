@@ -17,11 +17,14 @@ int main()
 {
 	SystemManager system;
 	system.loadHallsFromFiles();
-	/*system.loadUsersFromFiles();*/
+	
 	/*system.saveMoviesToFile();*/
 	/*system.saveTicketsToFiles();*/
-	system.loadTcketsFromFiles();
 	system.loadMoviesFromFile();
+	system.loadTcketsFromFiles();
+	system.loadUsersFromFiles();
+	system.saveUsersToFiles();
+	
 	
 	
 	/*Hall* h = new Hall(5, 5);
