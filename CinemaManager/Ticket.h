@@ -6,13 +6,15 @@
 
 class Ticket {
 private:
+    static int counterId;
+    int id;
 	Movie* movie;
     int row;
     int col;
-    time_t issueDate;
+    tm issueDate;
 public:
     Ticket() = default;
-    /*~Ticket();*/
+
     Ticket(Movie* movie, int row, int col);
     Ticket(const Ticket& other);
     Ticket& operator=(const Ticket& other);
@@ -21,7 +23,8 @@ public:
     Movie* getMovie();
     int getRow() const;
     int getCol() const;
-    time_t getIssueDate() const;
+    tm getIssueDate() const;
+    int getId() const;
     
     bool isExpired() const;  
 

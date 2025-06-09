@@ -7,22 +7,18 @@
 using namespace std;
 
 Ticket::Ticket(Movie* movie, int row, int col)
-	: movie(movie), row(row), col(col)
+	:id(++counterId), movie(movie), row(row), col(col)
 {
+	tm time = {};
+	issueDate = time;
 	
-	time(&issueDate);
 	
 }
-
-//Ticket::~Ticket() {
-//	if (movie != nullptr) {
-//		delete movie;
-//	}
-//	
-//}
+int Ticket::counterId = 0;
 
 
 Ticket::Ticket(const Ticket& other) {
+	this->id = other.id;
 	this->row = other.row;
 	this->col = other.col;
 	this->issueDate = other.issueDate;
@@ -31,7 +27,7 @@ Ticket::Ticket(const Ticket& other) {
 
 Ticket& Ticket::operator=(const Ticket& other) {
 	if (this != &other) {
-
+		this->id = other.id;
 		this->row = other.row;
 		this->col = other.col;
 		this->issueDate = other.issueDate;
@@ -45,6 +41,10 @@ Movie* Ticket::getMovie()
 	return movie;
 }
 
+int Ticket::getId() const {
+	return id;
+}
+
 int Ticket::getRow() const {
 	return row;
 }
@@ -53,7 +53,7 @@ int Ticket::getCol() const {
 	return col;
 }
 
-time_t Ticket::getIssueDate() const
+tm Ticket::getIssueDate() const
 {
 	return issueDate;
 }
@@ -64,19 +64,18 @@ bool Ticket::isExpired() const
 	time(&now);
 
 	tm now_tm;
-	tm ticket_tm;
 
 	localtime_s(&now_tm, &now);
-	localtime_s(&ticket_tm, &issueDate);
 
 
-	if (ticket_tm.tm_year < now_tm.tm_year)
+
+	if (issueDate.tm_year < now_tm.tm_year)
 		return true;
-	if (ticket_tm.tm_year == now_tm.tm_year && ticket_tm.tm_mon < now_tm.tm_mon)
+	if (issueDate.tm_year == now_tm.tm_year && issueDate.tm_mon < now_tm.tm_mon)
 		return true;
-	if (ticket_tm.tm_year == now_tm.tm_year &&
-		ticket_tm.tm_mon == now_tm.tm_mon &&
-		ticket_tm.tm_mday < now_tm.tm_mday)
+	if (issueDate.tm_year == now_tm.tm_year &&
+		issueDate.tm_mon == now_tm.tm_mon &&
+		issueDate.tm_mday < now_tm.tm_mday)
 		return true;
 
 

@@ -17,8 +17,8 @@ int main()
 {
 	SystemManager system;
 	system.loadHallsFromFiles();
-	system.loadUsersFromFiles();
-	system.saveMoviesToFile();
+	/*system.loadUsersFromFiles();*/
+	//system.saveMoviesToFile();
 	system.loadMoviesFromFile();
 	
 	

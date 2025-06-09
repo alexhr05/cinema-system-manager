@@ -24,6 +24,8 @@ public:
 	User();
 	User(MyString name,MyString password,double balance);
 	User(MyString name, MyString password);
+	
+	
 
 	void setName(MyString& name);
 	void setPassword(MyString& password);
@@ -36,6 +38,7 @@ public:
 	MyVector<Ticket> getTickets() const;
 	MyVector<Movie*> getWatchedMovies() const;
 	void addTicket(Ticket& ticket);
+	void addWatchedMovies(Movie* movie);
 
 	void checkExpiredTickets();
 	void setId(int newId);

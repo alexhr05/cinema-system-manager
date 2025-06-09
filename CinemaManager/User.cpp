@@ -66,8 +66,12 @@ MyVector<Movie*> User::getWatchedMovies() const
 
 void User::addTicket(Ticket& ticket)
 {
-	/*tickets = MyVector<Ticket>(4);*/
 	tickets.add(ticket);
+}
+
+void User::addWatchedMovies(Movie* movie)
+{
+	watchedMovies.add(movie);
 }
 
 void User::checkExpiredTickets()

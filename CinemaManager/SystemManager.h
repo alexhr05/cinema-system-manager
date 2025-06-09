@@ -17,6 +17,7 @@ private:
 	MyVector<User*> users;
 	MyVector<Movie*> movies;
 	MyVector<Hall*> halls;
+	MyVector<Ticket> allTickets;
 
 public:
 	SystemManager();
@@ -25,11 +26,11 @@ public:
 	void loadHallsFromFiles();
 	void saveHallsToFiles();
 
+	void loadTcketsFromFiles();
+	void saveTicketsToFiles();
+
 	void loadUsersFromFiles();
 	void saveUsersToFiles();
-
-	void loadTicketsForUser();
-	void saveTicketsForUser(User* user);
 
 	void loadMoviesFromFile();    
 	void saveMoviesToFile();      
@@ -45,7 +46,10 @@ public:
 	MyVector<User*> getUsers() const;
 	MyVector<Movie*> getMovies() const;
 	MyVector<Hall*> getHalls() const;
+	MyVector<Ticket> getAllTickets() const;
 
+	Ticket& findTicketById(int id);
+	Movie* findMovieById(int id);
 	void addDefaultAdmin();
 
 	Hall* findHallById(int id);
