@@ -6,6 +6,8 @@
 #include "Admin.h"
 #include "Hall.h"
 #include "Movie.h"
+#include "DocumantaryMovie.h"
+#include "DramaMovie.h"
 #include "ActionMovie.h"
 #include "MyString.h"
 #include "MyVector.hpp"
@@ -17,32 +19,22 @@ int main()
 {
 	SystemManager system;
 	system.loadHallsFromFiles();
-	
-	/*system.saveMoviesToFile();*/
-	/*system.saveTicketsToFiles();*/
 	system.loadMoviesFromFile();
 	system.loadTicketsFromFiles();
 	system.loadUsersFromFiles();
-	system.saveUsersToFiles();
-	
-	
-	
-	/*Hall* h = new Hall(5, 5);
-	h->reserveSeat(1,1);
-	system.addHall(h);
 
-	Hall* hall2 = new Hall(3,5);
-	hall2->reserveSeat(0, 0);
-	system.addHall(hall2);
+	/*system.saveMoviesToFile();*/
+	/*system.saveTicketsToFiles();*/
+	
+	
 
-	system.printHalls();*/
-	/*User* loggedUser = nullptr;
+	User* loggedUser = nullptr;
 	MyString name;
 	MyString password;
 
 	cout << "> ";
-	MyString cmd;*/
-	/*while (cin>>cmd) {
+	MyString cmd;
+	while (cin>>cmd) {
 		if (cmd.equals("exit")) {
 			break;
 		}
@@ -71,59 +63,57 @@ int main()
 				cout << "User already exists.\n";
 			}
 		}
+		else if (cmd.equals("buy-ticket")) {
+			int movieId, row, col;
+			cout << "Enter movie id:";
+			cin >> movieId;
+			cout << "Enter row:";
+			cin >> row;
+			cout << "Enter column:";
+			cin >> col;
+			Movie* movie = system.findMovieById(movieId);
+			Ticket tick(movie, row, col);
+			
+			try {
+				switch (movie->getMovieType()) {
+				case MoviesType::ActionMovie: {
+					ActionMovie* action = dynamic_cast<ActionMovie*>(movie);
+					if (loggedUser->getBalance() < action->getTicketPrice()) {
+						throw exception("Cant't buy ticket");
+					}
+					break;
+				}
+				case MoviesType::DocumentaryMovie: {
+					DocumentaryMovie* documentary = dynamic_cast<DocumentaryMovie*>(movie);
+					if (loggedUser->getBalance() < documentary->getTicketPrice()) {
+						throw exception("Cant't buy ticket");
+					}
+					break;
+				}
+				case MoviesType::DramaMovie: {
+					DramaMovie* drama = dynamic_cast<DramaMovie*>(movie);
+					if (loggedUser->getBalance() < drama->getTicketPrice()) {
+						throw exception("Cant't buy ticket");
+					}
+					break;
+				}
+				default:
+					cout << "Unknown movie type: " << static_cast<int>(movie->getMovieType()) << endl;
+				}
+			}
+			catch (const std::ios_base::failure& e) {
+				std::cerr << "File read error: " << e.what() << std::endl;
+			}
+		
+			
+			
+		}
+		
 		cout << "> ";
-	}*/
-	//time_t now = time(0);
-	//tm ltm ;
-
-	//localtime_s(&ltm, &now);
-	//
-	//MyVector<Ticket> tick;
-	//name = "Star wars";
-	//MyString Genre = "fas";
-	//ActionMovie* am = new ActionMovie(name, 4, 2.5, 2000, Genre, 10);
-
-	//Ticket ticks(am, 2, 3);
-	//tick.add(ticks);
-	//loggedUser = new Admin("admin", "admin123");
-
-	//loggedUser->addTicket(ticks);
-	//tick = loggedUser->getTickets();
-	//
-	//cout<<"tickSize="<<tick.getSize();
-	//Movie* mov = tick[0].getMovie();
-	/*cout<<"rows="<<mov->getHall().getRows();*/
-	/*for (size_t i = 0; i < tick.getSize(); i++)
-	{
-		cout << "Movie: " << tick[i].getMovie()->getTitle().c_str() << "\n";
-		cout << "Row: " << tick[i].getRow() << ", Col: " << tick[i].getCol() << "\n";
-		cout << "Sold at: "
-			<< 1900 + ltm.tm_year << "-"
-			<< 1 + ltm.tm_mon << "-"
-			<< ltm.tm_mday << " "
-			<< ltm.tm_hour << ":"
-			<< ltm.tm_min << ":"
-			<< ltm.tm_sec << "\n\n";
-
-	}*/
+	}
 	
-	
+		
 
-	
-	//system.saveHallsToFiles();
-	/*system.saveUsersToFiles();*/
-	
-	//time_t now;
-	//time(&now);
-
-	//tm now_tm;
-	//tm ticket_tm;
-
-	//localtime_s(&now_tm, &now);
-	////localtime_s(&ticket_tm, &issueDate);
-
-
-	//cout << now_tm.tm_year;
-
+	system.saveUsersToFiles();
 
 }

@@ -200,7 +200,6 @@ void SystemManager::loadUsersFromFiles()
         in.ignore();
         getline(in, name, '\n');
 
-        /*in.ignore();*/
         getline(in, password, '\n');
         in >> balance>> ticketsSize;
         
