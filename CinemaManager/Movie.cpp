@@ -1,10 +1,11 @@
 #include "Movie.h"
+#include "MyVector.hpp"
 
-Movie::Movie(): id(++counterId), title(""), rate(0), duration(0), productionYear(0), Genre(""), hallId(0), timeInfo(), startHour(0), endHour(0)
+Movie::Movie(): id(++counterId), title(""), rate(0), duration(0), productionYear(0), Genre(""), hallId(0), timeInfo(MyVector<tm>()), startHour(0), endHour(0)
 {
 }
 
-Movie::Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, int hallId, tm& timeInfo, int startHour, int endHour, MoviesType type)
+Movie::Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, int hallId, MyVector<tm> timeInfo, int startHour, int endHour, MoviesType type)
 	: id(++counterId), title(title), rate(rate), duration(duration), productionYear(productYear), Genre(Genre), hallId(hallId), timeInfo(timeInfo), startHour(startHour), endHour(endHour), type(type)
 {
 }
@@ -51,7 +52,7 @@ int Movie::getHallId() const
 	return hallId;
 }
 
-tm Movie::getTimeInfo() const
+MyVector<tm> Movie::getTimeInfo() const
 {
 	return timeInfo;
 }

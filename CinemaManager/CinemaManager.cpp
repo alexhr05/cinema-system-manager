@@ -21,7 +21,7 @@ int main()
 	/*system.saveMoviesToFile();*/
 	/*system.saveTicketsToFiles();*/
 	system.loadMoviesFromFile();
-	system.loadTcketsFromFiles();
+	system.loadTicketsFromFiles();
 	system.loadUsersFromFiles();
 	system.saveUsersToFiles();
 	

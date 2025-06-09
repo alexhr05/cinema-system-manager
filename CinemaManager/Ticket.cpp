@@ -22,7 +22,18 @@ Ticket::Ticket(const Ticket& other) {
 	this->row = other.row;
 	this->col = other.col;
 	this->issueDate = other.issueDate;
-	this->movie = other.movie ? other.movie->clone() : nullptr;
+	if (other.movie != nullptr) {
+		try {
+			this->movie = other.movie->clone();
+		}//Хваща всички изключения
+		catch (...) {
+			std::cerr << "Error: clone() failed, setting movie to nullptr\n";
+			this->movie = nullptr;
+		}
+	}
+	else {
+		this->movie = nullptr;
+	}
 }
 
 Ticket& Ticket::operator=(const Ticket& other) {

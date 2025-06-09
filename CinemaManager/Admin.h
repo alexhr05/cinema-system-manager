@@ -10,10 +10,13 @@ public:
 
 	void handleUserSpecificCommand(MyString command, SystemManager& system);
 
-	void addActionMovie(Movie& movie, int actionIntensity);
-	void addDramaMovie(Movie& movie, bool hasComedyElements);
-	void addDocumentaryMovie(Movie& movie, bool isBasedOnTrueEvents);
+	void addActionMovie(SystemManager& system,Movie* movie, int actionIntensity);
+	void addDramaMovie(SystemManager& system, Movie* movie, bool hasComedyElements);
+	void addDocumentaryMovie(SystemManager& system, Movie* movie, bool isBasedOnTrueEvents);
+	void removeMovie(SystemManager& system, Movie* movie);
 
-	void removeMovie(SystemManager& system);
+	void addHall(SystemManager& system, Hall* hall);
+	void removeHall(SystemManager& system, Hall* hall);
+	
 
 };

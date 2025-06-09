@@ -2,6 +2,7 @@
 
 #include "MyString.h"
 #include "Hall.h"
+#include "MyVector.hpp"
 #include "MoviesType.h"
 #include <ctime>
 
@@ -15,13 +16,14 @@ private:
 	int productionYear;
 	MyString Genre;
 	int hallId;
-	tm timeInfo = {};
+	MyVector<tm> timeInfo;
+	/*tm timeInfo = {};*/
 	int  startHour;
 	int endHour;
 	MoviesType type;
 public:
 	Movie();
-	Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, int hallId, tm& timeInfo, int startHour, int endHour, MoviesType type);
+	Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, int hallId, MyVector<tm> timeInfo, int startHour, int endHour, MoviesType type);
 	Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, MoviesType type);
 
 	int getId() const;
@@ -31,7 +33,7 @@ public:
 	int getProductionYear() const;
 	MyString getGenre() const;
 	int getHallId() const;
-	tm getTimeInfo() const;
+	MyVector<tm> getTimeInfo() const;
 	int getStartHour() const;
 	int getEndHour() const;
 	void setHallId(int id);

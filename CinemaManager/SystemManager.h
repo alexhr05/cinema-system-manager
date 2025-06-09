@@ -26,7 +26,7 @@ public:
 	void loadHallsFromFiles();
 	void saveHallsToFiles();
 
-	void loadTcketsFromFiles();
+	void loadTicketsFromFiles();
 	void saveTicketsToFiles();
 
 	void loadUsersFromFiles();
@@ -56,4 +56,6 @@ public:
 	void printHalls();
 
 	tm createTimeStruct(int year, int month, int day, int hour);
+	void removeMovieSystem(Movie* movie);
+	void removeHallSystem(Hall* hall);
 };
