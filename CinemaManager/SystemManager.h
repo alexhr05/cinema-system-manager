@@ -55,4 +55,5 @@ public:
 	Hall* findHallById(int id);
 	void printHalls();
 
+	tm createTimeStruct(int year, int month, int day, int hour);
 };

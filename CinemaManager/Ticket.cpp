@@ -36,7 +36,12 @@ Ticket& Ticket::operator=(const Ticket& other) {
 	return *this;
 }
 
-Movie* Ticket::getMovie()
+void Ticket::setIssuedDate(tm issuedDate)
+{
+	this->issueDate = issuedDate;
+}
+
+Movie* Ticket::getMovie() const
 {
 	return movie;
 }

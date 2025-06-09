@@ -18,7 +18,9 @@ int main()
 	SystemManager system;
 	system.loadHallsFromFiles();
 	/*system.loadUsersFromFiles();*/
-	//system.saveMoviesToFile();
+	/*system.saveMoviesToFile();*/
+	/*system.saveTicketsToFiles();*/
+	system.loadTcketsFromFiles();
 	system.loadMoviesFromFile();
 	
 	

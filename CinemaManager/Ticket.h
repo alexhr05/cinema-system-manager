@@ -19,8 +19,9 @@ public:
     Ticket(const Ticket& other);
     Ticket& operator=(const Ticket& other);
 
+    void setIssuedDate(tm issuedDate);
 
-    Movie* getMovie();
+    Movie* getMovie() const;
     int getRow() const;
     int getCol() const;
     tm getIssueDate() const;

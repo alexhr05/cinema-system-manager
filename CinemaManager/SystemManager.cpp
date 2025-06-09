@@ -99,49 +99,87 @@ void SystemManager::printHalls() {
     }
 }
 
-//void SystemManager::loadUsersFromFiles() {
-//
-//}
-//
-//void SystemManager::saveTicketsToFiles() {
-//    ofstream outFile("tickets.txt", ios::app);
-//    if (!outFile.is_open()) return;
-//
-//    /*static int counterId;
-//    int id;
-//    Movie* movie;
-//    int row;
-//    int col;
-//    tm issueDate;*/
-//
-//    for (size_t i = 0; i < allTickets.getSize(); i++) {
-//        Ticket ticket = allTickets[i];
-//
-//
-//        outFile << ticket.getId() << "\n"
-//            << ticket.getMovie()->getId() << '\n'
-//            << ticket << '\n'
-//            << user->getBalance() << '\n';
-//        if (user->getTickets().getSize() > 0) {
-//            MyVector<Ticket> tickets;
-//            tickets = user->getTickets();
-//            outFile << tickets.getSize() << "\n";
-//            for (size_t j = 0; j < tickets.getSize(); j++) {
-//                outFile << tickets[j].getId() << "\n";
-//            }
-//        }
-//        if (user->getWatchedMovies().getSize() > 0) {
-//            MyVector<Movie*> watchedMovies;
-//            watchedMovies = user->getWatchedMovies();
-//            for (size_t j = 0; j < watchedMovies.getSize(); j++) {
-//                outFile << watchedMovies[j]->getId() << "\n";
-//            }
-//        }
-//
-//    }
-//
-//    outFile.close();
-//}
+tm SystemManager::createTimeStruct(int year, int month, int day, int hour)
+{
+    tm time;
+    time.tm_year = year;
+    time.tm_mon = month;
+    time.tm_wday = day;
+    time.tm_hour = hour;
+
+    return time;
+}
+
+void SystemManager::loadTcketsFromFiles() {
+    ifstream in("tickets.txt");
+    if (!in.is_open()) {
+        std::cerr << "Could not open tickets file"<<endl;
+        return;
+    }
+    int id, movieId, row, col, year, month, day, hour;
+    tm issuedDate;
+
+
+    while (in>>id>>movieId>> row>>col>>year>>month>>day>>hour) {
+        issuedDate = createTimeStruct(year, month, day, hour);
+        try {
+            /*MyString name = "asdawd";
+            MyString gen = "gen";
+            Movie* movie = new ActionMovie(name, 3, 2.5, 2000, gen, MoviesType::ActionMovie, 15);
+            movies.add(movie);*/
+            /*cout << "Moive id:" << movies[0]->getId() << "movieId" << movieId << "row:" << row << "; col=" << col << "; year:" << issuedDate.tm_year << "; month:" << issuedDate.tm_mon << endl;*/
+            Movie* movieRes = findMovieById(movieId);
+            Ticket tick(movieRes, row, col);
+            tick.setIssuedDate(issuedDate);
+
+            
+            allTickets.add(tick);
+        }
+        catch (const std::exception& ex) {
+            std::cerr << "Error: " << ex.what() << std::endl;
+            break;
+        }
+        
+
+        
+    }
+
+    in.close();
+}
+
+void SystemManager::saveTicketsToFiles() {
+    ofstream outFile("tickets.txt", ios::app);
+    if (!outFile.is_open()) return;
+    MyString name = "asdawd";
+    MyString gen = "gen";
+    Movie* movie = new ActionMovie(name, 3, 2.5, 2000, gen, MoviesType::ActionMovie, 15);
+    int row = 2;
+    
+    Ticket ticks(movie, 2, 4);
+    tm time = {};
+    time.tm_year = 2025;
+    time.tm_mon = 2;
+    time.tm_wday = 15;
+    time.tm_hour = 9;
+    ticks.setIssuedDate(time);
+    allTickets.add(ticks);
+    for (size_t i = 0; i < allTickets.getSize(); i++) {
+        Ticket ticket = allTickets[i];
+
+        tm issueDate = ticket.getIssueDate();
+        outFile << ticket.getId() << "\n"
+            << ticket.getMovie()->getId() << '\n'
+            << ticket.getRow() << '\n'
+            << ticket.getCol() << '\n'
+            << issueDate.tm_year << '\n'
+            << issueDate.tm_mon << '\n'
+            << issueDate.tm_wday << '\n'
+            << issueDate.tm_hour << '\n';
+
+    }
+
+    outFile.close();
+}
 
 void SystemManager::loadUsersFromFiles()
 {
@@ -227,7 +265,9 @@ Ticket& SystemManager::findTicketById(int id) {
 }
 
 Movie* SystemManager::findMovieById(int id) {
+    
     for (int i = 0; i < movies.getSize(); i++) {
+        cout << movies.getSize() << ":SIZE" << endl;
         if (movies[i]->getId() == id) {
             return movies[i];
         }
