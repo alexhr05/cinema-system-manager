@@ -33,7 +33,10 @@ public:
 	void saveUsersToFiles();
 
 	void loadMoviesFromFile();    
-	void saveMoviesToFile();      
+	void saveMoviesToFile();   
+
+	void saveToFile() const;
+	void loadFromFile();
 
 	bool registerUser(MyString name, MyString password);
 	User* login(MyString name, MyString password);

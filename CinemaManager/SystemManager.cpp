@@ -524,3 +524,4 @@ void SystemManager::removeMovieSystem(Movie* movie) {
 void SystemManager::removeHallSystem(Hall* hall) {
     halls.remove(hall);
 }
+

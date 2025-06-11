@@ -15,13 +15,13 @@ private:
 
     void allocateSeats();
     void freeSeats();
-    void copySeatsFrom(const Session& other);
+    void copySeatsFrom(Session& other);
 
 public:
     Session();
-    Session(Movie* movie, Hall* hall, const tm& startTime);
-    Session(const Session& other);
-    Session& operator=(const Session& other);
+    Session(Movie* movie, Hall* hall, tm& startTime);
+    Session(Session& other);
+    Session& operator=(Session& other);
     ~Session();
 
     int getSessionId() const;
@@ -30,7 +30,4 @@ public:
     bool reserveSeat(int row, int col);
     bool isSeatTaken(int row, int col) const;
     void displaySeats() const;
-
-    void saveToFile(std::ofstream& out) const;
-    void loadFromFile(std::ifstream& in, Movie* movie, Hall* hall);
 };
