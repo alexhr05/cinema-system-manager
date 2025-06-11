@@ -233,7 +233,7 @@ void SystemManager::loadUsersFromFiles()
     in.close();
 }
 
-Ticket& SystemManager::findTicketById(int id) {
+Ticket SystemManager::findTicketById(int id) {
     for (int i = 0; i < allTickets.getSize(); i++) {
         
         if (allTickets[i].getId() == id) {
@@ -258,6 +258,20 @@ Movie* SystemManager::findMovieById(int id) {
     
     cout << "Movie not Found"<<endl;
     return nullptr;
+}
+
+Session SystemManager::findSessionById(int id)
+{
+    for (int i = 0; i < sessions.getSize(); i++) {
+        if (sessions[i].getId() == id) {
+            return sessions[i];
+        }
+
+    }
+
+    cout << "Movie not Found" << endl;
+    Session session;
+    return session;
 }
 
 void SystemManager::addDefaultAdmin() {
@@ -450,6 +464,60 @@ void SystemManager::saveMoviesToFile()
     outFile.close();
 }
 
+void SystemManager::saveSessionToFile() const {
+    ofstream outFile("session.txt");
+    outFile << sessionId << " "
+        << movie->getId() << " "
+        << hall->getId() << " "
+        << startTime.tm_year << " "
+        << startTime.tm_mon << " "
+        << startTime.tm_mday << " "
+        << startTime.tm_hour << " "
+        << hall->getRows() << " "
+        << hall->getCols() << "\n";
+
+    for (int i = 0; i < hall->getRows(); i++) {
+        for (int j = 0; j < hall->getCols(); j++) {
+            outFile << seats[i][j];
+        }
+        outFile << "\n";
+    }
+
+    outFile.close();
+}
+
+
+void SystemManager::loadSessionFromFile() {
+    ifstream in("session.txt");
+
+
+    int year, mon, day, hour;
+    int rows, cols;
+
+    in >> sessionId;
+    in >> year >> mon >> day >> hour;
+    in >> rows >> cols;
+
+    startTime.tm_year = year;
+    startTime.tm_mon = mon;
+    startTime.tm_mday = day;
+    startTime.tm_hour = hour;
+
+    allocateSeats();
+
+    MyString line;
+    getline(in, line);
+    for (int i = 0; i < rows; i++) {
+        getline(in, line);
+        for (int j = 0; j < cols && j < line.size(); j++) {
+            seats[i][j] = line[j];
+        }
+    }
+
+    in.close();
+}
+
+
 User* SystemManager::login(MyString name, MyString password) {
     cout << "Name=" << name.c_str() << "; password=" << password.c_str() << endl;
     for (size_t i = 0; i < users.getSize(); i++) {
@@ -494,6 +562,11 @@ MyVector<Ticket> SystemManager::getAllTickets() const
     return allTickets;
 }
 
+MyVector<Session> SystemManager::getSessions() const
+{
+    return sessions;
+}
+
 bool SystemManager::registerUser(MyString name, MyString password) {
     for (size_t i = 0; i < users.getSize(); i++)
     {
@@ -524,4 +597,3 @@ void SystemManager::removeMovieSystem(Movie* movie) {
 void SystemManager::removeHallSystem(Hall* hall) {
     halls.remove(hall);
 }
-

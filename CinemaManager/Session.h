@@ -24,7 +24,7 @@ public:
     Session& operator=(Session& other);
     ~Session();
 
-    int getSessionId() const;
+    int getId() const;
     const tm& getStartTime() const;
 
     bool reserveSeat(int row, int col);

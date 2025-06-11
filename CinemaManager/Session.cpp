@@ -69,7 +69,7 @@ void Session::copySeatsFrom(Session& other) {
             seats[i][j] = other.seats[i][j];
 }
 
-int Session::getSessionId() const {
+int Session::getId() const {
     return sessionId;
 }
 

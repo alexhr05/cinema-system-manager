@@ -5,6 +5,7 @@
 #include "Ticket.h"
 #include "MyVector.hpp"
 #include "MyString.h"
+#include "Session.h"
 
 class User;
 class Movie;
@@ -18,6 +19,7 @@ private:
 	MyVector<Movie*> movies;
 	MyVector<Hall*> halls;
 	MyVector<Ticket> allTickets;
+	MyVector<Session> sessions;
 
 public:
 	SystemManager();
@@ -35,8 +37,8 @@ public:
 	void loadMoviesFromFile();    
 	void saveMoviesToFile();   
 
-	void saveToFile() const;
-	void loadFromFile();
+	void saveSessionToFile() const;
+	void loadSessionFromFile();
 
 	bool registerUser(MyString name, MyString password);
 	User* login(MyString name, MyString password);
@@ -50,9 +52,11 @@ public:
 	MyVector<Movie*> getMovies() const;
 	MyVector<Hall*> getHalls() const;
 	MyVector<Ticket> getAllTickets() const;
+	MyVector<Session> getSessions() const;
 
-	Ticket& findTicketById(int id);
+	Ticket findTicketById(int id);
 	Movie* findMovieById(int id);
+	Session findSessionById(int id);
 	void addDefaultAdmin();
 
 	Hall* findHallById(int id);
