@@ -83,8 +83,6 @@ bool Ticket::isExpired() const
 
 	localtime_s(&now_tm, &now);
 
-
-
 	if (issueDate.tm_year < now_tm.tm_year)
 		return true;
 	if (issueDate.tm_year == now_tm.tm_year && issueDate.tm_mon < now_tm.tm_mon)
@@ -100,10 +98,10 @@ bool Ticket::isExpired() const
 
 void Ticket::print() const
 {
-	cout << "Ticket information:" << endl;
+	cout << "Ticket " << id << endl;
 
-	cout << "Movie: " << movie->getTitle().c_str()
-		<< " | Зала ID: " << movie->getHallId()
-		<< " | Място: Ред " << row << ", Колона " << col << std::endl;
-
+	cout << "Movie name: " << movie->getTitle().c_str()
+		<< " | : " << movie->getHallId()
+		<< "Red: " << row << ", column:" << col
+		<<"Issue Date: "<< issueDate.tm_year<<"/"<<issueDate.tm_mon<<"/"<<issueDate.tm_wday<<" "<<issueDate.tm_hour << endl;
 }

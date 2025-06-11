@@ -150,6 +150,7 @@
     <ClInclude Include="Mystring.h" />
     <ClInclude Include="MyVector.hpp" />
     <ClInclude Include="SeatTypes.h" />
+    <ClInclude Include="Session.h" />
     <ClInclude Include="SystemManager.h" />
     <ClInclude Include="Ticket.h" />
     <ClInclude Include="User.h" />

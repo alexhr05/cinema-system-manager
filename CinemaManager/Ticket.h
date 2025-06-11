@@ -8,10 +8,11 @@ class Ticket {
 private:
     static int counterId;
     int id;
-	Movie* movie;
+	/*Movie* movie;
     int row;
-    int col;
-    tm issueDate;
+    int col;*/
+
+    int sessionId;
 public:
     Ticket() = default;
 

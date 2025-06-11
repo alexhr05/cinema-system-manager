@@ -17,7 +17,6 @@ private:
 	MyString Genre;
 	int hallId;
 	MyVector<tm> timeInfo;
-	/*tm timeInfo = {};*/
 	int  startHour;
 	int endHour;
 	MoviesType type;

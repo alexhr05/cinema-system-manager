@@ -451,9 +451,9 @@ void SystemManager::saveMoviesToFile()
 }
 
 User* SystemManager::login(MyString name, MyString password) {
-
+    cout << "Name=" << name.c_str() << "; password=" << password.c_str() << endl;
     for (size_t i = 0; i < users.getSize(); i++) {
-        cout << "users[i]->getId()=" << users[i]->getId() << endl;
+        cout << "users[i]->getId()=" << users[i]->getName().c_str() << endl;
         cout << "users[i]->getPassword()=" << users[i]->getPassword().c_str() << endl;
         if (users[i]->getName().equals(name) && users[i]->getPassword().equals(password)) {
             return users[i];
