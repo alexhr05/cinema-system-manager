@@ -9,6 +9,7 @@
 #include "DocumantaryMovie.h"
 #include "DramaMovie.h"
 #include "ActionMovie.h"
+#include "Session.h"
 #include "MyString.h"
 #include "MyVector.hpp"
 #include "SystemManager.h"
@@ -18,11 +19,13 @@ using namespace std;
 int main()
 {
 	SystemManager system;
+	
 	system.loadHallsFromFiles();
 	system.loadMoviesFromFile();
+	system.loadSessionFromFile();
 	system.loadTicketsFromFiles();
 	system.loadUsersFromFiles();
-
+	system.saveSessionToFile();
 	/*system.saveMoviesToFile();*/
 	/*system.saveTicketsToFiles();*/
 	
@@ -58,7 +61,7 @@ int main()
 					cout << "Enter column:";
 					cin >> col;
 					Movie* movie = system.findMovieById(movieId);
-					Ticket tick(movie, row, col);
+					/*Ticket tick(movie, row, col);*/
 
 					try {
 						switch (movie->getMovieType()) {

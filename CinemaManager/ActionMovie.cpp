@@ -5,11 +5,11 @@
 
 using namespace std;
 
-ActionMovie::ActionMovie(MyString& title, int rate, double duration, int productYear, MyString& Genre, int hallId, MyVector<tm> timeInfo, int startHour, int endHour, MoviesType type, int actionIntensity)
-	:Movie(title,rate, duration, productYear, Genre, hallId, timeInfo, startHour, endHour, type), actionIntensity(actionIntensity)
-{
-	
-}
+//ActionMovie::ActionMovie(MyString& title, int rate, double duration, int productYear, MyString& Genre, int hallId, MyVector<tm> timeInfo, int startHour, int endHour, MoviesType type, int actionIntensity)
+//	:Movie(title,rate, duration, productYear, Genre, hallId, timeInfo, startHour, endHour, type), actionIntensity(actionIntensity)
+//{
+//	
+//}
 
 ActionMovie::ActionMovie(MyString& title, int rate, double duration, int productYear, MyString& Genre, MoviesType type, int actionIntensity)
 	:Movie(title, rate, duration, productYear, Genre, type), actionIntensity(actionIntensity)

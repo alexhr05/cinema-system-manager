@@ -2,33 +2,27 @@
 
 #include "Movie.h"
 #include "Hall.h"
+#include "Session.h"
 #include <ctime>
 
 class Ticket {
 private:
     static int counterId;
     int id;
-	/*Movie* movie;
-    int row;
-    int col;*/
-
-    int sessionId;
+    Session session;
 public:
     Ticket() = default;
 
-    Ticket(Movie* movie, int row, int col);
+    Ticket(Session session);
     Ticket(const Ticket& other);
     Ticket& operator=(const Ticket& other);
 
     void setIssuedDate(tm issuedDate);
 
-    Movie* getMovie() const;
-    int getRow() const;
-    int getCol() const;
-    tm getIssueDate() const;
     int getId() const;
+    Session getSession() const;
     
-    bool isExpired() const;  
+    /*bool isExpired() const;  */
 
     void print() const;
 };

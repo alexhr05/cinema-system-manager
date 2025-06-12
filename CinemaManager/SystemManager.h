@@ -37,7 +37,7 @@ public:
 	void loadMoviesFromFile();    
 	void saveMoviesToFile();   
 
-	void saveSessionToFile() const;
+	void saveSessionToFile();
 	void loadSessionFromFile();
 
 	bool registerUser(MyString name, MyString password);

@@ -15,14 +15,14 @@ private:
 	double duration;
 	int productionYear;
 	MyString Genre;
-	int hallId;
+	/*int hallId;
 	MyVector<tm> timeInfo;
 	int  startHour;
-	int endHour;
+	int endHour;*/
 	MoviesType type;
 public:
 	Movie();
-	Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, int hallId, MyVector<tm> timeInfo, int startHour, int endHour, MoviesType type);
+	//Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, MoviesType type);
 	Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, MoviesType type);
 
 	int getId() const;
@@ -31,11 +31,11 @@ public:
 	double getDuration() const;
 	int getProductionYear() const;
 	MyString getGenre() const;
-	int getHallId() const;
+	/*int getHallId() const;
 	MyVector<tm> getTimeInfo() const;
 	int getStartHour() const;
 	int getEndHour() const;
-	void setHallId(int id);
+	void setHallId(int id);*/
 	MoviesType getMovieType() const;
 	void setMovieType();
 	

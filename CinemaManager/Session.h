@@ -15,19 +15,31 @@ private:
 
     void allocateSeats();
     void freeSeats();
-    void copySeatsFrom(Session& other);
+    void copySeatsFrom(const Session& other);
 
 public:
     Session();
     Session(Movie* movie, Hall* hall, tm& startTime);
-    Session(Session& other);
-    Session& operator=(Session& other);
+    Session(const Session& other);
+    Session& operator=(const Session& other);
     ~Session();
+
+    void setId(int id);
 
     int getId() const;
     const tm& getStartTime() const;
+    Hall* getHall() const;
+    Movie* getMovie() const;
+    char** getSeats();
+
 
     bool reserveSeat(int row, int col);
     bool isSeatTaken(int row, int col) const;
     void displaySeats() const;
+    bool isExpired() const;
+
+    char getSeat(int r, int c) const;
+    bool cancelReservation(int row, int col);
+    void print() const;
+
 };

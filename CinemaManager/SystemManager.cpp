@@ -15,7 +15,7 @@ using namespace std;
 
 
 
-SystemManager::SystemManager(): users(MyVector<User*>()), movies(MyVector<Movie*>()), halls(MyVector<Hall*>()),  allTickets(MyVector<Ticket>())
+SystemManager::SystemManager(): users(MyVector<User*>()), movies(MyVector<Movie*>()), halls(MyVector<Hall*>()),  allTickets(MyVector<Ticket>()), sessions(MyVector<Session>())
 {
 }
 
@@ -38,13 +38,15 @@ void SystemManager::loadHallsFromFiles()
     
     std::ifstream inFile("halls.txt");
     if (!inFile.is_open()) return;
-
+    cout << "Minava prez hall"<<endl;
     int id, rows, cols;
     while (inFile >> id >> rows >> cols) {
-        
-        
+        cout << endl;
+        cout << "HALLS:id=" << id<<endl;
         Hall* h = new Hall(rows, cols);
-        h->allocateSeats();
+        cout << "";
+        h->setId(id);
+        /*h->allocateSeats();
         h->setId(id);
         MyString word;
         for (int i = 0; i < rows; i++){   
@@ -55,7 +57,7 @@ void SystemManager::loadHallsFromFiles()
                     h->reserveSeat(i,j);
                 }
             }
-        }  
+        }  */
         halls.add(h);
     }
     
@@ -72,25 +74,25 @@ void SystemManager::saveHallsToFiles()
         outFile << h->getId() << "\n"
             << h->getRows() << '\n'
             << h->getCols() << '\n';
-        for (int j = 0; j < halls[i]->getRows(); j++) {
+        /*for (int j = 0; j < halls[i]->getRows(); j++) {
             for (int q = 0; q < halls[i]->getCols(); q++) {
                 outFile << halls[i]->getSeat(j,q);
             }
             outFile << "\n";
-        }
+        }*/
     }
     outFile.close();
 }
 
 void SystemManager::printHalls() {
     
-    for (size_t i = 0; i < halls.getSize(); i++) {
-        Hall* h = halls[i];
-        Hall hall = *h;
-        cout << "Hall #" << h->getId() << ":\n";
-        hall.displaySeats();
-        cout << "\n";
-    }
+    //for (size_t i = 0; i < halls.getSize(); i++) {
+    //    Hall* h = halls[i];
+    //    Hall hall = *h;
+    //    cout << "Hall #" << h->getId() << ":\n";
+    //    /*hall.displaySeats();*/
+    //    cout << "\n";
+    //}
 }
 
 tm SystemManager::createTimeStruct(int year, int month, int day, int hour)
@@ -110,35 +112,24 @@ void SystemManager::loadTicketsFromFiles() {
         std::cerr << "Could not open tickets file"<<endl;
         return;
     }
-    int id, movieId, row, col, year, month, day, hour;
-    tm issuedDate;
+    int id, sessionId;
 
 
-    while (in>>id>>movieId>> row>>col>>year>>month>>day>>hour) {
-        issuedDate = createTimeStruct(year, month, day, hour);
-        
-        try {
-            /*MyString name = "asdawd";
-            MyString gen = "gen";
-            Movie* movie = new ActionMovie(name, 3, 2.5, 2000, gen, MoviesType::ActionMovie, 15);
-            movies.add(movie);*/
-            /*cout << "Moive id:" << movies[0]->getId() << "movieId" << movieId << "row:" << row << "; col=" << col << "; year:" << issuedDate.tm_year << "; month:" << issuedDate.tm_mon << endl;*/
-            cout << "Movies:" << movies.getSize()<<endl;
-            Movie* movieRes = findMovieById(movieId);
-            Ticket tick(movieRes, row, col);
-            tick.setIssuedDate(issuedDate);
+    while (in>>id>> sessionId) {
+            ///*MyString name = "asdawd";
+            //MyString gen = "gen";
+            //Movie* movie = new ActionMovie(name, 3, 2.5, 2000, gen, MoviesType::ActionMovie, 15);
+            //movies.add(movie);*/
+            ///*cout << "Moive id:" << movies[0]->getId() << "movieId" << movieId << "row:" << row << "; col=" << col << "; year:" << issuedDate.tm_year << "; month:" << issuedDate.tm_mon << endl;*/
+            //cout << "Movies:" << movies.getSize()<<endl;
+            //Movie* movieRes = findMovieById(movieId);
+            //Ticket tick(movieRes, row, col);
+            //tick.setIssuedDate(issuedDate);
 
+            Session session = findSessionById(sessionId);
             
+            Ticket tick(session);
             allTickets.add(tick);
-            
-        }
-        catch (const std::exception& ex) {
-            std::cerr << "Error: " << ex.what() << std::endl;
-            break;
-        }
-        
-
-        
     }
     
 
@@ -148,7 +139,7 @@ void SystemManager::loadTicketsFromFiles() {
 void SystemManager::saveTicketsToFiles() {
     ofstream outFile("tickets.txt", ios::app);
     if (!outFile.is_open()) return;
-    MyString name = "asdawd";
+    /*MyString name = "asdawd";
     MyString gen = "gen";
     Movie* movie = new ActionMovie(name, 3, 2.5, 2000, gen, MoviesType::ActionMovie, 15);
     int row = 2;
@@ -160,20 +151,13 @@ void SystemManager::saveTicketsToFiles() {
     time.tm_wday = 15;
     time.tm_hour = 9;
     ticks.setIssuedDate(time);
-    allTickets.add(ticks);
+    allTickets.add(ticks);*/
     for (size_t i = 0; i < allTickets.getSize(); i++) {
         Ticket ticket = allTickets[i];
 
-        tm issueDate = ticket.getIssueDate();
+        //tm issueDate = ticket.getIssueDate();
         outFile << ticket.getId() << "\n"
-            << ticket.getMovie()->getId() << '\n'
-            << ticket.getRow() << '\n'
-            << ticket.getCol() << '\n'
-            << issueDate.tm_year << '\n'
-            << issueDate.tm_mon << '\n'
-            << issueDate.tm_wday << '\n'
-            << issueDate.tm_hour << '\n';
-
+            << ticket.getSession().getId() << '\n';
     }
 
     outFile.close();
@@ -269,7 +253,7 @@ Session SystemManager::findSessionById(int id)
 
     }
 
-    cout << "Movie not Found" << endl;
+    cout << "Session not Found" << endl;
     Session session;
     return session;
 }
@@ -340,6 +324,7 @@ void SystemManager::loadMoviesFromFile()
         return;
     }
 
+
     int id, productionYear, startHour, endHour, rate, hallId, type , actionIntensity,
         year, month, day, hour, timeSesionSize;
     
@@ -359,8 +344,8 @@ void SystemManager::loadMoviesFromFile()
         in.ignore();
         getline(in, genre, '\n');
         
-        in >> hallId >> timeSesionSize;
-        MyVector<tm> timeSesion;
+        /*in >> hallId >> timeSesionSize;*/
+        /*MyVector<tm> timeSesion;
         for (size_t i = 0; i < timeSesionSize; i++)
         {
             in >> year >> month >> day >> hour;
@@ -368,30 +353,30 @@ void SystemManager::loadMoviesFromFile()
             timeStruct = createTimeStruct(year, month, day, hour);
             timeSesion.add(timeStruct);
         }
-        in >> startHour >> endHour;
+        in >> startHour >> endHour;*/
         
         Movie* movie = nullptr;
         MoviesType movieType = static_cast<MoviesType>(type);
 
-        Hall* h = findHallById(hallId);
+        /*Hall* h = findHallById(hallId);
         if (!h) {
             cout << "Hall not found with this id:" << hallId << endl;
             continue;
-        }
+        }*/
 
         switch (movieType) {
         case MoviesType::ActionMovie:
             in >> actionIntensity;
             
-            movie = new ActionMovie(title, rate, duration, productionYear, genre,hallId, timeSesion, startHour, endHour, movieType, actionIntensity);
+            movie = new ActionMovie(title, rate, duration, productionYear, genre, movieType, actionIntensity);
             break;
         case MoviesType::DocumentaryMovie:
             in >> isBasedOnTrueEvents;
-            movie = new DocumentaryMovie(title, rate, duration, productionYear, genre, hallId, timeSesion, startHour, endHour, movieType, isBasedOnTrueEvents);
+            movie = new DocumentaryMovie(title, rate, duration, productionYear, genre, movieType, isBasedOnTrueEvents);
             break;
         case MoviesType::DramaMovie:
             in >> hasComedyElements;
-            movie = new DramaMovie(title, rate, duration, productionYear, genre, hallId, timeSesion, startHour, endHour, movieType, hasComedyElements);
+            movie = new DramaMovie(title, rate, duration, productionYear, genre, movieType, hasComedyElements);
             break;
         default:
             cout << "Unknown movie type: " << type << endl;
@@ -408,11 +393,11 @@ void SystemManager::saveMoviesToFile()
 {
 
     ofstream outFile("movies.txt", ios::app);
-    MyString name = "Star wars";
+    /*MyString name = "Star wars";
     MyString gen = "fic";
     Movie* movie = new ActionMovie(name, 3, 2.5, 2000, gen, MoviesType::ActionMovie,15);
     movie->setHallId(2);
-    movies.add(movie);
+    movies.add(movie);*/
 
     for (size_t i = 0; i < movies.getSize(); i++)
     {
@@ -422,8 +407,8 @@ void SystemManager::saveMoviesToFile()
             << movies[i]->getRate() << "\n"
             << movies[i]->getDuration() << "\n"
             << movies[i]->getProductionYear() << "\n"
-            << movies[i]->getGenre().c_str() << "\n"
-            << movies[i]->getHallId() << "\n"
+            << movies[i]->getGenre().c_str() << "\n";
+            /*<< movies[i]->getHallId() << "\n"
             << movies[i]->getTimeInfo().getSize() << "\n";
             MyVector<tm> timeSesion = movies[i]->getTimeInfo();
 
@@ -436,21 +421,21 @@ void SystemManager::saveMoviesToFile()
             }
             
             outFile<< movies[i]->getStartHour() << "\n"
-            << movies[i]->getEndHour()<<"\n";
+            << movies[i]->getEndHour()<<"\n";*/
         
         switch (movies[i]->getMovieType()) {
         case MoviesType::ActionMovie: {
-            ActionMovie* action = dynamic_cast<ActionMovie*>(movie);
+            ActionMovie* action = dynamic_cast<ActionMovie*>(movies[i]);
             outFile << action->getActionIntensity() << "\n";
             break;
         }   
         case MoviesType::DocumentaryMovie: {
-            DocumentaryMovie* documentary = dynamic_cast<DocumentaryMovie*>(movie);
+            DocumentaryMovie* documentary = dynamic_cast<DocumentaryMovie*>(movies[i]);
             outFile << documentary->getIsBasedOnTrueEvents() << "\n";
             break;
         }   
         case MoviesType::DramaMovie: {
-            DramaMovie* drama = dynamic_cast<DramaMovie*>(movie);
+            DramaMovie* drama = dynamic_cast<DramaMovie*>(movies[i]);
             outFile << drama->getHasComedyElements() << "\n";
             break;
         }
@@ -464,58 +449,95 @@ void SystemManager::saveMoviesToFile()
     outFile.close();
 }
 
-void SystemManager::saveSessionToFile() const {
+void SystemManager::saveSessionToFile() {
     ofstream outFile("session.txt");
-    outFile << sessionId << " "
-        << movie->getId() << " "
-        << hall->getId() << " "
-        << startTime.tm_year << " "
-        << startTime.tm_mon << " "
-        << startTime.tm_mday << " "
-        << startTime.tm_hour << " "
-        << hall->getRows() << " "
-        << hall->getCols() << "\n";
+    MyString name = "Star wars";
+    MyString gen = "fic";
+    Movie* movie = new ActionMovie(name, 3, 2.5, 2000, gen, MoviesType::ActionMovie, 15);
+    Hall* hall = new Hall(5,5);
+    //movie->setHallId(2);
+    tm time = {};
+    time.tm_year = 200;
+    time.tm_mon = 2;
+    time.tm_wday = 12;
+    time.tm_hour = 2;
+    Session session(movie, hall, time);
+    sessions.add(session);
 
-    for (int i = 0; i < hall->getRows(); i++) {
-        for (int j = 0; j < hall->getCols(); j++) {
-            outFile << seats[i][j];
+    cout << "session:size::" << sessions.getSize()<<"id:"<<session.getId()<<endl;
+    for (int i = 0; i < sessions.getSize(); i++)
+    {
+        /*for (size_t i = 0; i < movies.getSize(); i++)
+        {
+            sessions[i]
+        }*/
+        outFile << sessions[i].getId() << "\n"
+            << sessions[i].getMovie()->getId() << "\n"
+            << sessions[i].getHall()->getId() << "\n"
+            << sessions[i].getStartTime().tm_year << "\n"
+            << sessions[i].getStartTime().tm_mon << "\n"
+            << sessions[i].getStartTime().tm_mday << "\n"
+            << sessions[i].getStartTime().tm_hour << "\n";
+
+        for (int j = 0; j < sessions[i].getHall()->getRows(); j++) {
+            for (int q = 0; q < sessions[i].getHall()->getCols(); q++) {
+                outFile << sessions[i].getSeat(j,q);
+            }
+            outFile << "\n";
         }
-        outFile << "\n";
+
     }
+    
 
     outFile.close();
 }
 
 
 void SystemManager::loadSessionFromFile() {
-    ifstream in("session.txt");
-
-
-    int year, mon, day, hour;
-    int rows, cols;
-
-    in >> sessionId;
-    in >> year >> mon >> day >> hour;
-    in >> rows >> cols;
-
-    startTime.tm_year = year;
-    startTime.tm_mon = mon;
-    startTime.tm_mday = day;
-    startTime.tm_hour = hour;
-
-    allocateSeats();
-
-    MyString line;
-    getline(in, line);
-    for (int i = 0; i < rows; i++) {
-        getline(in, line);
-        for (int j = 0; j < cols && j < line.size(); j++) {
-            seats[i][j] = line[j];
-        }
+    
+    ifstream inFile("session.txt");
+    if (!inFile.is_open()) {
+        cerr << "Could not open session.txt\n";
+        return;
     }
 
-    in.close();
+    int sessionId, movieId, hallId, year, month, day, hour;
+
+    while (inFile >> sessionId >> movieId >> hallId >> year >> month >> day >> hour) {
+        
+        Movie* movie = findMovieById(movieId);
+        Hall* hall = findHallById(hallId);
+        cout << "Minava pres session" << endl;
+        if (!movie || !hall) {
+            cerr << "Invalid movie or hall ID in session file.\n";
+            continue;
+        }
+
+        tm timeStruct = {};
+        timeStruct.tm_year = year;
+        timeStruct.tm_mon = month;
+        timeStruct.tm_mday = day;
+        timeStruct.tm_hour = hour;
+
+        cout << "SessionId=" << sessionId<<endl;
+        Session session(movie, hall, timeStruct);
+        session.setId(sessionId);
+
+        for (int i = 0; i < hall->getRows(); i++) {
+            inFile.ignore();
+            for (int j = 0; j < hall->getCols(); j++) {
+                SeatTypes type = static_cast<SeatTypes>(inFile.get());
+                if (type == SeatTypes::Reserved) {
+                    session.reserveSeat(i, j);
+                }
+            }
+        }
+        sessions.add(session);
+    }
+
+    inFile.close();
 }
+
 
 
 User* SystemManager::login(MyString name, MyString password) {
