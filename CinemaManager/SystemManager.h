@@ -19,7 +19,7 @@ private:
 	MyVector<Movie*> movies;
 	MyVector<Hall*> halls;
 	MyVector<Ticket> allTickets;
-	MyVector<Session> sessions;
+	MyVector<Session*> sessions;
 
 public:
 	SystemManager();
@@ -46,17 +46,17 @@ public:
 
 	void addMovie(Movie* movie);
 	void addHall(Hall* hall);
-	
+	void addTicket(Ticket ticket);
 
 	MyVector<User*> getUsers() const;
 	MyVector<Movie*> getMovies() const;
 	MyVector<Hall*> getHalls() const;
 	MyVector<Ticket> getAllTickets() const;
-	MyVector<Session> getSessions() const;
+	MyVector<Session*> getSessions() const;
 
 	Ticket findTicketById(int id);
 	Movie* findMovieById(int id);
-	Session findSessionById(int id);
+	Session* findSessionById(int id);
 	void addDefaultAdmin();
 
 	Hall* findHallById(int id);
@@ -65,4 +65,7 @@ public:
 	tm createTimeStruct(int year, int month, int day, int hour);
 	void removeMovieSystem(Movie* movie);
 	void removeHallSystem(Hall* hall);
+	void printWatchedMovies(User* user);
+	void printAllMoviesFromSessions();
+	void printAllSessions();
 };

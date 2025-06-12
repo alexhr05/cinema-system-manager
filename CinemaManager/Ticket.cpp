@@ -9,7 +9,7 @@ using namespace std;
 
 class Session;
 
-Ticket::Ticket(Session session)
+Ticket::Ticket(Session* session)
 	:id(++counterId), session(session)
 {
 	
@@ -35,7 +35,7 @@ int Ticket::getId() const {
 	return id;
 }
 
-Session Ticket::getSession() const
+Session* Ticket::getSession() const
 {
 	return session;
 }

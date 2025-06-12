@@ -24,6 +24,7 @@ void User::setId(int newId) {
 	}
 }
 
+
 void User::setName(MyString& name) {
 	this->name = name;
 }
@@ -80,8 +81,8 @@ void User::checkExpiredTickets()
 
 	for (int i = 0; i < tickets.getSize();i++) {
 		Ticket ticket = tickets[i];
-		if (ticket.getSession().isExpired()) {
-			watchedMovies.add(ticket.getSession().getMovie());
+		if (ticket.getSession()->isExpired()) {
+			watchedMovies.add(ticket.getSession()->getMovie());
 		}
 		else {
 			updatedTickets.add(ticket);

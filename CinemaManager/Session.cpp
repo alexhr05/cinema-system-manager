@@ -5,14 +5,14 @@
 int Session::sessionCounter = 0;
 
 Session::Session()
-    : sessionId(sessionCounter++), movie(nullptr), hall(nullptr) {
+    : sessionId(0), movie(nullptr), hall(nullptr) {
     time_t now = time(0);
     localtime_s(&startTime, &now);
     seats = nullptr;
 }
 
 Session::Session(Movie* movie, Hall* hall, tm& startTime)
-    : sessionId(sessionCounter++), movie(movie), hall(hall), startTime(startTime) {
+    : sessionId(++sessionCounter), movie(movie), hall(hall), startTime(startTime) {
     allocateSeats();
 }
 
@@ -56,6 +56,11 @@ void Session::setId(int id)
     if (id >= sessionCounter) {
         sessionCounter = id + 1;
     }
+}
+
+void Session::setNewId()
+{
+    sessionId = sessionCounter++;
 }
 
 

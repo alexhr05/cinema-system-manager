@@ -43,5 +43,6 @@ public:
 	void checkExpiredTickets();
 	void setId(int newId);
 
+
 	void handleCommand(MyString command, SystemManager& system);
 };

@@ -76,3 +76,14 @@ MoviesType Movie::getMovieType() const
 {
 	return type;
 }
+
+void Movie::print()
+{
+	cout << "Type Movie(1-Action movie; 2-Documentary movie; 3- Drama movie);" << endl;
+	cout << "Name: " << title.c_str() << "\n"
+		<< "Type Movie: " << static_cast<int>(type) << "\n"
+		<< "Rate: " << rate << "\n"
+		<< "Duration: " << duration << "\n"
+		<< "Production Year: " << productionYear << "\n"
+		<< "Genre: " << Genre.c_str() << "\n";
+}

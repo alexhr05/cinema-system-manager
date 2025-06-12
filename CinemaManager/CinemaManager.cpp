@@ -35,69 +35,28 @@ int main()
 	MyString name;
 	MyString password;
 	
-	cout << "\n> ";
 	MyString cmd;
-	while (cin>>cmd) {
+	bool isRunningProgram = true;
+	do {
+		cout << "\n> ";
+		cin >> cmd;
 		if (cmd.equals("exit")) {
 			break;
 		}
 		else if (cmd.equals("login")) {
 			MyString name, password;
-			cin >> name >> password;
+			cout << "Enter name:";
+			cin >> name;
+			cout << "Enter password:";
+			cin>> password;
 
 			loggedUser = system.login(name, password);
-			
 			if (loggedUser == nullptr) {
 				cout << "Not found such User" << endl;
 			}
 			else {
 				cout << "Login successfully" << endl;
-				if (cmd.equals("buy-ticket")) {
-					int movieId, row, col;
-					cout << "Enter movie id:";
-					cin >> movieId;
-					cout << "Enter row:";
-					cin >> row;
-					cout << "Enter column:";
-					cin >> col;
-					Movie* movie = system.findMovieById(movieId);
-					/*Ticket tick(movie, row, col);*/
-
-					try {
-						switch (movie->getMovieType()) {
-						case MoviesType::ActionMovie: {
-							ActionMovie* action = dynamic_cast<ActionMovie*>(movie);
-							if (loggedUser->getBalance() < action->getTicketPrice()) {
-								throw exception("Cant't buy ticket");
-							}
-							break;
-						}
-						case MoviesType::DocumentaryMovie: {
-							DocumentaryMovie* documentary = dynamic_cast<DocumentaryMovie*>(movie);
-							if (loggedUser->getBalance() < documentary->getTicketPrice()) {
-								throw exception("Cant't buy ticket");
-							}
-							break;
-						}
-						case MoviesType::DramaMovie: {
-							DramaMovie* drama = dynamic_cast<DramaMovie*>(movie);
-							if (loggedUser->getBalance() < drama->getTicketPrice()) {
-								throw exception("Cant't buy ticket");
-							}
-							break;
-						}
-						default:
-							cout << "Unknown movie type: " << static_cast<int>(movie->getMovieType()) << endl;
-						}
-					}
-					catch (const std::ios_base::failure& e) {
-						std::cerr << "File read error: " << e.what() << std::endl;
-					}
-
-
-
-				}
-
+				
 			}
 
 		}
@@ -118,10 +77,89 @@ int main()
 				cout << "User already exists.\n";
 			}
 		}
-		
-		
-		cout << "> ";
-	}
+		else if (loggedUser != nullptr) {
+			if (cmd.equals("buy-ticket")) {
+				int sessionId, row, col;
+				system.printAllSessions();
+				cout << "Enter session id:";
+				cin >> sessionId;
+				cout << "Enter row:";
+				cin >> row;
+				cout << "Enter column:";
+				cin >> col;
+
+				Session* session = system.findSessionById(sessionId);
+				
+				if (session == nullptr) {
+					cout << "Not found session with such Id" << endl;
+
+				}
+				else {
+					try {
+						session->reserveSeat(row,col);
+						Ticket tick(session);
+
+						Movie* movie = session->getMovie();
+
+						switch (movie->getMovieType()) {
+						case MoviesType::ActionMovie: {
+							ActionMovie* action = dynamic_cast<ActionMovie*>(movie);
+							if (loggedUser->getBalance() < action->getTicketPrice()) {
+								throw exception("Cant't buy ticket");
+							}
+							else {
+								int userBalance = loggedUser->getBalance();
+								cout << "UserBalance=" << userBalance<<endl;
+								loggedUser->setBalance(userBalance - action->getTicketPrice());
+								cout << "Price=" << action->getTicketPrice() << endl;
+								cout << "UserBalance=" << loggedUser->getBalance()<<endl;
+							}
+							break;
+						}
+						case MoviesType::DocumentaryMovie: {
+							DocumentaryMovie* documentary = dynamic_cast<DocumentaryMovie*>(movie);
+							if (loggedUser->getBalance() < documentary->getTicketPrice()) {
+								throw exception("Cant't buy ticket");
+							}
+							else {
+
+							}
+							break;
+						}
+						case MoviesType::DramaMovie: {
+							DramaMovie* drama = dynamic_cast<DramaMovie*>(movie);
+							if (loggedUser->getBalance() < drama->getTicketPrice()) {
+								throw exception("Cant't buy ticket");
+							}
+							else {
+
+							}
+							break;
+						}
+						default:
+							cout << "Unknown movie type: " << static_cast<int>(movie->getMovieType()) << endl;
+						}
+						cout << "ticketSize:" << system.getAllTickets().getSize()<<endl;
+						loggedUser->addTicket(tick);
+						system.addTicket(tick);
+						cout << "ticketSize:" << system.getAllTickets().getSize() << endl;
+						session->displaySeats();
+					}
+					catch (const std::ios_base::failure& e) {
+						std::cerr << "File read error: " << e.what() << std::endl;
+					}
+				}
+
+
+			}
+			else if (cmd.equals("list-history")) {
+				system.printWatchedMovies(loggedUser);
+			}
+			else if (cmd.equals("list-movies")) {
+				system.printAllMoviesFromSessions();
+			}
+		}
+	}while (isRunningProgram);
 	
 		
 

@@ -38,6 +38,7 @@ public:
 	void setHallId(int id);*/
 	MoviesType getMovieType() const;
 	void setMovieType();
+	void print();
 	
 	virtual double getTicketPrice() const = 0;
 	virtual Movie* clone() const = 0;

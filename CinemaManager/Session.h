@@ -25,6 +25,7 @@ public:
     ~Session();
 
     void setId(int id);
+    void setNewId();
 
     int getId() const;
     const tm& getStartTime() const;

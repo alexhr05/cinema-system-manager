@@ -15,8 +15,7 @@ using namespace std;
 
 
 
-SystemManager::SystemManager(): users(MyVector<User*>()), movies(MyVector<Movie*>()), halls(MyVector<Hall*>()),  allTickets(MyVector<Ticket>()), sessions(MyVector<Session>())
-{
+SystemManager::SystemManager(): users(MyVector<User*>()), movies(MyVector<Movie*>()), halls(MyVector<Hall*>()),  allTickets(MyVector<Ticket>()), sessions(MyVector<Session*>()){
 }
 
 SystemManager::~SystemManager() {
@@ -30,6 +29,9 @@ SystemManager::~SystemManager() {
 
     for (size_t i = 0; i < halls.getSize(); i++) {
         delete halls[i];
+    }
+    for (size_t i = 0; i < sessions.getSize(); i++) {
+        delete sessions[i];
     }
 }
 
@@ -126,7 +128,7 @@ void SystemManager::loadTicketsFromFiles() {
             //Ticket tick(movieRes, row, col);
             //tick.setIssuedDate(issuedDate);
 
-            Session session = findSessionById(sessionId);
+            Session* session = findSessionById(sessionId);
             
             Ticket tick(session);
             allTickets.add(tick);
@@ -157,7 +159,7 @@ void SystemManager::saveTicketsToFiles() {
 
         //tm issueDate = ticket.getIssueDate();
         outFile << ticket.getId() << "\n"
-            << ticket.getSession().getId() << '\n';
+            << ticket.getSession()->getId() << '\n';
     }
 
     outFile.close();
@@ -188,6 +190,7 @@ void SystemManager::loadUsersFromFiles()
         in >> balance>> ticketsSize;
         
         User* user = new User(name, password, balance);
+        user->setId(id);
         for (size_t i = 0; i < ticketsSize; i++) {
             in >> ticketId;
             Ticket ticket = findTicketById(ticketId) ;
@@ -244,18 +247,18 @@ Movie* SystemManager::findMovieById(int id) {
     return nullptr;
 }
 
-Session SystemManager::findSessionById(int id)
+Session* SystemManager::findSessionById(int id)
 {
     for (int i = 0; i < sessions.getSize(); i++) {
-        if (sessions[i].getId() == id) {
+        if (sessions[i]->getId() == id) {
             return sessions[i];
         }
 
     }
 
     cout << "Session not Found" << endl;
-    Session session;
-    return session;
+    
+    return nullptr;
 }
 
 void SystemManager::addDefaultAdmin() {
@@ -274,7 +277,7 @@ void SystemManager::saveUsersToFiles()
 {
     ofstream outFile("users.txt", ios::out);
     if (!outFile.is_open()) return;
-
+    cout << "users.size=" << users.getSize() << endl;
     for (size_t i = 0; i < users.getSize(); i++) {
         
         User* user = users[i];
@@ -461,27 +464,28 @@ void SystemManager::saveSessionToFile() {
     time.tm_mon = 2;
     time.tm_wday = 12;
     time.tm_hour = 2;
-    Session session(movie, hall, time);
+    Session* session = new Session(movie, hall, time);
+    /*session->setNewId();*/
     sessions.add(session);
 
-    cout << "session:size::" << sessions.getSize()<<"id:"<<session.getId()<<endl;
+    cout << "session:size::" << sessions.getSize()<<"id:"<<session->getId()<<endl;
     for (int i = 0; i < sessions.getSize(); i++)
     {
         /*for (size_t i = 0; i < movies.getSize(); i++)
         {
             sessions[i]
         }*/
-        outFile << sessions[i].getId() << "\n"
-            << sessions[i].getMovie()->getId() << "\n"
-            << sessions[i].getHall()->getId() << "\n"
-            << sessions[i].getStartTime().tm_year << "\n"
-            << sessions[i].getStartTime().tm_mon << "\n"
-            << sessions[i].getStartTime().tm_mday << "\n"
-            << sessions[i].getStartTime().tm_hour << "\n";
+        outFile << sessions[i]->getId() << "\n"
+            << sessions[i]->getMovie()->getId() << "\n"
+            << sessions[i]->getHall()->getId() << "\n"
+            << sessions[i]->getStartTime().tm_year << "\n"
+            << sessions[i]->getStartTime().tm_mon << "\n"
+            << sessions[i]->getStartTime().tm_mday << "\n"
+            << sessions[i]->getStartTime().tm_hour << "\n";
 
-        for (int j = 0; j < sessions[i].getHall()->getRows(); j++) {
-            for (int q = 0; q < sessions[i].getHall()->getCols(); q++) {
-                outFile << sessions[i].getSeat(j,q);
+        for (int j = 0; j < sessions[i]->getHall()->getRows(); j++) {
+            for (int q = 0; q < sessions[i]->getHall()->getCols(); q++) {
+                outFile << sessions[i]->getSeat(j,q);
             }
             outFile << "\n";
         }
@@ -520,15 +524,15 @@ void SystemManager::loadSessionFromFile() {
         timeStruct.tm_hour = hour;
 
         cout << "SessionId=" << sessionId<<endl;
-        Session session(movie, hall, timeStruct);
-        session.setId(sessionId);
+        Session* session = new Session(movie, hall, timeStruct);
+        session->setId(sessionId);
 
         for (int i = 0; i < hall->getRows(); i++) {
             inFile.ignore();
             for (int j = 0; j < hall->getCols(); j++) {
                 SeatTypes type = static_cast<SeatTypes>(inFile.get());
                 if (type == SeatTypes::Reserved) {
-                    session.reserveSeat(i, j);
+                    session->reserveSeat(i, j);
                 }
             }
         }
@@ -564,6 +568,11 @@ void SystemManager::addHall(Hall* hall)
     halls.add(hall);
 }
 
+void SystemManager::addTicket(Ticket ticket)
+{
+    allTickets.add(ticket);
+}
+
 MyVector<User*> SystemManager::getUsers() const
 {
     return users;
@@ -584,7 +593,7 @@ MyVector<Ticket> SystemManager::getAllTickets() const
     return allTickets;
 }
 
-MyVector<Session> SystemManager::getSessions() const
+MyVector<Session*> SystemManager::getSessions() const
 {
     return sessions;
 }
@@ -618,4 +627,41 @@ void SystemManager::removeMovieSystem(Movie* movie) {
 
 void SystemManager::removeHallSystem(Hall* hall) {
     halls.remove(hall);
+}
+
+void SystemManager::printWatchedMovies(User* user)
+{
+    
+    for (size_t j = 0; j < user->getWatchedMovies().getSize(); j++) {
+        MyVector<Movie*> watchedMovie = user->getWatchedMovies();
+        watchedMovie[j]->print();
+    }
+   
+
+}
+
+void SystemManager::printAllMoviesFromSessions() {
+    cout << "Movies to watch:" << endl;
+    for (size_t i = 0; i < sessions.getSize(); i++)
+    {
+        cout << "Name: " << sessions[i]->getMovie()->getTitle().c_str() << "; start time: " << sessions[i]->getStartTime().tm_hour<<endl;
+    }
+}
+
+void SystemManager::printAllSessions()
+{
+    cout << "Info about all Sessions to buy ticket:" << endl<<endl;
+
+    for (size_t i = 0; i < sessions.getSize(); i++)
+    {
+        cout << "Session id: " << sessions[i]->getId() << "\n"
+            << "Movie: " << sessions[i]->getMovie()->getTitle().c_str() << "\n"
+            << "Hall: " << sessions[i]->getHall()->getId()<<"\n"
+            << "Start time: "<< sessions[i]->getStartTime().tm_hour << " "<< sessions[i]->getStartTime().tm_year
+            <<"/"<< sessions[i]->getStartTime().tm_mon
+            <<"/"<< sessions[i]->getStartTime().tm_wday<<"\n";
+        sessions[i]->displaySeats();
+        cout << endl;
+
+    }
 }
