@@ -58,6 +58,7 @@ public:
 	Ticket findTicketById(int id);
 	Movie* findMovieById(int id);
 	Session* findSessionById(int id);
+	User* findUserById(int id);
 	void addDefaultAdmin();
 
 	Hall* findHallById(int id);
@@ -65,10 +66,13 @@ public:
 
 	tm createTimeStruct(int year, int month, int day, int hour);
 	void removeMovieSystem(int movieId);
-	void removeHallSystem(Hall* hall);
+	void removeHallSystem(int hall);
+	void removeUserSystem(int userId);
 	void printWatchedMovies(User* user);
 	void printAllMoviesFromSessions();
 	void printAllSessions();
+
+
 
 	
 };

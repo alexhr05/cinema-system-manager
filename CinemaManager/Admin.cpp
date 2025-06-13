@@ -60,9 +60,14 @@ void Admin::addHall(SystemManager& system, Hall* hall)
     system.addHall(hall);
 }
 
-void Admin::removeHall(SystemManager& system, Hall* hall)
+void Admin::removeHall(SystemManager& system, int hall)
 {
     system.removeHallSystem(hall);
+}
+
+void Admin::removeUser(SystemManager& system, int userId)
+{
+    system.removeUserSystem(userId);
 }
 
 

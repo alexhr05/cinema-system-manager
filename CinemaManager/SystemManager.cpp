@@ -261,6 +261,20 @@ Session* SystemManager::findSessionById(int id)
     return nullptr;
 }
 
+User* SystemManager::findUserById(int id)
+{
+    for (int i = 0; i < users.getSize(); i++) {
+        if (users[i]->getId() == id) {
+            return users[i];
+        }
+
+    }
+
+    cout << "User not Found" << endl;
+
+    return nullptr;
+}
+
 void SystemManager::addDefaultAdmin() {
     MyString defaultName = "admin";
     MyString defaultPassword = "admin123";
@@ -655,8 +669,29 @@ void SystemManager::removeMovieSystem(int movieId) {
 
 }
 
-void SystemManager::removeHallSystem(Hall* hall) {
-    halls.remove(hall);
+void SystemManager::removeHallSystem(int hall) {
+    for (size_t i = 0; i < halls.getSize(); i++)
+    {
+
+    }
+    //halls.remove(hall);
+}
+
+void SystemManager::removeUserSystem(int userId)
+{
+    User* user = findUserById(userId);
+    if (user == nullptr) {
+        return;
+    }
+
+    for (size_t i = 0; i < users.getSize(); i++)
+    {
+        if (users[i]->getId() == user->getId()) {
+            cout << "PREDI userSize=" << users.getSize()<<endl;
+            users.remove(user);
+            cout << "SLED userSize=" << users.getSize() << endl;
+        }
+    }
 }
 
 void SystemManager::printWatchedMovies(User* user)
@@ -666,8 +701,6 @@ void SystemManager::printWatchedMovies(User* user)
         MyVector<Movie*> watchedMovie = user->getWatchedMovies();
         watchedMovie[j]->print();
     }
-   
-
 }
 
 void SystemManager::printAllMoviesFromSessions() {

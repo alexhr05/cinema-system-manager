@@ -173,6 +173,16 @@ int main()
 					cout << "mmoiveId=" << movieId;
 					admin->removeMovie(system, movieId);
 					
+				}else if(cmd.equals("close-haul")) {
+					int hallId;
+					cout << "Enter hall id:";
+					cin >> hallId;
+					/*admin->removeHall(hallId);*/
+				}else if (cmd.equals("remove-user")) {
+					int userId;
+					cout << "Enter user id:";
+					cin >> userId;
+					admin->removeUser(system, userId);
 				}
 			}
 

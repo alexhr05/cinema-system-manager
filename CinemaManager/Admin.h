@@ -21,7 +21,9 @@ public:
 	void removeMovie(SystemManager& system, int movieId);
 
 	void addHall(SystemManager& system, Hall* hall);
-	void removeHall(SystemManager& system, Hall* hall);
+	void removeHall(SystemManager& system, int hall);
+
+	void removeUser(SystemManager& system, int userId);
 	
 
 };
