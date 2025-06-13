@@ -1,7 +1,7 @@
 #include "Movie.h"
 #include "MyVector.hpp"
 
-Movie::Movie(): id(++counterId), title(""), rate(0), duration(0), productionYear(0), Genre("")//, hallId(0), timeInfo(MyVector<tm>()), startHour(0), endHour(0)
+Movie::Movie(): id(++counterId), title(""), rate(0), duration(0), productionYear(0), Genre(""), type()//, hallId(0), timeInfo(MyVector<tm>()), startHour(0), endHour(0)
 {
 }
 
@@ -77,13 +77,9 @@ MoviesType Movie::getMovieType() const
 	return type;
 }
 
-void Movie::print()
+
+
+bool Movie::operator==(const Movie* other)
 {
-	cout << "Type Movie(1-Action movie; 2-Documentary movie; 3- Drama movie);" << endl;
-	cout << "Name: " << title.c_str() << "\n"
-		<< "Type Movie: " << static_cast<int>(type) << "\n"
-		<< "Rate: " << rate << "\n"
-		<< "Duration: " << duration << "\n"
-		<< "Production Year: " << productionYear << "\n"
-		<< "Genre: " << Genre.c_str() << "\n";
+	return this->getId() == other->getId();
 }

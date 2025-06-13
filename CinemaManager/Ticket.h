@@ -16,7 +16,7 @@ public:
     Ticket(Session* session);
     Ticket(const Ticket& other);
     Ticket& operator=(const Ticket& other);
-
+    bool operator==(const Ticket& other);
     void setIssuedDate(tm issuedDate);
 
     int getId() const;

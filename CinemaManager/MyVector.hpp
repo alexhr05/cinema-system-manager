@@ -16,7 +16,6 @@ public:
 
 	MyVector(const MyVector& other);
 	MyVector& operator=(const MyVector& other);
-	bool operator==(const T& other);
 	~MyVector();
 
 	void add(const T& element);
@@ -64,11 +63,6 @@ MyVector<T>& MyVector<T>::operator=(const MyVector& other) {
 	return *this;
 }
 
-template<typename T>
-bool MyVector<T>::operator==(const T& other)
-{
-	return this->getId() == other.getId();
-}
 
 template <typename T>
 MyVector<T>::~MyVector() {

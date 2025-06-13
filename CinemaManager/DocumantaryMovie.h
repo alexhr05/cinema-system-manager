@@ -15,6 +15,7 @@ public:
 
 	bool getIsBasedOnTrueEvents() const;
 	double getTicketPrice() const override;
-	
+	void print() override;
+
 	Movie* clone() const override;
 };

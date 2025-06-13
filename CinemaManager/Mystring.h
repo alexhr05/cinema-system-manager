@@ -10,7 +10,6 @@ private:
 
 public:
 	friend std::istream& operator>>(std::istream& in, MyString& str);
-	/*friend std::istream& getline(std::istream& is, MyString& str);*/
 
 	MyString();
 	MyString(const char* str);

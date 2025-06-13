@@ -1,5 +1,4 @@
 ﻿#include "MyString.h"
-#include <iostream>
 #include <cstring>
 #include <fstream>
 #include <cmath>  

@@ -1,5 +1,9 @@
 ﻿#include "Session.h"
-#include <iostream>
+//#include "Movie.h"
+//#include "ActionMovie.h"
+//#include "DocumantaryMovie.h"
+//#include "DramaMovie.h"
+//#include <iostream>
 #include <iomanip>
 
 int Session::sessionCounter = 0;
@@ -186,4 +190,10 @@ bool Session::cancelReservation(int row, int col) {
     }
 
     return false;
+}
+
+
+bool Session::operator==(const Session& other)
+{
+    return this->getId() == other.getId();
 }

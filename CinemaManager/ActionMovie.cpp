@@ -1,5 +1,5 @@
-#include "Movie.h"
-#include "MoviesType.h"
+//#include "Movie.h"
+//#include "MoviesType.h"
 #include "ActionMovie.h"
 #include <iostream>
 
@@ -46,4 +46,17 @@ Movie* ActionMovie::clone() const
 	
 	return new ActionMovie(*this);
 	
+}
+
+void ActionMovie::print()
+{
+	cout << "Type Movie(1-Action movie; 2-Documentary movie; 3- Drama movie);" << endl;
+	cout << "Id: " << this->getId() << "\n"
+		<<"Name: " << this->getTitle().c_str() << "\n"
+		<< "Type Movie: " << static_cast<int>(this->getMovieType()) << "\n"
+		<< "Rate: " << this->getRate() << "\n"
+		<< "Duration: " << this->getDuration() << "\n"
+		<< "Production Year: " << this->getProductionYear() << "\n"
+		<< "Genre: " << this->getGenre().c_str() << "\n"
+		<< "Action Intensity scene: " << this->getActionIntensity() << "\n";
 }

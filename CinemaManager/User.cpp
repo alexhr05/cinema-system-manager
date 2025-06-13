@@ -1,5 +1,5 @@
 #include "User.h"
-#include "Ticket.h"
+//#include "Ticket.h"
 #include "Mystring.h"
 #include "MyVector.hpp"
 
@@ -63,6 +63,16 @@ MyVector<Ticket> User::getTickets() const
 MyVector<Movie*> User::getWatchedMovies() const
 {
 	return watchedMovies;
+}
+
+void User::setTickets(MyVector<Ticket> tickets)
+{
+	this->tickets = tickets;
+}
+
+void User::setWatchedMovies(MyVector<Movie*> watchedMovies)
+{
+	this->watchedMovies = watchedMovies;
 }
 
 void User::addTicket(Ticket& ticket)

@@ -1,5 +1,6 @@
 #pragma once
 #include "User.h"
+#include "Admin.h"
 #include "Movie.h"
 #include "Hall.h"
 #include "Ticket.h"
@@ -63,9 +64,11 @@ public:
 	void printHalls();
 
 	tm createTimeStruct(int year, int month, int day, int hour);
-	void removeMovieSystem(Movie* movie);
+	void removeMovieSystem(int movieId);
 	void removeHallSystem(Hall* hall);
 	void printWatchedMovies(User* user);
 	void printAllMoviesFromSessions();
 	void printAllSessions();
+
+	
 };

@@ -1,14 +1,14 @@
 ﻿#include "SystemManager.h"
-#include <iostream>
+//#include <iostream>
 #include <fstream>
-#include "MyVector.hpp"
+//#include "MyVector.hpp"
 #include "SeatTypes.h"
-#include "User.h"
-#include "Admin.h"
-#include "MoviesType.h"
-#include "ActionMovie.h"
-#include "DocumantaryMovie.h"
-#include "DramaMovie.h"
+//#include "User.h"
+//#include "Admin.h"
+//#include "MoviesType.h"
+//#include "ActionMovie.h"
+//#include "DocumantaryMovie.h"
+//#include "DramaMovie.h"
 
 
 using namespace std;
@@ -61,7 +61,6 @@ void SystemManager::loadHallsFromFiles()
             }
         }  */
         halls.add(h);
-        delete h;
     }
     
     inFile.close();
@@ -215,10 +214,9 @@ void SystemManager::loadUsersFromFiles()
         cout << "USER INFO:" << users.getSize()<< endl;
         cout << users[1]->getName().c_str() << " " << users[1]->getPassword().c_str() << " " << users[1]->getBalance() << " "
             << users[1]->getTickets()[0].getId();
-        delete user;
         
     }
-   
+    
     in.close();
 }
 
@@ -266,12 +264,13 @@ Session* SystemManager::findSessionById(int id)
 void SystemManager::addDefaultAdmin() {
     MyString defaultName = "admin";
     MyString defaultPassword = "admin123";
-    User* admin = new User(defaultName, defaultPassword);
+    double balance = 10000;
+    User* admin = new Admin(defaultName, defaultPassword, balance);
     admin->setId(1);
     users.add(admin);
 
     cout << "Default admin created: admin / admin123\n";
-    delete admin;
+
 }
 
 
@@ -386,8 +385,10 @@ void SystemManager::loadMoviesFromFile()
         default:
             cout << "Unknown movie type: " << type << endl;
         }
+        cout << endl << endl;
+        movie->print();
+        cout << endl << endl;
         movies.add(movie);
-        delete movie;
         cout <<"size:"<< movies.getSize();
         
         
@@ -481,9 +482,6 @@ void SystemManager::saveSessionToFile() {
         }
 
     }
-    delete movie;
-    delete hall;
-    delete session;
 
     outFile.close();
 }
@@ -529,7 +527,6 @@ void SystemManager::loadSessionFromFile() {
             }
         }
         sessions.add(session);
-        delete session;
     }
 
     inFile.close();
@@ -539,6 +536,7 @@ void SystemManager::loadSessionFromFile() {
 
 User* SystemManager::login(MyString name, MyString password) {
     cout << "Name=" << name.c_str() << "; password=" << password.c_str() << endl;
+    cout << "sizeUsers=" << users.getSize()<<endl;
     for (size_t i = 0; i < users.getSize(); i++) {
         cout << "users[i]->getId()=" << users[i]->getName().c_str() << endl;
         cout << "users[i]->getPassword()=" << users[i]->getPassword().c_str() << endl;
@@ -601,7 +599,6 @@ bool SystemManager::registerUser(MyString name, MyString password) {
 
     User* user = new User(name, password);
     users.add(user);
-    delete user;
     return true;
 }
 
@@ -614,8 +611,48 @@ Hall* SystemManager::findHallById(int id) {
     return nullptr;
 }
 
-void SystemManager::removeMovieSystem(Movie* movie) {
-    movies.remove(movie);
+void SystemManager::removeMovieSystem(int movieId) {
+    Movie* targetMovie = findMovieById(movieId);
+    if (targetMovie == nullptr) {
+        cout << "Movie is missing";
+        return;
+    }
+    bool isMovieInSession = true;
+    for (size_t i = 0; i < users.getSize(); i++)
+    {
+
+
+        MyVector<Ticket> tickets = users[i]->getTickets();
+        for (size_t j = 0; j < tickets.getSize(); j++)
+        {
+            Session* session = tickets[j].getSession();
+            MoviesType movieTypeFromSession = session->getMovie()->getMovieType();
+            Movie* movieFromSession = session->getMovie();
+            if (targetMovie->getId() == movieFromSession->getId()) {
+                int priceTicket = targetMovie->getTicketPrice();
+                users[i]->setBalance(users[i]->getBalance() + priceTicket);
+                tickets.remove(tickets[j]);
+                sessions.remove(session);
+                allTickets.remove(tickets[j]);
+                users[i]->setTickets(tickets);
+                isMovieInSession = false;
+            }
+        }
+        
+        MyVector<Movie*> watchedMovies = users[i]->getWatchedMovies();
+        for (size_t q = 0; q < watchedMovies.getSize(); q++)
+        {
+            if (watchedMovies[q]->getId() == targetMovie->getId() && !isMovieInSession) {
+                watchedMovies.remove(watchedMovies[q]);
+                users[i]->setWatchedMovies(watchedMovies);
+            }
+        }
+        
+    }
+    
+
+    movies.remove(targetMovie);
+
 }
 
 void SystemManager::removeHallSystem(Hall* hall) {

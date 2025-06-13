@@ -22,6 +22,7 @@ public:
     Session(Movie* movie, Hall* hall, tm& startTime);
     Session(const Session& other);
     Session& operator=(const Session& other);
+    bool operator==(const Session& other);
     ~Session();
 
     void setId(int id);

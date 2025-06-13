@@ -2,8 +2,6 @@
 //
 
 #include <iostream>
-#include <cstdlib>
-#include <crtdbg.h>
 #include "User.h"
 #include "Admin.h"
 #include "Hall.h"
@@ -16,17 +14,11 @@
 #include "MyVector.hpp"
 #include "SystemManager.h"
 
+
 using namespace std;
 
 int main()
 {
-
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
-	//...
-	//someLogic("crit1.txt", "crit2.txt", "res.txt"); The function has no memory leak
-	int* a = new int(3);
-
 	SystemManager system;
 	
 	system.loadHallsFromFiles();
@@ -41,6 +33,7 @@ int main()
 	
 
 	User* loggedUser = nullptr;
+	Admin* admin = nullptr;
 	MyString name;
 	MyString password;
 	
@@ -55,10 +48,12 @@ int main()
 		else if (cmd.equals("login")) {
 			MyString name, password;
 			cout << "Enter name:";
-			cin >> name;
+			cin.ignore();
+			getline(cin, name, '\n');
 			cout << "Enter password:";
-			cin>> password;
 
+			getline(cin, password, '\n');
+			
 			loggedUser = system.login(name, password);
 			if (loggedUser == nullptr) {
 				cout << "Not found such User" << endl;
@@ -86,8 +81,16 @@ int main()
 				cout << "User already exists.\n";
 			}
 		}
-		else if (loggedUser != nullptr) {
+		if (loggedUser != nullptr) {
+			
 			if (loggedUser->getId() == 1) {
+				admin = new Admin(loggedUser->getName(), loggedUser->getPassword(), loggedUser->getBalance());
+				admin->setId(1);
+			}
+			if (admin != nullptr) {
+
+				cout << "minava prez admin"<<endl;
+			
 				if (cmd.equals("add-movie")) {
 					MyString title,genre;
 					int rate, typeMovie, productionYear;
@@ -96,22 +99,21 @@ int main()
 					cin >> typeMovie;
 					
 					
-					cout << "Enter title";
+					cout << "Enter title:";
 					cin.ignore();
 					getline(cin, title, '\n');
-					cout << "Enter rate";
+					cout << "Enter rate:";
 					cin >> rate;
-					cout << "Enter duration";
+					cout << "Enter duration:";
 					cin >> duration;
-					cout << "Enter production year";
+					cout << "Enter production year:";
 					cin >> productionYear;
-					cout << "Enter genre";
+					cout << "Enter genre:";
 					cin.ignore();
 					getline(cin, genre, '\n');
 
-					cout << "Movie size:" << system.getMovies().getSize();
 					MoviesType movieType = static_cast<MoviesType>(typeMovie);
-					Admin* admin = static_cast<Admin*>(loggedUser);
+					
 					switch (movieType) {
 						case MoviesType::ActionMovie: {
 
@@ -122,7 +124,6 @@ int main()
 
 							ActionMovie* action = new ActionMovie(title, rate, duration, productionYear, genre, movieType, actionIntensity);
 							admin->addActionMovie(system, action);
-							delete action;
 							break;
 						}
 						case MoviesType::DocumentaryMovie: {
@@ -133,7 +134,6 @@ int main()
 							cin >> isBasedOnTrueEvents;
 							DocumentaryMovie* documentary = new DocumentaryMovie(title, rate, duration, productionYear, genre, movieType, isBasedOnTrueEvents);
 							admin->addDocumentaryMovie(system, documentary);
-							delete documentary;
 							break;
 						}
 						case MoviesType::DramaMovie: {
@@ -144,15 +144,34 @@ int main()
 							cin >> hasComedyElements;
 							DramaMovie* drama = new DramaMovie(title, rate, duration, productionYear, genre, movieType, hasComedyElements);
 							admin->addDramaMovie(system, drama);
-							delete drama;
 							break;
 						}
 						default: {
 							cout << "Unknown movie type: " << typeMovie << endl;
 						}
-						
+							   
 					}
-					cout << "Movie size:" << system.getMovies().getSize();
+					
+				}
+				else if (cmd.equals("open-haul")) {
+					int rows, cols;
+					cout << "Enter rows for hall:";
+					cin >> rows;
+					cout << "Enter cols for hall:";
+					cin >> cols;
+
+					Hall* hall = new Hall(rows, cols);
+
+					cout << "Hall size:" << system.getHalls().getSize();
+					admin->addHall(system, hall);
+					cout << "Hall size:" << system.getHalls().getSize();
+				}
+				else if (cmd.equals("remove-movie")) {
+					int movieId;
+					cout << "Enter movie id to remove:";
+					cin >> movieId;
+					cout << "mmoiveId=" << movieId;
+					admin->removeMovie(system, movieId);
 					
 				}
 			}

@@ -1,8 +1,7 @@
 ﻿#include "Ticket.h"
-#include "Hall.h"
-#include "Movie.h"
-#include "Session.h"
-#include <iostream>
+//#include "Hall.h"
+//#include "Movie.h"
+//#include "Session.h"
 #include <ctime>
 
 using namespace std;
@@ -40,3 +39,7 @@ Session* Ticket::getSession() const
 	return session;
 }
 
+bool Ticket::operator==(const Ticket& other)
+{
+	return this->getId() == other.getId();
+}

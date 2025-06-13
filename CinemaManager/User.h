@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "SystemManager.h"
+
 #include "Ticket.h"
 #include "Movie.h"
 #include "MyVector.hpp"
@@ -37,6 +37,8 @@ public:
 	int getId() const;
 	MyVector<Ticket> getTickets() const;
 	MyVector<Movie*> getWatchedMovies() const;
+	void setTickets(MyVector<Ticket> tickets);
+	void setWatchedMovies(MyVector<Movie*> watchedMovies);
 	void addTicket(Ticket& ticket);
 	void addWatchedMovies(Movie* movie);
 

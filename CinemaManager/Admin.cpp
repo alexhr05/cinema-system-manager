@@ -1,13 +1,15 @@
-﻿#include "User.h"
+﻿//#include "User.h"
 #include "Admin.h"
-#include "Movie.h"
-#include "ActionMovie.h"
-#include "DocumantaryMovie.h"
-#include "DramaMovie.h"
-#include "SystemManager.h"
+//#include "Movie.h"
+//#include "ActionMovie.h"
+//#include "DocumantaryMovie.h"
+//#include "DramaMovie.h"
+//#include "SystemManager.h"
 
-Admin::Admin(MyString name, MyString password)
-    : User(name, password, 0.0) {
+
+
+Admin::Admin(MyString name, MyString password, double balance)
+    : User(name, password, balance) {
     
 }
 
@@ -24,6 +26,7 @@ void Admin::addDramaMovie(SystemManager& system, DramaMovie* drama)
 
 void Admin::addDocumentaryMovie(SystemManager& system, DocumentaryMovie* documentary)
 {
+    cout << "minava dobaven"<<endl;
     system.addMovie(documentary);
 }
 
@@ -47,9 +50,9 @@ void Admin::handleUserSpecificCommand(MyString command, SystemManager& system)
     //}
 }
 
-void Admin::removeMovie(SystemManager& system, Movie* movie)
+void Admin::removeMovie(SystemManager& system, int movieId)
 {
-    system.removeMovieSystem(movie);
+    system.removeMovieSystem(movieId);
 }
 
 void Admin::addHall(SystemManager& system, Hall* hall)
