@@ -12,27 +12,18 @@ Admin::Admin(MyString name, MyString password)
 }
 
 
-void Admin::addActionMovie(SystemManager& system,Movie* movie, int actionIntensity)
+void Admin::addActionMovie(SystemManager& system, ActionMovie* action)
 {
-    ActionMovie* action = dynamic_cast<ActionMovie*>(movie);
-    action->setActionIntensity(actionIntensity);
-
     system.addMovie(action);
 }
 
-void Admin::addDramaMovie(SystemManager& system, Movie* movie, bool hasComedyElements)
+void Admin::addDramaMovie(SystemManager& system, DramaMovie* drama)
 {
-    DramaMovie* drama = dynamic_cast<DramaMovie*>(movie);
-    drama->setHasComedyElements(hasComedyElements);
-
     system.addMovie(drama);
 }
 
-void Admin::addDocumentaryMovie(SystemManager& system, Movie* movie, bool isBasedOnTrueEvents)
+void Admin::addDocumentaryMovie(SystemManager& system, DocumentaryMovie* documentary)
 {
-    DocumentaryMovie* documentary = dynamic_cast<DocumentaryMovie*>(movie);
-    documentary->setIsBasedOnTrueEvents(isBasedOnTrueEvents);
-
     system.addMovie(documentary);
 }
 

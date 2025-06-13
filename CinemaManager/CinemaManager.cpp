@@ -2,6 +2,8 @@
 //
 
 #include <iostream>
+#include <cstdlib>
+#include <crtdbg.h>
 #include "User.h"
 #include "Admin.h"
 #include "Hall.h"
@@ -18,6 +20,13 @@ using namespace std;
 
 int main()
 {
+
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+	//...
+	//someLogic("crit1.txt", "crit2.txt", "res.txt"); The function has no memory leak
+	int* a = new int(3);
+
 	SystemManager system;
 	
 	system.loadHallsFromFiles();
@@ -78,6 +87,77 @@ int main()
 			}
 		}
 		else if (loggedUser != nullptr) {
+			if (loggedUser->getId() == 1) {
+				if (cmd.equals("add-movie")) {
+					MyString title,genre;
+					int rate, typeMovie, productionYear;
+					double duration;
+					cout << "Enter type movie(1-Action movie; 2-Documentary movie; 3-Drama movie):";
+					cin >> typeMovie;
+					
+					
+					cout << "Enter title";
+					cin.ignore();
+					getline(cin, title, '\n');
+					cout << "Enter rate";
+					cin >> rate;
+					cout << "Enter duration";
+					cin >> duration;
+					cout << "Enter production year";
+					cin >> productionYear;
+					cout << "Enter genre";
+					cin.ignore();
+					getline(cin, genre, '\n');
+
+					cout << "Movie size:" << system.getMovies().getSize();
+					MoviesType movieType = static_cast<MoviesType>(typeMovie);
+					Admin* admin = static_cast<Admin*>(loggedUser);
+					switch (movieType) {
+						case MoviesType::ActionMovie: {
+
+
+							int actionIntensity;
+							cout << "Enter action intensity:";
+							cin >> actionIntensity;
+
+							ActionMovie* action = new ActionMovie(title, rate, duration, productionYear, genre, movieType, actionIntensity);
+							admin->addActionMovie(system, action);
+							delete action;
+							break;
+						}
+						case MoviesType::DocumentaryMovie: {
+
+
+							bool isBasedOnTrueEvents;
+							cout << "Enter based on true events (0 or 1): ";
+							cin >> isBasedOnTrueEvents;
+							DocumentaryMovie* documentary = new DocumentaryMovie(title, rate, duration, productionYear, genre, movieType, isBasedOnTrueEvents);
+							admin->addDocumentaryMovie(system, documentary);
+							delete documentary;
+							break;
+						}
+						case MoviesType::DramaMovie: {
+
+
+							bool hasComedyElements;
+							cout << "Enter based on true events (0 or 1): ";
+							cin >> hasComedyElements;
+							DramaMovie* drama = new DramaMovie(title, rate, duration, productionYear, genre, movieType, hasComedyElements);
+							admin->addDramaMovie(system, drama);
+							delete drama;
+							break;
+						}
+						default: {
+							cout << "Unknown movie type: " << typeMovie << endl;
+						}
+						
+					}
+					cout << "Movie size:" << system.getMovies().getSize();
+					
+				}
+			}
+
+
 			if (cmd.equals("buy-ticket")) {
 				int sessionId, row, col;
 				system.printAllSessions();

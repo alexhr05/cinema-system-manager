@@ -61,6 +61,7 @@ void SystemManager::loadHallsFromFiles()
             }
         }  */
         halls.add(h);
+        delete h;
     }
     
     inFile.close();
@@ -214,6 +215,7 @@ void SystemManager::loadUsersFromFiles()
         cout << "USER INFO:" << users.getSize()<< endl;
         cout << users[1]->getName().c_str() << " " << users[1]->getPassword().c_str() << " " << users[1]->getBalance() << " "
             << users[1]->getTickets()[0].getId();
+        delete user;
         
     }
    
@@ -269,6 +271,7 @@ void SystemManager::addDefaultAdmin() {
     users.add(admin);
 
     cout << "Default admin created: admin / admin123\n";
+    delete admin;
 }
 
 
@@ -370,7 +373,6 @@ void SystemManager::loadMoviesFromFile()
         switch (movieType) {
         case MoviesType::ActionMovie:
             in >> actionIntensity;
-            
             movie = new ActionMovie(title, rate, duration, productionYear, genre, movieType, actionIntensity);
             break;
         case MoviesType::DocumentaryMovie:
@@ -385,6 +387,7 @@ void SystemManager::loadMoviesFromFile()
             cout << "Unknown movie type: " << type << endl;
         }
         movies.add(movie);
+        delete movie;
         cout <<"size:"<< movies.getSize();
         
         
@@ -411,20 +414,7 @@ void SystemManager::saveMoviesToFile()
             << movies[i]->getDuration() << "\n"
             << movies[i]->getProductionYear() << "\n"
             << movies[i]->getGenre().c_str() << "\n";
-            /*<< movies[i]->getHallId() << "\n"
-            << movies[i]->getTimeInfo().getSize() << "\n";
-            MyVector<tm> timeSesion = movies[i]->getTimeInfo();
-
-            for (size_t j = 0; j < movies[j]->getTimeInfo().getSize(); j++)
-            {
-                outFile << timeSesion[j].tm_year << "\n"
-                    << timeSesion[j].tm_mon << "\n"
-                    << timeSesion[j].tm_wday << "\n"
-                    << timeSesion[j].tm_hour << "\n";
-            }
-            
-            outFile<< movies[i]->getStartHour() << "\n"
-            << movies[i]->getEndHour()<<"\n";*/
+           
         
         switch (movies[i]->getMovieType()) {
         case MoviesType::ActionMovie: {
@@ -491,7 +481,9 @@ void SystemManager::saveSessionToFile() {
         }
 
     }
-    
+    delete movie;
+    delete hall;
+    delete session;
 
     outFile.close();
 }
@@ -537,6 +529,7 @@ void SystemManager::loadSessionFromFile() {
             }
         }
         sessions.add(session);
+        delete session;
     }
 
     inFile.close();
@@ -608,7 +601,7 @@ bool SystemManager::registerUser(MyString name, MyString password) {
 
     User* user = new User(name, password);
     users.add(user);
-
+    delete user;
     return true;
 }
 

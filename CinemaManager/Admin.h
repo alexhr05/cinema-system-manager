@@ -2,6 +2,9 @@
 
 #include "User.h"
 #include "Movie.h"
+#include "ActionMovie.h"
+#include "DocumantaryMovie.h"
+#include "DramaMovie.h"
 #include "SystemManager.h"
 
 class Admin : public User {
@@ -10,9 +13,9 @@ public:
 
 	void handleUserSpecificCommand(MyString command, SystemManager& system);
 
-	void addActionMovie(SystemManager& system,Movie* movie, int actionIntensity);
-	void addDramaMovie(SystemManager& system, Movie* movie, bool hasComedyElements);
-	void addDocumentaryMovie(SystemManager& system, Movie* movie, bool isBasedOnTrueEvents);
+	void addActionMovie(SystemManager& system,ActionMovie* action);
+	void addDramaMovie(SystemManager& system, DramaMovie* dramaa);
+	void addDocumentaryMovie(SystemManager& system, DocumentaryMovie* documentary);
 	void removeMovie(SystemManager& system, Movie* movie);
 
 	void addHall(SystemManager& system, Hall* hall);
