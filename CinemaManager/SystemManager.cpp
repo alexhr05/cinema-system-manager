@@ -814,3 +814,8 @@ void SystemManager::printAllUsersTickets(int userId) {
     }
 
 }
+
+void SystemManager::addSession(Session* session)
+{
+    sessions.add(session);
+}

@@ -24,6 +24,36 @@ void User::setId(int newId) {
 	}
 }
 
+void User::handleCommand(SystemManager& system, MyString command) {
+	
+	try {
+		if (input == "logout") {
+			cout << "Logging out.\n";
+			break;
+		}
+		else if (input == "mailbox") {
+			printMailbox();
+		}
+		else if (input == "change_password") {
+			MyString oldPass, newPass;
+			cin >> oldPass >> newPass;
+			dm.changePassword(id, oldPass, newPass);
+			cout << "Success! Password changed.\n";
+		}
+		else {
+			handleUserSpecificCommand(input, dm);
+		}
+	}
+	catch (const invalid_argument& e) {
+		cout << e.what() << endl;
+	}
+	catch (const exception& e) {
+		cout << "Something went wrong: " << e.what() << endl;
+		return;
+	}
+	
+}
+
 
 void User::setName(MyString& name) {
 	this->name = name;

@@ -13,7 +13,7 @@ class Admin : public User {
 public:
 	Admin(MyString name, MyString password,double balance);
 
-	void handleUserSpecificCommand(MyString command, SystemManager& system);
+	void handleUserSpecificCommand(SystemManager& system, MyString command) override;
 
 	void addActionMovie(SystemManager& system,ActionMovie* action);
 	void addDramaMovie(SystemManager& system, DramaMovie* dramaa);
@@ -21,6 +21,7 @@ public:
 	void removeMovie(SystemManager& system, int movieId);
 
 	void addHall(SystemManager& system, Hall* hall);
+	void addNewSession(SystemManager& system,  Session* session);
 	void removeHall(SystemManager& system, int hallId);
 
 	void removeUser(SystemManager& system, int userId);

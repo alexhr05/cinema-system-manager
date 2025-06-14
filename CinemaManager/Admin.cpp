@@ -13,6 +13,10 @@ Admin::Admin(MyString name, MyString password, double balance)
     
 }
 
+void Admin::handleUserSpecificCommand(SystemManager& system, MyString command)
+{
+}
+
 
 void Admin::addActionMovie(SystemManager& system, ActionMovie* action)
 {
@@ -58,6 +62,11 @@ void Admin::removeMovie(SystemManager& system, int movieId)
 void Admin::addHall(SystemManager& system, Hall* hall)
 {
     system.addHall(hall);
+}
+
+void Admin::addNewSession(SystemManager& system, Session* session)
+{
+    system.addSession(session);
 }
 
 void Admin::removeHall(SystemManager& system, int hallId)

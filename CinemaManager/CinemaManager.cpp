@@ -89,16 +89,16 @@ int main()
 			}
 			if (admin != nullptr) {
 
-				cout << "minava prez admin"<<endl;
-			
+				cout << "minava prez admin" << endl;
+
 				if (cmd.equals("add-movie")) {
-					MyString title,genre;
+					MyString title, genre;
 					int rate, typeMovie, productionYear;
 					double duration;
 					cout << "Enter type movie(1-Action movie; 2-Documentary movie; 3-Drama movie):";
 					cin >> typeMovie;
-					
-					
+
+
 					cout << "Enter title:";
 					cin.ignore();
 					getline(cin, title, '\n');
@@ -113,45 +113,76 @@ int main()
 					getline(cin, genre, '\n');
 
 					MoviesType movieType = static_cast<MoviesType>(typeMovie);
-					
+
 					switch (movieType) {
-						case MoviesType::ActionMovie: {
+					case MoviesType::ActionMovie: {
 
 
-							int actionIntensity;
-							cout << "Enter action intensity:";
-							cin >> actionIntensity;
+						int actionIntensity;
+						cout << "Enter action intensity:";
+						cin >> actionIntensity;
 
-							ActionMovie* action = new ActionMovie(title, rate, duration, productionYear, genre, movieType, actionIntensity);
-							admin->addActionMovie(system, action);
-							break;
-						}
-						case MoviesType::DocumentaryMovie: {
-
-
-							bool isBasedOnTrueEvents;
-							cout << "Enter based on true events (0 or 1): ";
-							cin >> isBasedOnTrueEvents;
-							DocumentaryMovie* documentary = new DocumentaryMovie(title, rate, duration, productionYear, genre, movieType, isBasedOnTrueEvents);
-							admin->addDocumentaryMovie(system, documentary);
-							break;
-						}
-						case MoviesType::DramaMovie: {
-
-
-							bool hasComedyElements;
-							cout << "Enter based on true events (0 or 1): ";
-							cin >> hasComedyElements;
-							DramaMovie* drama = new DramaMovie(title, rate, duration, productionYear, genre, movieType, hasComedyElements);
-							admin->addDramaMovie(system, drama);
-							break;
-						}
-						default: {
-							cout << "Unknown movie type: " << typeMovie << endl;
-						}
-							   
+						ActionMovie* action = new ActionMovie(title, rate, duration, productionYear, genre, movieType, actionIntensity);
+						admin->addActionMovie(system, action);
+						break;
 					}
-					
+					case MoviesType::DocumentaryMovie: {
+
+
+						bool isBasedOnTrueEvents;
+						cout << "Enter based on true events (0 or 1): ";
+						cin >> isBasedOnTrueEvents;
+						DocumentaryMovie* documentary = new DocumentaryMovie(title, rate, duration, productionYear, genre, movieType, isBasedOnTrueEvents);
+						admin->addDocumentaryMovie(system, documentary);
+						break;
+					}
+					case MoviesType::DramaMovie: {
+						bool hasComedyElements;
+						cout << "Enter based on true events (0 or 1): ";
+						cin >> hasComedyElements;
+						DramaMovie* drama = new DramaMovie(title, rate, duration, productionYear, genre, movieType, hasComedyElements);
+						admin->addDramaMovie(system, drama);
+						break;
+					}
+					default: {
+						cout << "Unknown movie type: " << typeMovie << endl;
+					}
+
+					}
+				}
+				else if (cmd.equals("create-session")) {
+					int movieId, hallId;
+
+					cout << "Enter movie id:";
+					cin >> movieId;
+					Movie* movie = system.findMovieById(movieId);
+					cout << "Enter hall id:";
+					cin >> hallId;
+					Hall* hall = system.findHallById(hallId);
+					tm startTime = {};
+					int year, month, day, hour;
+					int zero = 0;
+					int allMonths = 12;
+					int maxDays = 31;
+					int maxHour = 24;
+					cout << "Enter year:";
+					cin >> year;
+					cout << "Enter month:";
+					cin >> month;
+					cout << "Enter day:";
+					cin >> day;
+					cout << "Enter hour:";
+					cin >> hour;
+					if (year <= zero || month < zero || month > allMonths || day < zero || day > maxDays || hour < zero || hour > maxHour) {
+						cout << "One of the fields is not in the right range for year, month, day or hour" << endl;
+					}
+					else {
+						startTime = system.createTimeStruct(year, month, day, hour);
+						cout << startTime.tm_year << " " << startTime.tm_mon << " " << startTime.tm_wday << " " << startTime.tm_hour << endl;
+						Session* session = new Session(movie, hall, startTime);
+						admin->addNewSession(system, session);
+					}
+
 				}
 				else if (cmd.equals("open-haul")) {
 					int rows, cols;
@@ -162,9 +193,7 @@ int main()
 
 					Hall* hall = new Hall(rows, cols);
 
-					cout << "Hall size:" << system.getHalls().getSize();
 					admin->addHall(system, hall);
-					cout << "Hall size:" << system.getHalls().getSize();
 				}
 				else if (cmd.equals("remove-movie")) {
 					int movieId;
@@ -172,12 +201,13 @@ int main()
 					cin >> movieId;
 					cout << "mmoiveId=" << movieId;
 					admin->removeMovie(system, movieId);
-					
-				}else if(cmd.equals("close-haul")) {
+
+				}
+				else if (cmd.equals("close-haul")) {
 					int hallId;
 					cout << "Enter hall id:";
 					cin >> hallId;
-					admin->removeHall(system,hallId);
+					admin->removeHall(system, hallId);
 				}
 				else if (cmd.equals("update-movie-title")) {
 					int movieId;
@@ -196,7 +226,7 @@ int main()
 					cout << "Enter user Id";
 					cin >> userId;
 					admin->printUsersWatchedMovies(system, userId);
-					
+
 				}
 				else if (cmd.equals("list-user-tickets")) {
 					int userId;
@@ -206,7 +236,7 @@ int main()
 
 				}
 				else if (cmd.equals("list-users")) {
-					
+
 					system.printAllUsers();
 				}
 				else if (cmd.equals("remove-user")) {

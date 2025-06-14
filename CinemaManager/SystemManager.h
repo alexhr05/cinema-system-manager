@@ -76,4 +76,5 @@ public:
 	void updateSystemMovieTitle(int movieId, MyString title);
 	void printAllUsersWatchedMovies(int userId);
 	void printAllUsersTickets(int userId);
+	void addSession(Session* session);
 };
