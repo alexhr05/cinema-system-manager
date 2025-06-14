@@ -634,8 +634,6 @@ void SystemManager::removeMovieSystem(int movieId) {
     bool isMovieInSession = true;
     for (size_t i = 0; i < users.getSize(); i++)
     {
-
-
         MyVector<Ticket> tickets = users[i]->getTickets();
         for (size_t j = 0; j < tickets.getSize(); j++)
         {
@@ -669,12 +667,56 @@ void SystemManager::removeMovieSystem(int movieId) {
 
 }
 
-void SystemManager::removeHallSystem(int hall) {
-    for (size_t i = 0; i < halls.getSize(); i++)
+void SystemManager::removeHallSystem(int hallId) {
+    Hall* hall = findHallById(hallId);
+    if (hall == nullptr)
+        return;
+    cout << "hallId="<<hallId<<endl;
+    /*for (size_t i = 0; i < sessions.getSize(); i++)
     {
+     
 
+        if (hall->getId() == sessions[i]->getHall()->getId()) {
+
+            Movie* movieFromSession = sessions[i]->getMovie();
+
+            int priceTicket = movieFromSession->getTicketPrice();
+            users[i]->setBalance(users[i]->getBalance() + priceTicket);
+
+            sessions[i]->setHall(nullptr);
+            cout << "Hall=" << sessions[i]->getHall()<<endl;
+        }
+    }*/
+    cout << "PREDDIhallSIze=" << halls.getSize()<<endl;
+    for (size_t i = 0; i < users.getSize(); i++)
+    {
+        MyVector<Ticket> tickets = users[i]->getTickets();
+        for (size_t j = 0; j < tickets.getSize(); j++)
+        {
+            Session* session = tickets[j].getSession();
+            Movie* movie = session->getMovie();
+            Hall* hallFromSession = session->getHall();
+            
+            if (hall->getId() == hallFromSession->getId()) {
+                int priceTicket = movie->getTicketPrice();
+                cout << "movieType:" << static_cast<int>(movie->getMovieType())<<endl;
+                cout << "user:" << users[i]->getId() << endl;
+                cout << "user:" << users[i]->getId() << endl;
+                cout << "PREDI BALANCE:" << users[i]->getBalance() << endl;
+                users[i]->setBalance(users[i]->getBalance() + priceTicket);
+                
+                cout << "AFTERbalance:" << users[i]->getBalance() << endl;
+                tickets.remove(tickets[j]);
+                sessions.remove(session);
+                allTickets.remove(tickets[j]);
+                users[i]->setTickets(tickets);
+            }
+        }
+        
     }
-    //halls.remove(hall);
+    halls.remove(hall);
+    cout << "SLEDDDhallSIze=" << halls.getSize()<<endl;
+    
 }
 
 void SystemManager::removeUserSystem(int userId)
@@ -724,6 +766,20 @@ void SystemManager::printAllSessions()
             <<"/"<< sessions[i]->getStartTime().tm_mon
             <<"/"<< sessions[i]->getStartTime().tm_wday<<"\n";
         sessions[i]->displaySeats();
+        cout << endl;
+
+    }
+}
+
+void SystemManager::printAllUsers()
+{
+    cout << "All users:" << endl<<endl;
+
+    for (size_t i = 0; i < users.getSize(); i++)
+    {
+        cout << "User id: " << users[i]->getId() << "\n"
+            << "Name: " << users[i]->getName().c_str() << "\n"
+            << "Balance: " << users[i]->getBalance()<<"\n";
         cout << endl;
 
     }

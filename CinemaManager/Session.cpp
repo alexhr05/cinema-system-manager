@@ -192,6 +192,11 @@ bool Session::cancelReservation(int row, int col) {
     return false;
 }
 
+void Session::setHall(Hall* h = nullptr)
+{
+    this->hall = h;
+}
+
 
 bool Session::operator==(const Session& other)
 {

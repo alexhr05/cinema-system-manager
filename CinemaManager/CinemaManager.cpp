@@ -177,8 +177,24 @@ int main()
 					int hallId;
 					cout << "Enter hall id:";
 					cin >> hallId;
-					/*admin->removeHall(hallId);*/
-				}else if (cmd.equals("remove-user")) {
+					admin->removeHall(system,hallId);
+				}
+				else if (cmd.equals("update-movie-title")) {
+					int movieId;
+					cout << "Enter movie id:";
+					cin >> movieId;
+					MyString title;
+					cout << "Enter title:";
+					getline(cin, title, '\n');
+
+
+					/*admin->updateTitleMovie(system, movieId);*/
+				}
+				else if (cmd.equals("list-users")) {
+					
+					system.printAllUsers();
+				}
+				else if (cmd.equals("remove-user")) {
 					int userId;
 					cout << "Enter user id:";
 					cin >> userId;

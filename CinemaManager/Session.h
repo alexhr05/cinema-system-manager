@@ -44,4 +44,6 @@ public:
     bool cancelReservation(int row, int col);
     void print() const;
 
+    void setHall(Hall* h);
+
 };

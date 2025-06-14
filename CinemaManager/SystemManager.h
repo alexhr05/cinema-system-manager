@@ -66,12 +66,12 @@ public:
 
 	tm createTimeStruct(int year, int month, int day, int hour);
 	void removeMovieSystem(int movieId);
-	void removeHallSystem(int hall);
+	void removeHallSystem(int hallId);
 	void removeUserSystem(int userId);
 	void printWatchedMovies(User* user);
 	void printAllMoviesFromSessions();
 	void printAllSessions();
-
+	void printAllUsers();
 
 
 	
