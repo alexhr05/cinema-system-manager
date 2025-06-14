@@ -16,6 +16,18 @@ Movie::Movie(MyString& title, int rate, double duration, int productYear, MyStri
 	
 }
 
+void Movie::setId(int newId)
+{
+	id = newId;
+	if (newId >= counterId) {
+		counterId = newId + 1;
+	}
+}
+
+void Movie::setTitle(MyString title) {
+	this->title = title;
+}
+
 int Movie::getId() const
 {
 	return id;

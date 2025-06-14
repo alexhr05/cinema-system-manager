@@ -20,6 +20,9 @@ public:
 	Movie();
 	Movie(MyString& title, int rate, double duration, int productYear, MyString& Genre, MoviesType type);
 
+
+	void setId(int id);
+	void setTitle(MyString title);
 	int getId() const;
 	MyString getTitle() const;
 	int getRate() const;
@@ -28,7 +31,9 @@ public:
 	MyString getGenre() const;
 	MoviesType getMovieType() const;
 	void setMovieType();
-	
+
+
+
 	bool operator==(const Movie* other);
 	
 	virtual void print() = 0;

@@ -73,6 +73,7 @@ public:
 	void printAllSessions();
 	void printAllUsers();
 
-
-	
+	void updateSystemMovieTitle(int movieId, MyString title);
+	void printAllUsersWatchedMovies(int userId);
+	void printAllUsersTickets(int userId);
 };

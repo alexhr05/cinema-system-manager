@@ -167,15 +167,14 @@ bool Session::isExpired() const
     return false;
 }
 
-//void Session::print() const
-//{
-//    cout << "Session " << id << endl;
-//
-//    cout << "Movie name: " << movie->getTitle().c_str()
-//        << " | : " << movie->getHallId()
-//        << "Red: " << row << ", column:" << col
-//        << "Issue Date: " << issueDate.tm_year << "/" << issueDate.tm_mon << "/" << issueDate.tm_wday << " " << issueDate.tm_hour << endl;
-//}
+void Session::print() const
+{
+    cout << "Session: " << sessionId << endl
+        << "Movie name: " << movie->getTitle().c_str() << endl
+        << " Hall id: " << hall->getId() << endl
+        << "Star time: " << startTime.tm_hour << "h.   " << startTime.tm_year << "/" << startTime.tm_mon << "/" << startTime.tm_wday<<endl;
+    displaySeats();
+}
 
 char Session::getSeat(int r, int c) const
 {

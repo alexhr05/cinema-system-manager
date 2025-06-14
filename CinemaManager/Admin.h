@@ -24,6 +24,8 @@ public:
 	void removeHall(SystemManager& system, int hallId);
 
 	void removeUser(SystemManager& system, int userId);
+	void updateTitleMovie(SystemManager& system, int movieId,MyString title);
 	
-
+	void printUsersWatchedMovies(SystemManager& system,int userId);
+	void printUsersTickets(SystemManager& system, int userId);
 };

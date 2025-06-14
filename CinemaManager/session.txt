@@ -7,7 +7,7 @@
 2
 FFFFF
 FFFFF
-FFFFF
+FFRFF
 3
 2
 1
@@ -21,7 +21,7 @@ FFFFF
 FFFFF
 FFFFF
 5
-4
+5
 4
 200
 2

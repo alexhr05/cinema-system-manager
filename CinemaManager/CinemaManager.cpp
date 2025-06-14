@@ -185,10 +185,25 @@ int main()
 					cin >> movieId;
 					MyString title;
 					cout << "Enter title:";
+					cin.ignore();
 					getline(cin, title, '\n');
 
 
-					/*admin->updateTitleMovie(system, movieId);*/
+					admin->updateTitleMovie(system, movieId, title);
+				}
+				else if (cmd.equals("list-user-history")) {
+					int userId;
+					cout << "Enter user Id";
+					cin >> userId;
+					admin->printUsersWatchedMovies(system, userId);
+					
+				}
+				else if (cmd.equals("list-user-tickets")) {
+					int userId;
+					cout << "Enter user Id";
+					cin >> userId;
+					admin->printUsersTickets(system, userId);
+
 				}
 				else if (cmd.equals("list-users")) {
 					
@@ -221,8 +236,8 @@ int main()
 				}
 				else {
 					try {
-						session->reserveSeat(row,col);
-						Ticket tick(session);
+						/*session->reserveSeat(row,col);*/
+						Ticket tick(session,row,col);
 
 						Movie* movie = session->getMovie();
 

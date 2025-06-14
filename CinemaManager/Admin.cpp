@@ -70,4 +70,19 @@ void Admin::removeUser(SystemManager& system, int userId)
     system.removeUserSystem(userId);
 }
 
+void Admin::updateTitleMovie(SystemManager& system, int movieId, MyString title)
+{
+    system.updateSystemMovieTitle(movieId, title);
+}
+
+void Admin::printUsersWatchedMovies(SystemManager& system,int userId)
+{
+    system.printAllUsersWatchedMovies(userId);
+}
+
+void Admin::printUsersTickets(SystemManager& system, int userId)
+{
+    system.printAllUsersTickets(userId);
+}
+
 

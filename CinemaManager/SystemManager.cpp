@@ -114,10 +114,10 @@ void SystemManager::loadTicketsFromFiles() {
         std::cerr << "Could not open tickets file"<<endl;
         return;
     }
-    int id, sessionId;
+    int id,row,col, sessionId;
 
 
-    while (in>>id>> sessionId) {
+    while (in>>id>>row>>col>> sessionId) {
             ///*MyString name = "asdawd";
             //MyString gen = "gen";
             //Movie* movie = new ActionMovie(name, 3, 2.5, 2000, gen, MoviesType::ActionMovie, 15);
@@ -130,7 +130,7 @@ void SystemManager::loadTicketsFromFiles() {
 
             Session* session = findSessionById(sessionId);
             
-            Ticket tick(session);
+            Ticket tick(session,row,col);
             allTickets.add(tick);
     }
     
@@ -159,6 +159,8 @@ void SystemManager::saveTicketsToFiles() {
 
         //tm issueDate = ticket.getIssueDate();
         outFile << ticket.getId() << "\n"
+            << ticket.getRow() << "\n"
+            << ticket.getCol() << "\n"
             << ticket.getSession()->getId() << '\n';
     }
 
@@ -387,6 +389,7 @@ void SystemManager::loadMoviesFromFile()
         case MoviesType::ActionMovie:
             in >> actionIntensity;
             movie = new ActionMovie(title, rate, duration, productionYear, genre, movieType, actionIntensity);
+            
             break;
         case MoviesType::DocumentaryMovie:
             in >> isBasedOnTrueEvents;
@@ -399,6 +402,7 @@ void SystemManager::loadMoviesFromFile()
         default:
             cout << "Unknown movie type: " << type << endl;
         }
+        movie->setId(id);
         cout << endl << endl;
         movie->print();
         cout << endl << endl;
@@ -783,4 +787,30 @@ void SystemManager::printAllUsers()
         cout << endl;
 
     }
+}
+
+void SystemManager::updateSystemMovieTitle(int movieId, MyString title)
+{
+    Movie* movie = findMovieById(movieId);
+    movies.remove(movie);
+    movie->setTitle(title);
+    cout << "New title=" << movie->getTitle().c_str() << endl;
+    movies.add(movie);
+}
+
+void SystemManager::printAllUsersWatchedMovies(int userId) {
+    User* user = findUserById(userId);    
+    printWatchedMovies(user);
+    
+}
+
+void SystemManager::printAllUsersTickets(int userId) {
+    User* user = findUserById(userId);
+    MyVector<Ticket> tickets = user->getTickets();
+    for (size_t i = 0; i < tickets.getSize(); i++)
+    {
+        tickets[i].print();
+        cout << endl;
+    }
+
 }
