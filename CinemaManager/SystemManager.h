@@ -41,7 +41,7 @@ public:
 	void saveSessionToFile();
 	void loadSessionFromFile();
 
-	bool registerUser(MyString name, MyString password);
+	bool registerUser(MyString name, MyString password, double balance);
 	User* login(MyString name, MyString password);
 	void logout();
 
@@ -68,7 +68,7 @@ public:
 	void removeMovieSystem(int movieId);
 	void removeHallSystem(int hallId);
 	void removeUserSystem(int userId);
-	void printWatchedMovies(User* user);
+	void printWatchedMovies(int userId);
 	void printAllMoviesFromSessions();
 	void printAllSessions();
 	void printAllUsers();
@@ -77,4 +77,5 @@ public:
 	void printAllUsersWatchedMovies(int userId);
 	void printAllUsersTickets(int userId);
 	void addSession(Session* session);
+	void addDefaultUser(User* user);
 };

@@ -24,8 +24,6 @@ public:
     int getRow() const;
     int getCol() const;
     Session* getSession() const;
-    
-    /*bool isExpired() const;  */
 
     void print() const;
 };

@@ -19,6 +19,7 @@ private:
 
 	MyVector<Ticket> tickets;
 	MyVector<Movie*> watchedMovies;
+
 	virtual void handleUserSpecificCommand(SystemManager& system, MyString command);
 
 public:

@@ -1,7 +1,4 @@
 ﻿#include "Ticket.h"
-//#include "Hall.h"
-//#include "Movie.h"
-//#include "Session.h"
 #include <ctime>
 
 using namespace std;
@@ -11,7 +8,7 @@ class Session;
 Ticket::Ticket(Session* session, int row, int col)
 	:id(++counterId), session(session), row(row), col(col)
 {
-	session->reserveSeat(row, col);
+
 }
 int Ticket::counterId = 0;
 

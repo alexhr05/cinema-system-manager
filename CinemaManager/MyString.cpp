@@ -124,8 +124,6 @@ void MyString::set(const char* str) {
     strcpy_s(data,length+1, str);
 }
 
-
-
 void MyString::intToCharArray(int number, char* buffer) {
     bool isNegative = false;
     int i = 0;
@@ -152,7 +150,6 @@ void MyString::intToCharArray(int number, char* buffer) {
 
     buffer[i] = '\0';
 
-    // Обръщане на символите
     for (int j = 0; j < i / 2; ++j) {
         char temp = buffer[j];
         buffer[j] = buffer[i - j - 1];
@@ -178,12 +175,6 @@ MyString MyString::operator+(char c) const {
     return result;
 }
 
-//std::istream& getline(std::istream& is, MyString& str) {
-//    char buffer[BUFFER_SIZE];
-//    is.getline(buffer, BUFFER_SIZE);
-//    str.set(buffer); 
-//    return is;
-//}
 
 bool getline(istream& is, MyString & str, char delimiter) {
     str = MyString("");
@@ -211,10 +202,3 @@ MyString& MyString::operator+=(char c) {
 
     return result;
 }
-
-
-//void MyString::readFromStream(std::istream& in) {
-//    char buffer[1024];
-//    in.getline(buffer, 1024);
-//    *this = buffer;
-//}

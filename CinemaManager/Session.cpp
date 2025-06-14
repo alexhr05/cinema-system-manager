@@ -1,10 +1,4 @@
 ﻿#include "Session.h"
-//#include "Movie.h"
-//#include "ActionMovie.h"
-//#include "DocumantaryMovie.h"
-//#include "DramaMovie.h"
-//#include <iostream>
-#include <iomanip>
 
 int Session::sessionCounter = 0;
 
