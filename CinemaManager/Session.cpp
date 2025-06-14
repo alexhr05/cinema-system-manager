@@ -10,7 +10,7 @@ Session::Session()
 }
 
 Session::Session(Movie* movie, Hall* hall, tm& startTime)
-    : sessionId(++sessionCounter), movie(movie), hall(hall), startTime(startTime) {
+    : sessionId(sessionCounter++), movie(movie), hall(hall), startTime(startTime) {
     allocateSeats();
 }
 
@@ -148,14 +148,19 @@ bool Session::isExpired() const
     tm now_tm;
 
     localtime_s(&now_tm, &now);
-    if (startTime.tm_year < now_tm.tm_year)
+    if (startTime.tm_year < (now_tm.tm_year+1900)) {
         return true;
-    if (startTime.tm_year == now_tm.tm_year && startTime.tm_mon < now_tm.tm_mon)
+    }
+        
+    if (startTime.tm_year == (now_tm.tm_year + 1900) && startTime.tm_mon < (now_tm.tm_mon + 1)){
+            return true;
+    }
+        
+    if (startTime.tm_year == (now_tm.tm_year + 1900) &&
+            startTime.tm_mon == (now_tm.tm_mon+1) &&
+            startTime.tm_mday < now_tm.tm_mday) {
         return true;
-    if (startTime.tm_year == now_tm.tm_year &&
-        startTime.tm_mon == now_tm.tm_mon &&
-        startTime.tm_mday < now_tm.tm_mday)
-        return true;
+    }
 
 
     return false;

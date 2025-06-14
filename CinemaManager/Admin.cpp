@@ -18,7 +18,7 @@ void Admin::handleUserSpecificCommand(SystemManager& system, MyString cmd)
 		cin.ignore();
 		getline(cin, name, '\n');
 		cout << "Enter user password:";
-		cin.ignore();
+		
 		getline(cin, password, '\n');
 
 		cout << "Enter user balance:";
@@ -38,7 +38,7 @@ void Admin::handleUserSpecificCommand(SystemManager& system, MyString cmd)
 		cout << "Enter title:";
 		cin.ignore();
 		getline(cin, title, '\n');
-		cout << "Enter rate:";
+		cout << "Enter rate between 1 to 5 :";
 		cin >> rate;
 		cout << "Enter duration:";
 		cin >> duration;
@@ -47,44 +47,51 @@ void Admin::handleUserSpecificCommand(SystemManager& system, MyString cmd)
 		cout << "Enter genre:";
 		cin.ignore();
 		getline(cin, genre, '\n');
-
-		MoviesType movieType = static_cast<MoviesType>(typeMovie);
-
-		switch (movieType) {
-		case MoviesType::ActionMovie: {
-
-
-			int actionIntensity;
-			cout << "Enter action intensity:";
-			cin >> actionIntensity;
-
-			ActionMovie* action = new ActionMovie(title, rate, duration, productionYear, genre, movieType, actionIntensity);
-			addActionMovie(system, action);
-			break;
+		if (rate < 0 || rate >5 || duration <0 || productionYear <0 ) {
+			cout<<"Invalid data for adding movie"<<endl;
 		}
-		case MoviesType::DocumentaryMovie: {
+		else {
+			MoviesType movieType = static_cast<MoviesType>(typeMovie);
+
+			switch (movieType) {
+			case MoviesType::ActionMovie: {
 
 
-			bool isBasedOnTrueEvents;
-			cout << "Enter based on true events (0 or 1): ";
-			cin >> isBasedOnTrueEvents;
-			DocumentaryMovie* documentary = new DocumentaryMovie(title, rate, duration, productionYear, genre, movieType, isBasedOnTrueEvents);
-			addDocumentaryMovie(system, documentary);
-			break;
-		}
-		case MoviesType::DramaMovie: {
-			bool hasComedyElements;
-			cout << "Enter based on true events (0 or 1): ";
-			cin >> hasComedyElements;
-			DramaMovie* drama = new DramaMovie(title, rate, duration, productionYear, genre, movieType, hasComedyElements);
-			addDramaMovie(system, drama);
-			break;
-		}
-		default: {
-			cout << "Unknown movie type: " << typeMovie << endl;
+				int actionIntensity;
+				cout << "Enter action intensity:";
+				cin >> actionIntensity;
+
+				ActionMovie* action = new ActionMovie(title, rate, duration, productionYear, genre, movieType, actionIntensity);
+				addActionMovie(system, action);
+				break;
+			}
+			case MoviesType::DocumentaryMovie: {
+
+
+				bool isBasedOnTrueEvents;
+				cout << "Enter based on true events (0 or 1): ";
+				cin >> isBasedOnTrueEvents;
+				DocumentaryMovie* documentary = new DocumentaryMovie(title, rate, duration, productionYear, genre, movieType, isBasedOnTrueEvents);
+				addDocumentaryMovie(system, documentary);
+				break;
+			}
+			case MoviesType::DramaMovie: {
+				bool hasComedyElements;
+				cout << "Enter based on true events (0 or 1): ";
+				cin >> hasComedyElements;
+				DramaMovie* drama = new DramaMovie(title, rate, duration, productionYear, genre, movieType, hasComedyElements);
+				addDramaMovie(system, drama);
+				break;
+			}
+			default: {
+				cout << "Unknown movie type: " << typeMovie << endl;
+			}
+
+			}
+			cout << "Successfully added movie" << endl;
 		}
 
-		}
+		
 	}
 	else if (cmd.equals("create-session")) {
 		int movieId, hallId;
@@ -117,6 +124,7 @@ void Admin::handleUserSpecificCommand(SystemManager& system, MyString cmd)
 			cout << startTime.tm_year << " " << startTime.tm_mon << " " << startTime.tm_wday << " " << startTime.tm_hour << endl;
 			Session* session = new Session(movie, hall, startTime);
 			addNewSession(system, session);
+			cout << "Successfully added movie" << endl;
 		}
 
 	}
@@ -126,16 +134,21 @@ void Admin::handleUserSpecificCommand(SystemManager& system, MyString cmd)
 		cin >> rows;
 		cout << "Enter cols for hall:";
 		cin >> cols;
+		if (rows <= 0 || cols <= 0) {
+			cout << "Invlaid data for rows and columns" << endl;
+		}
+		else {
+			Hall* hall = new Hall(rows, cols);
 
-		Hall* hall = new Hall(rows, cols);
-
-		addHall(system, hall);
+			addHall(system, hall);
+			cout << "Successfully added hall" << endl;
+		}
+		
 	}
 	else if (cmd.equals("remove-movie")) {
 		int movieId;
 		cout << "Enter movie id to remove:";
 		cin >> movieId;
-		cout << "mmoiveId=" << movieId;
 		removeMovie(system, movieId);
 
 	}

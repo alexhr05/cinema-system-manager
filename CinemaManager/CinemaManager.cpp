@@ -30,7 +30,7 @@ int main()
 	/*system.saveMoviesToFile();*/
 	/*system.saveTicketsToFiles();*/
 	
-	
+	cout << "MMAINN TicketSize=" << system.getAllTickets().getSize()<<endl;
 
 	User* loggedUser = nullptr;
 	Admin* admin = nullptr;
@@ -43,6 +43,7 @@ int main()
 		cout << "\n> ";
 		cin >> cmd;
 		if (cmd.equals("exit")) {
+			cout << "EXIT TicketSize=" << system.getAllTickets().getSize() << endl;
 			break;
 		}
 		else if (cmd.equals("login")) {

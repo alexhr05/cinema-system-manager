@@ -78,4 +78,5 @@ public:
 	void printAllUsersTickets(int userId);
 	void addSession(Session* session);
 	void addDefaultUser(User* user);
+	void removeExpiredTickets();
 };

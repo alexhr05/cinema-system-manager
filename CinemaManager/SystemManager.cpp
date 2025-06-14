@@ -44,7 +44,6 @@ void SystemManager::loadHallsFromFiles()
     while (inFile >> id >> rows >> cols) {
         cout << endl;
         Hall* h = new Hall(rows, cols);
-        cout << "";
         h->setId(id);
         halls.add(h);
     }
@@ -54,7 +53,7 @@ void SystemManager::loadHallsFromFiles()
 
 void SystemManager::saveHallsToFiles()
 {
-    ofstream outFile("halls.txt", ios::app);
+    ofstream outFile("halls.txt");
     if (!outFile.is_open()) return;
 
     for (size_t i = 0; i < halls.getSize(); i++) {
@@ -90,8 +89,15 @@ void SystemManager::loadTicketsFromFiles() {
 
     while (in>>id>>row>>col>> sessionId) {
             Session* session = findSessionById(sessionId);
-            Ticket tick(session,row,col);
-            allTickets.add(tick);
+            if (session->isExpired()) {
+                sessions.remove(session);
+            }
+            else {
+                Ticket tick(session, row, col);
+                allTickets.add(tick);
+            }
+
+            
     }
     
 
@@ -99,12 +105,11 @@ void SystemManager::loadTicketsFromFiles() {
 }
 
 void SystemManager::saveTicketsToFiles() {
-    ofstream outFile("tickets.txt", ios::app);
+    ofstream outFile("tickets.txt");
     if (!outFile.is_open()) return;
-  
     for (size_t i = 0; i < allTickets.getSize(); i++) {
         Ticket ticket = allTickets[i];
-
+        
         outFile << ticket.getId() << "\n"
             << ticket.getRow() << "\n"
             << ticket.getCol() << "\n"
@@ -143,7 +148,6 @@ void SystemManager::loadUsersFromFiles()
         for (size_t i = 0; i < ticketsSize; i++) {
             in >> ticketId;
             Ticket ticket = findTicketById(ticketId) ;
-            allTickets.add(ticket);
             user->addTicket(ticket);   
         }
 
@@ -238,7 +242,7 @@ void SystemManager::addDefaultAdmin() {
 
 void SystemManager::saveUsersToFiles()
 {
-    ofstream outFile("users.txt", ios::out);
+    ofstream outFile("users.txt");
     if (!outFile.is_open()) return;
     for (size_t i = 0; i < users.getSize(); i++) {
         
@@ -344,7 +348,7 @@ void SystemManager::loadMoviesFromFile()
 void SystemManager::saveMoviesToFile()
 {
 
-    ofstream outFile("movies.txt", ios::app);
+    ofstream outFile("movies.txt");
   
 
     for (size_t i = 0; i < movies.getSize(); i++)
@@ -386,19 +390,19 @@ void SystemManager::saveMoviesToFile()
 
 void SystemManager::saveSessionToFile() {
     ofstream outFile("session.txt");
-    MyString name = "Star wars";
-    MyString gen = "fic";
-    Movie* movie = new ActionMovie(name, 3, 2.5, 2000, gen, MoviesType::ActionMovie, 15);
-    Hall* hall = new Hall(5,5);
-    tm time = {};
-    time.tm_year = 200;
-    time.tm_mon = 2;
-    time.tm_wday = 12;
-    time.tm_hour = 2;
-    Session* session = new Session(movie, hall, time);
-    sessions.add(session);
+    //MyString name = "Star wars";
+    //MyString gen = "fic";
+    //Movie* movie = new ActionMovie(name, 3, 2.5, 2000, gen, MoviesType::ActionMovie, 15);
+    //Hall* hall = new Hall(5,5);
+    //tm time = {};
+    //time.tm_year = 200;
+    //time.tm_mon = 2;
+    //time.tm_wday = 12;
+    //time.tm_hour = 2;
+    //Session* session = new Session(movie, hall, time);
+    //sessions.add(session);
 
-    cout << "session:size::" << sessions.getSize()<<"id:"<<session->getId()<<endl;
+    //cout << "session:size::" << sessions.getSize()<<"id:"<<session->getId()<<endl;
     for (int i = 0; i < sessions.getSize(); i++)
     {
         
@@ -462,6 +466,13 @@ void SystemManager::loadSessionFromFile() {
             }
         }
         sessions.add(session);
+        cout << endl;
+        for (size_t i = 0; i < sessions.getSize(); i++)
+        {
+            sessions[i]->print();
+            cout << endl;
+        }
+        cout << endl;
     }
 
     inFile.close();
@@ -583,6 +594,7 @@ void SystemManager::removeMovieSystem(int movieId) {
     movies.remove(targetMovie);
 
 }
+
 
 void SystemManager::removeHallSystem(int hallId) {
     Hall* hall = findHallById(hallId);
@@ -708,4 +720,8 @@ void SystemManager::addSession(Session* session)
 void SystemManager::addDefaultUser(User* user)
 {
     users.add(user);
+}
+
+void removeExpiredTickets(Ticket ticket) {
+
 }
