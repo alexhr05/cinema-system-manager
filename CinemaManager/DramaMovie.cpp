@@ -1,5 +1,6 @@
-#include "DramaMovie.h"
+﻿#include "DramaMovie.h"
 
+// Конструктор за създаване на DramaMovie обект.
 DramaMovie::DramaMovie(MyString& title, int rate, double duration, int productYear, MyString& Genre, MoviesType type, bool hasComedyElements)
 	:Movie(title, rate, duration, productYear, Genre, type), hasComedyElements(hasComedyElements)
 {
@@ -15,11 +16,13 @@ bool DramaMovie::getHasComedyElements() const
 	return hasComedyElements;
 }
 
+// Изчислява цената на билета за драматичен филм.
 double DramaMovie::getTicketPrice() const 
 {
 	return basePrice + (hasComedyElements ? 2.0 : 0.0);
 }
 
+// Клонира текущия обект.
 Movie* DramaMovie::clone() const
 {
 	
@@ -27,6 +30,7 @@ Movie* DramaMovie::clone() const
 	
 }
 
+// Принтира информация за филма в конзолата.
 void DramaMovie::print()
 {
 	cout << "Type Movie(1-Action movie; 2-Documentary movie; 3- Drama movie);" << endl;

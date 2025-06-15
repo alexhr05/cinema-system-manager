@@ -1,23 +1,15 @@
 ﻿#include "SystemManager.h"
-//#include <iostream>
 #include <fstream>
-//#include "MyVector.hpp"
 #include "SeatTypes.h"
-//#include "User.h"
-//#include "Admin.h"
-//#include "MoviesType.h"
-//#include "ActionMovie.h"
-//#include "DocumantaryMovie.h"
-//#include "DramaMovie.h"
-
 
 using namespace std;
 
 
-
+//Конструктор на SystemManager класа
 SystemManager::SystemManager(): users(MyVector<User*>()), movies(MyVector<Movie*>()), halls(MyVector<Hall*>()),  allTickets(MyVector<Ticket>()), sessions(MyVector<Session*>()){
 }
 
+//Деструктор на SystemManager класа
 SystemManager::~SystemManager() {
     for (size_t i = 0; i < users.getSize(); i++) {
         delete users[i];
@@ -35,6 +27,7 @@ SystemManager::~SystemManager() {
     }
 }
 
+//Зарежда информацията за залите от файл "halls.txt"
 void SystemManager::loadHallsFromFiles()
 {
     
@@ -50,7 +43,7 @@ void SystemManager::loadHallsFromFiles()
     
     inFile.close();
 }
-
+//Запазва информацията за залите във файл "halls.txt"
 void SystemManager::saveHallsToFiles()
 {
     ofstream outFile("halls.txt");
@@ -66,7 +59,7 @@ void SystemManager::saveHallsToFiles()
     outFile.close();
 }
 
-
+//Създава tm структура за представяне на време
 tm SystemManager::createTimeStruct(int year, int month, int day, int hour)
 {
     tm time;
@@ -77,7 +70,7 @@ tm SystemManager::createTimeStruct(int year, int month, int day, int hour)
 
     return time;
 }
-
+// Зарежда билетите от файл "tickets.txt"
 void SystemManager::loadTicketsFromFiles() {
     ifstream in("tickets.txt");
     if (!in.is_open()) {
@@ -104,6 +97,7 @@ void SystemManager::loadTicketsFromFiles() {
     in.close();
 }
 
+//Запазва билетите във файл "tickets.txt"
 void SystemManager::saveTicketsToFiles() {
     ofstream outFile("tickets.txt");
     if (!outFile.is_open()) return;
@@ -119,6 +113,7 @@ void SystemManager::saveTicketsToFiles() {
     outFile.close();
 }
 
+//Зарежда потребителите от файл "users.txt"
 void SystemManager::loadUsersFromFiles()
 {
     std::ifstream in("users.txt");
@@ -171,6 +166,7 @@ void SystemManager::loadUsersFromFiles()
     in.close();
 }
 
+//Намира билет по ID
 Ticket SystemManager::findTicketById(int id) {
     for (int i = 0; i < allTickets.getSize(); i++) {
         
@@ -185,6 +181,7 @@ Ticket SystemManager::findTicketById(int id) {
     return tick;
 }
 
+//Намира филм по ID
 Movie* SystemManager::findMovieById(int id) {
     
     for (int i = 0; i < movies.getSize(); i++) {
@@ -198,6 +195,7 @@ Movie* SystemManager::findMovieById(int id) {
     return nullptr;
 }
 
+//Намира сесия по ID
 Session* SystemManager::findSessionById(int id)
 {
     for (int i = 0; i < sessions.getSize(); i++) {
@@ -212,6 +210,7 @@ Session* SystemManager::findSessionById(int id)
     return nullptr;
 }
 
+//Намира потребител по ID
 User* SystemManager::findUserById(int id)
 {
     for (int i = 0; i < users.getSize(); i++) {
@@ -226,6 +225,7 @@ User* SystemManager::findUserById(int id)
     return nullptr;
 }
 
+//Добавя администратор по подразбиране в системата
 void SystemManager::addDefaultAdmin() {
     MyString defaultName = "admin";
     MyString defaultPassword = "admin123";
@@ -239,7 +239,7 @@ void SystemManager::addDefaultAdmin() {
 }
 
 
-
+//Запазва потребителите във файл "users.txt"
 void SystemManager::saveUsersToFiles()
 {
     ofstream outFile("users.txt");
@@ -283,7 +283,7 @@ void SystemManager::saveUsersToFiles()
 }
 
 
-
+//Зарежда филмите от файл "movies.txt"
 void SystemManager::loadMoviesFromFile()
 {
     std::ifstream in("movies.txt");
@@ -345,6 +345,7 @@ void SystemManager::loadMoviesFromFile()
     in.close();
 }
 
+//Запазва филмите във файл "movies.txt"
 void SystemManager::saveMoviesToFile()
 {
 
@@ -388,21 +389,9 @@ void SystemManager::saveMoviesToFile()
     outFile.close();
 }
 
+// Запазва сесиите във файл "session.txt"
 void SystemManager::saveSessionToFile() {
     ofstream outFile("session.txt");
-    //MyString name = "Star wars";
-    //MyString gen = "fic";
-    //Movie* movie = new ActionMovie(name, 3, 2.5, 2000, gen, MoviesType::ActionMovie, 15);
-    //Hall* hall = new Hall(5,5);
-    //tm time = {};
-    //time.tm_year = 200;
-    //time.tm_mon = 2;
-    //time.tm_wday = 12;
-    //time.tm_hour = 2;
-    //Session* session = new Session(movie, hall, time);
-    //sessions.add(session);
-
-    //cout << "session:size::" << sessions.getSize()<<"id:"<<session->getId()<<endl;
     for (int i = 0; i < sessions.getSize(); i++)
     {
         
@@ -426,7 +415,7 @@ void SystemManager::saveSessionToFile() {
     outFile.close();
 }
 
-
+//Зарежда сесиите от файл "session.txt"
 void SystemManager::loadSessionFromFile() {
     
     ifstream inFile("session.txt");
@@ -479,7 +468,7 @@ void SystemManager::loadSessionFromFile() {
 }
 
 
-
+//Проверява дали потребител съществува в системата
 User* SystemManager::login(MyString name, MyString password) {
     for (size_t i = 0; i < users.getSize(); i++) {
         if (users[i]->getName().equals(name) && users[i]->getPassword().equals(password)) {
@@ -530,7 +519,7 @@ MyVector<Session*> SystemManager::getSessions() const
 {
     return sessions;
 }
-
+//Регистрира нов потребител в системата
 bool SystemManager::registerUser(MyString name, MyString password, double balance) {
     for (size_t i = 0; i < users.getSize(); i++)
     {
@@ -544,6 +533,7 @@ bool SystemManager::registerUser(MyString name, MyString password, double balanc
     return true;
 }
 
+//Намира зала по ID
 Hall* SystemManager::findHallById(int id) {
     for (size_t i = 0; i < halls.getSize(); i++) {
         if (halls[i]->getId() == id) {
@@ -553,6 +543,7 @@ Hall* SystemManager::findHallById(int id) {
     return nullptr;
 }
 
+//Премахва филм от системата и възстановява пари на потребителите
 void SystemManager::removeMovieSystem(int movieId) {
     Movie* targetMovie = findMovieById(movieId);
     if (targetMovie == nullptr) {
@@ -595,7 +586,8 @@ void SystemManager::removeMovieSystem(int movieId) {
 
 }
 
-
+//Премахва зала от системата и възстановява пари на потребителите
+//Премахва всички билети и сесии свързани със залата
 void SystemManager::removeHallSystem(int hallId) {
     Hall* hall = findHallById(hallId);
     if (hall == nullptr)
@@ -625,6 +617,7 @@ void SystemManager::removeHallSystem(int hallId) {
     
 }
 
+//Премахва потребител от системата
 void SystemManager::removeUserSystem(int userId)
 {
     User* user = findUserById(userId);
@@ -640,6 +633,7 @@ void SystemManager::removeUserSystem(int userId)
     }
 }
 
+//Показва всички филми, които потребителят е гледал
 void SystemManager::printWatchedMovies(int userId)
 {
     User* user = findUserById(userId);
@@ -649,6 +643,7 @@ void SystemManager::printWatchedMovies(int userId)
     }
 }
 
+//Показва всички филми от активните сесии
 void SystemManager::printAllMoviesFromSessions() {
     cout << "Movies to watch:" << endl;
     for (size_t i = 0; i < sessions.getSize(); i++)
@@ -657,6 +652,8 @@ void SystemManager::printAllMoviesFromSessions() {
     }
 }
 
+
+//Показва информация за всички сесии
 void SystemManager::printAllSessions()
 {
     cout << "Info about all Sessions to buy ticket:" << endl<<endl;
@@ -675,6 +672,7 @@ void SystemManager::printAllSessions()
     }
 }
 
+//Показва информация за всички потребители
 void SystemManager::printAllUsers()
 {
     cout << "All users:" << endl<<endl;
@@ -689,6 +687,8 @@ void SystemManager::printAllUsers()
     }
 }
 
+
+//Обновява заглавието на филм
 void SystemManager::updateSystemMovieTitle(int movieId, MyString title)
 {
     Movie* movie = findMovieById(movieId);
@@ -697,10 +697,13 @@ void SystemManager::updateSystemMovieTitle(int movieId, MyString title)
     movies.add(movie);
 }
 
+//Показва всички гледани филми на потребител
 void SystemManager::printAllUsersWatchedMovies(int userId) {
     printWatchedMovies(userId);   
 }
 
+
+// Показва всички билети на потребител
 void SystemManager::printAllUsersTickets(int userId) {
     User* user = findUserById(userId);
     MyVector<Ticket> tickets = user->getTickets();
@@ -722,6 +725,3 @@ void SystemManager::addDefaultUser(User* user)
     users.add(user);
 }
 
-void removeExpiredTickets(Ticket ticket) {
-
-}

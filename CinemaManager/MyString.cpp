@@ -6,23 +6,27 @@
 using namespace std;
 const int BUFFER_SIZE = 1024;
 
+// Конструктор по подразбиране
 MyString::MyString() : length(0) {
     this->data = new char[1];
     this->data[0] = '\0';
 }
 
+// Конструктор с параметри
 MyString::MyString(const char* str) {
     this->length = strlen(str);
     this->data = new char[length + 1];
     strcpy_s(data, length + 1, str);
 }
 
+// Копиращ конструктор.
 MyString::MyString(const MyString& other) {
     this->length = other.length;
     this->data = new char[length + 1];
     strcpy_s(this->data, length + 1, other.data);
 }
 
+// Оператор за присвояване.
 MyString& MyString::operator=(const MyString& other) {
     if (this != &other) {
         delete[] this->data;
@@ -34,22 +38,26 @@ MyString& MyString::operator=(const MyString& other) {
 }
 
 
+// Деструктор
 MyString::~MyString() {
     delete[] this->data;
 }
 
+// Връща дължината на низа
 size_t MyString::size() const {
     return this->length;
 }
 
+// Индексен оператор 
 char& MyString::operator[](size_t index) {
     return this->data[index];
 }
-
+// Константен индексен оператор
 const char& MyString::operator[](size_t index) const {
     return this->data[index];
 }
 
+// Конкатенация на два MyString.
 MyString MyString::operator+(const MyString& other) const {
     MyString result;
     delete[] result.data;
@@ -62,10 +70,12 @@ MyString MyString::operator+(const MyString& other) const {
     return result;
 }
 
+// Връща указател към символите
 const char* MyString::c_str() const {
     return this->data;
 }
 
+// Сравнява дали два MyString са равни
 bool MyString::equals(const MyString& other) const {
     if (length != other.length) {
         return false;
@@ -80,6 +90,8 @@ bool MyString::equals(const MyString& other) const {
     }
     return true;
 }
+
+// Оператор за въвеждане от поток.
 std::istream& operator>>(std::istream& is, MyString& str) {
     char buffer[BUFFER_SIZE];
     is >> buffer;
@@ -87,36 +99,7 @@ std::istream& operator>>(std::istream& is, MyString& str) {
     return is;
 }
 
-MyString MyString::fromSizeT(size_t number) {
-    if (number == 0) return MyString("0");
-
-    char buffer[101];
-    size_t index = 100;
-    buffer[index] = '\0';
-
-    while (number > 0) {
-        buffer[--index] = '0' + (number % 10);
-        number /= 10;
-    }
-
-    return MyString(buffer + index);
-}
-
-MyString MyString::fromInt(int number) {
-    if (number == 0) return MyString("0");
-
-    char buffer[101];
-    int index = 100;
-    buffer[index] = '\0';
-
-    while (number > 0) {
-        buffer[--index] = '0' + (number % 10);
-        number /= 10;
-    }
-
-    return MyString(buffer + index);
-}
-
+// Присвоява нова стойност от масив от chars
 void MyString::set(const char* str) {
     delete[] data;
     length = strlen(str);
@@ -124,6 +107,7 @@ void MyString::set(const char* str) {
     strcpy_s(data,length+1, str);
 }
 
+// Преобразува int в char масив (с '\0' накрая).
 void MyString::intToCharArray(int number, char* buffer) {
     bool isNegative = false;
     int i = 0;
@@ -157,6 +141,7 @@ void MyString::intToCharArray(int number, char* buffer) {
     }
 }
 
+// Добавя един символ в края на MyString.
 MyString MyString::operator+(char c) const {
     char* newData = new char[length + 2];
 
@@ -175,7 +160,7 @@ MyString MyString::operator+(char c) const {
     return result;
 }
 
-
+// Прочита низ до зададен разделител и чете
 bool getline(istream& is, MyString & str, char delimiter) {
     str = MyString("");
 
@@ -197,6 +182,7 @@ bool getline(istream& is, MyString & str, char delimiter) {
     return readAnyChar || foundDelimiter;
 }
 
+// Добавя един символ към текущия MyString чрез +=
 MyString& MyString::operator+=(char c) {
     MyString result = this->data + c;
 

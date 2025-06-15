@@ -1,15 +1,18 @@
 ﻿#include "Admin.h"
 
+// Конструктор на Admin
 Admin::Admin(MyString name, MyString password, double balance)
     : User(name, password, balance) {
     
 }
 
+// Обработва специфични команди за администратор като добавяне на филм, потребител, сесия и други
 void Admin::handleUserSpecificCommand(SystemManager& system, MyString cmd)
 {
 	
-		
+	// Разпознаване на командата и извършване на съответното действие
 	if(cmd.equals("add-user")) {
+		// Добавя нов потребител
 		MyString name;
 		MyString password;
 		double balance;
@@ -28,6 +31,7 @@ void Admin::handleUserSpecificCommand(SystemManager& system, MyString cmd)
 		
 	}
 	else if (cmd.equals("add-movie")) {
+		// Добавя нов филм 
 		MyString title, genre;
 		int rate, typeMovie, productionYear;
 		double duration;
@@ -94,6 +98,8 @@ void Admin::handleUserSpecificCommand(SystemManager& system, MyString cmd)
 		
 	}
 	else if (cmd.equals("create-session")) {
+		// Създава нова прожекционна сесия
+
 		int movieId, hallId;
 
 		cout << "Enter movie id:";
@@ -129,6 +135,8 @@ void Admin::handleUserSpecificCommand(SystemManager& system, MyString cmd)
 
 	}
 	else if (cmd.equals("open-haul")) {
+		// Отваря нова зала
+
 		int rows, cols;
 		cout << "Enter rows for hall:";
 		cin >> rows;
@@ -146,6 +154,8 @@ void Admin::handleUserSpecificCommand(SystemManager& system, MyString cmd)
 		
 	}
 	else if (cmd.equals("remove-movie")) {
+		// Премахва филм по ID
+
 		int movieId;
 		cout << "Enter movie id to remove:";
 		cin >> movieId;
@@ -153,12 +163,16 @@ void Admin::handleUserSpecificCommand(SystemManager& system, MyString cmd)
 
 	}
 	else if (cmd.equals("close-haul")) {
+		// Затваря зала по ID
+
 		int hallId;
 		cout << "Enter hall id:";
 		cin >> hallId;
 		removeHall(system, hallId);
 	}
 	else if (cmd.equals("update-movie-title")) {
+		// Актуализира заглавието на филм по ID
+
 		int movieId;
 		cout << "Enter movie id:";
 		cin >> movieId;
@@ -171,6 +185,8 @@ void Admin::handleUserSpecificCommand(SystemManager& system, MyString cmd)
 		updateTitleMovie(system, movieId, title);
 	}
 	else if (cmd.equals("list-user-history")) {
+		// Извежда гледаните филми на потребител
+
 		int userId;
 		cout << "Enter user Id";
 		cin >> userId;
@@ -178,6 +194,9 @@ void Admin::handleUserSpecificCommand(SystemManager& system, MyString cmd)
 
 	}
 	else if (cmd.equals("list-user-tickets")) {
+		// Извежда всички билети на потребител
+		
+
 		int userId;
 		cout << "Enter user Id";
 		cin >> userId;
@@ -185,10 +204,13 @@ void Admin::handleUserSpecificCommand(SystemManager& system, MyString cmd)
 
 	}
 	else if (cmd.equals("list-users")) {
+		// Извежда списък с всички потребители
 
 		system.printAllUsers();
 	}
 	else if (cmd.equals("remove-user")) {
+		// Премахва потребител по ID
+
 		int userId;
 		cout << "Enter user id:";
 		cin >> userId;

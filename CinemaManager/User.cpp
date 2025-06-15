@@ -1,27 +1,29 @@
-#include "User.h"
-//#include "Ticket.h"
+﻿#include "User.h"
 #include "SystemManager.h"
 #include "Mystring.h"
 #include "MyVector.hpp"
 
-
+//Виртуален метод за обработка на специфични команди за потребителя
 void User::handleUserSpecificCommand(SystemManager& system, MyString command)
 {
 	return;
 }
 
+//Конструктор по подразбиране
 User::User() : id(counterId++),name(""), password(""), balance(0), tickets(MyVector<Ticket>()), watchedMovies(MyVector<Movie*>()) {}
 
+//Конструктор с име и парола
 User::User(MyString name, MyString password) : id(++counterId), name(name), password(password), balance(0), tickets(MyVector<Ticket>()), watchedMovies(MyVector<Movie*>())
 {
 
 }
 
-
+//Конструктор с име, парола и баланс
 User::User(MyString name, MyString password, double balance) : id(counterId++), name(name), password(password), balance(balance), tickets(MyVector<Ticket>()), watchedMovies(MyVector<Movie*>()) {
 
 }
 
+//Задава ID на потребителя и актуализира глобалния брояч
 void User::setId(int newId) {
 	this->id = newId;
 
@@ -30,6 +32,7 @@ void User::setId(int newId) {
 	}
 }
 
+//Основен метод за обработка на потребителските команди
 void User::handleCommand(SystemManager& system, MyString cmd) {
 	
 	try {
@@ -193,6 +196,7 @@ void User::addWatchedMovies(Movie* movie)
 	watchedMovies.add(movie);
 }
 
+//Проверява за изтекли билети и ги премества в историята на гледани филми
 void User::checkExpiredTickets()
 {
 	MyVector<Ticket> updatedTickets;

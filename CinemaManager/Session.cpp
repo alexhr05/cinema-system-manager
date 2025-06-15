@@ -2,6 +2,7 @@
 
 int Session::sessionCounter = 0;
 
+// Конструктор по подразбиране.
 Session::Session()
     : sessionId(0), movie(nullptr), hall(nullptr) {
     time_t now = time(0);
@@ -9,17 +10,20 @@ Session::Session()
     seats = nullptr;
 }
 
+// Конструктор с параметри.
 Session::Session(Movie* movie, Hall* hall, tm& startTime)
     : sessionId(sessionCounter++), movie(movie), hall(hall), startTime(startTime) {
     allocateSeats();
 }
 
+// Копиращ конструктор.
 Session::Session(const Session& other)
     : sessionId(other.sessionId), movie(other.movie), hall(other.hall), startTime(other.startTime) {
     allocateSeats();
     copySeatsFrom(other);
 }
 
+// Оператор за присвояване.
 Session& Session::operator=(const Session& other) {
     if (this != &other) {
         freeSeats();
@@ -44,10 +48,12 @@ Session& Session::operator=(const Session& other) {
     return *this;
 }
 
+// Деструктор - освобождава динамичната памет за седалките.
 Session::~Session() {
     freeSeats();
 }
 
+// Задава ID и актуализира глобалния брояч, ако е нужно.
 void Session::setId(int id)
 {
     sessionId = id;
@@ -56,12 +62,13 @@ void Session::setId(int id)
     }
 }
 
+// Задава ново ID като инкрементира глобалния брояч.
 void Session::setNewId()
 {
     sessionId = sessionCounter++;
 }
 
-
+// Създава двумерен масив от символи, представящи седалките в залата.
 void Session::allocateSeats() {
     if (!hall) return;
     int rows = hall->getRows();
@@ -76,6 +83,7 @@ void Session::allocateSeats() {
     }
 }
 
+// Освобождава динамичната памет за масива със седалки.
 void Session::freeSeats() {
     if (!seats || !hall) return;
     for (int i = 0; i < hall->getRows(); i++) {
@@ -85,6 +93,7 @@ void Session::freeSeats() {
     seats = nullptr;
 }
 
+// Копира състоянието на седалките от друга сесия.
 void Session::copySeatsFrom(const Session& other) {
     if (!hall) return;
     for (int i = 0; i < hall->getRows(); i++)
@@ -96,6 +105,7 @@ int Session::getId() const {
     return sessionId;
 }
 
+// Връща времето на стартиране на сесията.
 const tm& Session::getStartTime() const {
     return startTime;
 }
@@ -115,6 +125,7 @@ char** Session::getSeats()
     return seats;
 }
 
+// Резервира място в залата.
 bool Session::reserveSeat(int row, int col) {
     if (!hall || row >= hall->getRows() || col >= hall->getCols()) return false;
     if (seats[row][col] == 'F') {
@@ -124,11 +135,13 @@ bool Session::reserveSeat(int row, int col) {
     return false;
 }
 
+// Проверява дали мястото е заето.
 bool Session::isSeatTaken(int row, int col) const {
     if (!hall || row >= hall->getRows() || col >= hall->getCols()) return false;
     return seats[row][col] == 'R';
 }
 
+// Отпечатва всички места в залата с техния статус (F или R).
 void Session::displaySeats() const {
     if (!hall) return;
     for (int i = 0; i < hall->getRows(); i++) {
@@ -140,6 +153,7 @@ void Session::displaySeats() const {
     
 }
 
+// Проверява дали сесията е изтекла спрямо текущото време.
 bool Session::isExpired() const
 {
     time_t now;
@@ -166,6 +180,7 @@ bool Session::isExpired() const
     return false;
 }
 
+// Отпечатва информация за сесията, включително филм, зала и час.
 void Session::print() const
 {
     cout << "Session: " << sessionId << endl
@@ -175,11 +190,13 @@ void Session::print() const
     displaySeats();
 }
 
+// Връща статуса на определено място в залата.
 char Session::getSeat(int r, int c) const
 {
     return seats[r][c];
 }
 
+// Отменя резервация на място, ако вече е резервирано.
 bool Session::cancelReservation(int row, int col) {
     if (row < 0 || row >= hall->getRows() || col < 0 || col >= hall->getCols()) return false;
     if (seats[row][col] == 'R') {
@@ -190,12 +207,8 @@ bool Session::cancelReservation(int row, int col) {
     return false;
 }
 
-void Session::setHall(Hall* h = nullptr)
-{
-    this->hall = h;
-}
 
-
+// Оператор за сравнение на сесии по ID.
 bool Session::operator==(const Session& other)
 {
     return this->getId() == other.getId();
