@@ -21,6 +21,6 @@ public:
 	int getId() const;
 	int getRows() const;
 	int getCols() const;
-
+	void print();
 
 };

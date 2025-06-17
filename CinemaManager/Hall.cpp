@@ -35,4 +35,3 @@ int Hall::getCols() const
 {
     return cols;
 }
-

@@ -1,5 +1,5 @@
 ﻿#include "Admin.h"
-
+#include "Hall.h"
 // Конструктор на Admin
 Admin::Admin(MyString name, MyString password, double balance)
     : User(name, password, balance) {
@@ -130,7 +130,7 @@ void Admin::handleUserSpecificCommand(SystemManager& system, MyString cmd)
 			cout << startTime.tm_year << " " << startTime.tm_mon << " " << startTime.tm_wday << " " << startTime.tm_hour << endl;
 			Session* session = new Session(movie, hall, startTime);
 			addNewSession(system, session);
-			cout << "Successfully added movie" << endl;
+			cout << "Successfully added session" << endl;
 		}
 
 	}
@@ -188,7 +188,7 @@ void Admin::handleUserSpecificCommand(SystemManager& system, MyString cmd)
 		// Извежда гледаните филми на потребител
 
 		int userId;
-		cout << "Enter user Id";
+		cout << "Enter user Id:";
 		cin >> userId;
 		printUsersWatchedMovies(system, userId);
 
@@ -216,6 +216,30 @@ void Admin::handleUserSpecificCommand(SystemManager& system, MyString cmd)
 		cin >> userId;
 		removeUser(system, userId);
 	}
+	else if (cmd.equals("list-movies-cinema")) {
+		MyVector<Movie*> movies = system.getMovies();
+		cout << "All movies:" << endl<<endl;
+		for (size_t i = 0; i < movies.getSize(); i++)
+		{
+			movies[i]->print();
+			cout << endl;
+		}
+		
+	}
+	else if (cmd.equals("list-halls")) {
+		
+		MyVector<Hall*> halls = system.getHalls();
+		cout << "All movies:" << endl << endl;
+		for (size_t i = 0; i < halls.getSize(); i++)
+		{
+			cout << "Hall Id:" << halls[i]->getId() << "\n"
+				<< "Hall rows: " << halls[i]->getRows()<< "\n"
+				<<"Hall columns: "<< halls[i]->getCols()<<"\n";
+			cout << endl;
+		}
+
+	}
+
 }
 
 

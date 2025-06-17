@@ -183,7 +183,6 @@ Ticket SystemManager::findTicketById(int id) {
 
 //Намира филм по ID
 Movie* SystemManager::findMovieById(int id) {
-    
     for (int i = 0; i < movies.getSize(); i++) {
         if (movies[i]->getId() == id) {
             return movies[i];
@@ -427,8 +426,6 @@ void SystemManager::loadSessionFromFile() {
     int sessionId, movieId, hallId, year, month, day, hour;
 
     while (inFile >> sessionId >> movieId >> hallId >> year >> month >> day >> hour) {
-        cout << "day:" << day << endl;
-        cout << "Hour:" << hour << endl;
         Movie* movie = findMovieById(movieId);
         Hall* hall = findHallById(hallId);
 
@@ -442,7 +439,6 @@ void SystemManager::loadSessionFromFile() {
         timeStruct.tm_mon = month;
         timeStruct.tm_mday = day;
         timeStruct.tm_hour = hour;
-        cout << "Day:" << timeStruct.tm_mday << endl;
         Session* session = new Session(movie, hall, timeStruct);
         session->setId(sessionId);
 
@@ -457,12 +453,6 @@ void SystemManager::loadSessionFromFile() {
             }
         }
         sessions.add(session);
-        cout << endl;
-        for (size_t i = 0; i < sessions.getSize(); i++)
-        {
-            sessions[i]->print();
-            cout << endl;
-        }
         cout << endl;
     }
 
@@ -585,6 +575,7 @@ void SystemManager::removeMovieSystem(int movieId) {
     
 
     movies.remove(targetMovie);
+    cout << "Successfully removed movie"<<endl;
 
 }
 
@@ -616,6 +607,7 @@ void SystemManager::removeHallSystem(int hallId) {
         
     }
     halls.remove(hall);
+    cout << "Successfully removed hall" << endl;
     
 }
 
@@ -631,6 +623,7 @@ void SystemManager::removeUserSystem(int userId)
     {
         if (users[i]->getId() == user->getId()) {
             users.remove(user);
+            cout << "Successfully removed user" << endl;
         }
     }
 }
@@ -639,6 +632,10 @@ void SystemManager::removeUserSystem(int userId)
 void SystemManager::printWatchedMovies(int userId)
 {
     User* user = findUserById(userId);
+    if (user->getWatchedMovies().getSize() == 0) {
+        cout << "User doens't have any watched movies" << endl;
+        return;
+    }
     for (size_t j = 0; j < user->getWatchedMovies().getSize(); j++) {
         MyVector<Movie*> watchedMovie = user->getWatchedMovies();
         watchedMovie[j]->print();

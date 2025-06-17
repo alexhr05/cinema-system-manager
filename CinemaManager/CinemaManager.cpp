@@ -16,8 +16,14 @@
 
 using namespace std;
 
+void welcomeFunction() {
+	cout << "WELCOME TO CINEMAGRAND";
+}
+
+
 int main()
 {
+	welcomeFunction();
 	SystemManager system;
 	
 	// Зареждане на данни от файлове (зали, филми, сесии, билети, потребители)
@@ -105,7 +111,7 @@ int main()
 			// Показване на администраторски команди
 
 			cout << "Commands for Admin:" << endl;
-			MyString allCommands = "1. add-user\n2. add-movie\n3. create-session\n4. open-haul\n5. close-haul\n6. remove-movie\n7. update-movie-title\n8. list-user-history\n9. list-user-tickets\n10. list-users\n11. remove-user\n";
+			MyString allCommands = "1. add-user\n2. add-movie\n3. create-session\n4. open-haul\n5. close-haul\n6. remove-movie\n7. update-movie-title\n8. list-user-history\n9. list-user-tickets\n10. list-users\n11. remove-user\n12. list-movies-cinema\n13. list-halls";
 			cout << allCommands.c_str();
 		}
 
