@@ -1,5 +1,4 @@
-﻿// CinemaManager.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+﻿//GITHUB repo: https://github.com/alexhr05/cinema-system-manager
 
 #include <iostream>
 #include "User.h"

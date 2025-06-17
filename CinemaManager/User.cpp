@@ -57,7 +57,7 @@ void User::handleCommand(SystemManager& system, MyString cmd) {
 
 					Ticket tick(session, row, col);
 					if (!session->reserveSeat(row, col)) {
-						throw invalid_argument("The seat is reserved");
+						throw invalid_argument("The seat is reserved or the row and column is invalid.");
 					}
 					
 					Movie* movie = session->getMovie();

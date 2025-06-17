@@ -22,6 +22,7 @@ private:
 	MyVector<Ticket> allTickets;
 	MyVector<Session*> sessions;
 
+
 public:
 	SystemManager();
 	~SystemManager();
