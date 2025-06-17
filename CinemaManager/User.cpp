@@ -70,10 +70,7 @@ void User::handleCommand(SystemManager& system, MyString cmd) {
 						}
 						else {
 							int userBalance = getBalance();
-							cout << "UserBalance=" << userBalance << endl;
 							setBalance(userBalance - action->getTicketPrice());
-							cout << "Price=" << action->getTicketPrice() << endl;
-							cout << "UserBalance=" << getBalance() << endl;
 						}
 						break;
 					}

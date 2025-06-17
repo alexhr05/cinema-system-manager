@@ -294,8 +294,8 @@ void SystemManager::loadMoviesFromFile()
     }
 
 
-    int id, productionYear, startHour, endHour, rate, hallId, type , actionIntensity,
-        year, month, day, hour, timeSesionSize;
+    int id, productionYear, rate, hallId, type , actionIntensity,
+        timeSesionSize;
     
     double duration;
     MyString title, genre;
@@ -427,7 +427,8 @@ void SystemManager::loadSessionFromFile() {
     int sessionId, movieId, hallId, year, month, day, hour;
 
     while (inFile >> sessionId >> movieId >> hallId >> year >> month >> day >> hour) {
-        
+        cout << "day:" << day << endl;
+        cout << "Hour:" << hour << endl;
         Movie* movie = findMovieById(movieId);
         Hall* hall = findHallById(hallId);
 
@@ -441,10 +442,11 @@ void SystemManager::loadSessionFromFile() {
         timeStruct.tm_mon = month;
         timeStruct.tm_mday = day;
         timeStruct.tm_hour = hour;
-
+        cout << "Day:" << timeStruct.tm_mday << endl;
         Session* session = new Session(movie, hall, timeStruct);
         session->setId(sessionId);
 
+        
         for (int i = 0; i < hall->getRows(); i++) {
             inFile.ignore();
             for (int j = 0; j < hall->getCols(); j++) {
@@ -648,7 +650,9 @@ void SystemManager::printAllMoviesFromSessions() {
     cout << "Movies to watch:" << endl;
     for (size_t i = 0; i < sessions.getSize(); i++)
     {
-        cout << "Name: " << sessions[i]->getMovie()->getTitle().c_str() << "; start time: " << sessions[i]->getStartTime().tm_hour<<endl;
+        tm time = sessions[i]->getStartTime();
+        cout << "Name: " << sessions[i]->getMovie()->getTitle().c_str() << "; start time: " << time.tm_hour <<"h "
+            << time.tm_year<<"/"<< time.tm_mon<<"/"<<time.tm_wday << endl;
     }
 }
 
